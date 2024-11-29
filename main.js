@@ -3,5 +3,5 @@ function showCat(){
   cat.style.opacity = 1;
   var bn = document.getElementById('sc');
   bn.style.borderColor = 'lightgreen';
-  bn.style.Color = 'lightgreen';
+  bn.style.color = 'lightgreen';
 }
