@@ -18,13 +18,3 @@ button:hover{
     background-color: rgb(65, 65, 65);
     transform: translateY(3px);
 }
-
-#cat{
-    width: 275px; 
-    position: absolute; 
-    left: 200px; 
-    rotate: -13deg; 
-    border: 3px solid rgb(219, 177, 86); 
-    border-radius: 5px;
-    opacity: 1;
-}
