@@ -20,6 +20,7 @@ button{
     cursor: pointer;
     transition: all 0.3s;
 }
+
 button:hover{
     background-color: rgb(65, 65, 65);
 }
