@@ -11,3 +11,15 @@ img.cat{
     border: 3px solid rgb(219, 177, 86); 
     border-radius: 5px;
 }
+
+button{
+    background-color: rgb(50, 50, 50);
+    padding: 10px;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+button:hover{
+    background-color: rgb(65, 65, 65);
+}
