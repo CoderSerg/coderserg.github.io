@@ -3,7 +3,7 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     color: white;
 }
-code{
+#code{
     background-color: rgb(50, 50, 50);
     padding: 5px;
     color: white;
