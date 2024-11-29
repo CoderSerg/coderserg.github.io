@@ -9,3 +9,11 @@ body{
     color: white;
     font-family: monospace;
 }
+#cat{
+    width: 275px; 
+    position: absolute; 
+    left: 200px; 
+    rotate: -13deg; 
+    border: 3px solid rgb(219, 177, 86); 
+    border-radius: 5px;
+}
