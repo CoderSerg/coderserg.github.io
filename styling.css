@@ -3,7 +3,7 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     color: white;
 }
-#cat{
+img#cat{
     width: 275px; 
     position: absolute; 
     left: 200px; 
