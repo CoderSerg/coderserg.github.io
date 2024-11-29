@@ -1,5 +1,4 @@
 function showCat(){
-  var cat = document.getElementsByClassName("cat");
-
-  cat.style.opacity = 0;
+  var cat = document.getElementById("cat");
+  cat.style.opacity = '0';
 }
