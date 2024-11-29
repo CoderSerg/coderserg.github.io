@@ -1,3 +1,5 @@
-if(typeof window.orientation !== "undefined"){
-  document.getElementsByClassName('cat').remove();
+function showCat(){
+  var cat = document.getElementsByClassName("cat");
+
+  cat.style.opacity = 0;
 }
