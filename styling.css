@@ -18,3 +18,11 @@ button:hover{
     background-color: rgb(65, 65, 65);
     transform: translateY(3px);
 }
+
+.snippet{
+    background-color: rgb(50,50,50); 
+    width: 100px; 
+    border-radius: 8px; 
+    font-family: monospace; 
+    color: white;
+}
