@@ -5,6 +5,3 @@ function showCat(){
   bn.style.borderColor = 'lightgreen';
   bn.style.color = 'lightgreen';
 }
-
-var n = document.createElement('h1');
-n.innerHTML = 'this is a test!';
