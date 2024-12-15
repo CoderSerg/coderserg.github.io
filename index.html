@@ -23,8 +23,12 @@
     </p>
     <img id="cat" style="width: 275px; position: absolute; left: 200px; rotate: -13deg; border: 3px solid rgb(219, 177, 86); border-radius: 5px; opacity: 0; transition: opacity 1s;" src="catmeme.png">
     <button onclick="showCat()" id="sc">Show da cat</button> <br><br>
-    <button onclick="alert('This is a button')">Click me!</button>
-    <button onclick="navigator.clipboard.writeText('Hello World!')">Copy Text</button>
+    <button onclick="alert('This is a button')">Click me!</button> <br><br>
+    <button onclick="
+    navigator.clipboard.writeText('Hello World!');
+    document.getElementById('tc').style.borderColor = 'lightgreen';
+    document.getElementById('tc').style.color = 'lightgreen';
+    " id="tc">Copy Text</button>
     </center>
 </body>
 </html>
