@@ -7,7 +7,7 @@ function showCat(){
 }
 
 function AlertText(){
-  var TextToAlert = document.getElementById('inputText').Value;
+  var TextToAlert = document.getElementById('inputText').value;
   alert(TextToAlert);
   TextToAlert = "";
 }
