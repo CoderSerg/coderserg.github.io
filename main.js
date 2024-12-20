@@ -5,3 +5,9 @@ function showCat(){
   bn.style.borderColor = 'lightgreen';
   bn.style.color = 'lightgreen';
 }
+
+function AlertText(){
+  var TextToAlert = document.getElementById('inputText').Value;
+  alert(TextToAlert);
+  TextToAlert = "";
+}
