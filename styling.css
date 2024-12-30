@@ -17,6 +17,7 @@ button{
 button:hover{
     background-color: rgb(65, 65, 65);
     transform: translateY(3px);
+    border-color: lightgreen;
 }
 
 input{
@@ -25,7 +26,6 @@ input{
     color: white;
     border: 1px solid white;
     border-radius: 8px;
-    height: 8px;
 }
 
 input::placeholder{
