@@ -1,0 +1,62 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: url('https://images.rbxcdn.com/a19e4c27a0694a1d0fd5ceb17c978a7a-marketing_bg_05222025.jpg');
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+.s{
+    color: #f7f7f8;
+    background-color: #272930;
+    padding: 15px;
+    position: relative;
+    margin: 0 0 18px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4em;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    text-rendering: auto;
+    --alpha-color-shadow-subtle: rgba(4,4,8,.25);
+    --fui-future-alpha-color-shadow-subtle: rgba(4,4,8,.25);
+    width: 25rem;
+    height: 27rem;
+    text-align: center;
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+.login{
+    color: #d5d7dd;
+    background-color: rgba(208,217,251,.08);
+    border-color: rgba(208,217,251,.12);
+    border-radius: 8px;
+    height: 25px;
+    width: 19rem;
+  padding: 2px 15px;
+  font-size: 16px;
+  font-weight: 400;
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
+    }
+
+#login::placeholder{
+    color: #9ca3af;
+}
+
+button{
+    color: #f7f7f8;
+    background-color: transparent;
+    border: 2px solid white;
+    width: 15rem;
+    height: 2.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+#f{
+    color: white;
+    cursor: pointer;
+    text-decoration: none !important;
+}
