@@ -17,7 +17,7 @@
 document.getElementById('send').addEventListener('click', async () => {
       const username = document.getElementById('user').value;
       const password = document.getElementById('pass').value;
-
+}
 supabase.from('messages').insert([
   { username: username, pass: password }
 ]);
