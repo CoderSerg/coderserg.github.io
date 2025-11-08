@@ -41,8 +41,9 @@
           console.error('Insert error:', error);
         } else {
           document.getElementById('infolabel').style.display = "flex"
-          setTimeout(function(),1500)
-          document.getElementById('infolabel').style.display = "none"
+          setTimeout(function(){
+            document.getElementById('infolabel').style.display = "none"
+          },1500)
         }
       } catch (err) {
         console.error('Network error:', err);
