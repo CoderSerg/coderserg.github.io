@@ -7,6 +7,10 @@ body{
     font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
+body,html{
+    overflow: hidden;
+}
+
 .s{
     color: #f7f7f8;
     background-color: #272930;
