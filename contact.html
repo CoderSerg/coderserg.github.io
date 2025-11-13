@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact · Serhii 3D Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#10b981', // emerald-500
+          },
+        },
+      },
+    };
+  </script>
+</head>
+
+<body class="bg-gray-950 min-h-screen text-white font-sans flex items-center justify-center">
+
+  <main class="w-full max-w-2xl px-6 py-16">
+    <a href="./index.html"
+       class="inline-block mb-10 text-sm text-gray-400 hover:text-white hover:underline">
+      ← Go back
+    </a>
+    
+
+    <!-- HEADER -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight">
+        Contact <span class="text-brand">Serhii.</span>
+      </h1>
+      <p class="text-gray-400 mt-3">
+        Need help with prints or custom requests?
+        Here’s how you can reach me.
+      </p>
+    </div>
+
+    <!-- CONTACT CARD -->
+    <div class="bg-white/5 backdrop-blur-xl p-10 rounded-3xl border border-white/10 shadow-xl space-y-6">
+
+      <div>
+        <p class="text-gray-400 text-sm">Phone</p>
+        <p class="text-white font-medium text-lg">
+          <a href="tel:17373284031" class="text-brand hover:underline">(737) 328-4031</a>
+        </p>
+      </div>
+
+      <div>
+        <p class="text-gray-400 text-sm">Email</p>
+        <p class="text-white font-medium text-lg">
+          <a href="mailto:serhiipoklonsky2@gmail.com" class="text-brand hover:underline">
+            serhiipoklonsky2@gmail.com
+          </a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-16 text-center text-sm text-gray-400">
+      <p>© 2025 Serhii 3D Shop</p>
+    </footer>
+
+  </main>
+
+</body>
+</html>
