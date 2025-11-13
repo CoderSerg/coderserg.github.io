@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop – 3D Prints</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+            extend: {
+          colors: {
+            brand: '#10b981',
+          }
+            }
+          }
+        };
+      </script>
+    </head>
+
+    <body class="bg-gray-950 min-h-screen text-white font-sans">
+
+      <!-- HEADER -->
+      <header class="max-w-5xl mx-auto px-6 py-6 flex justify-between items-center">
+        <h1 class="text-2xl font-semibold">Shop</h1>
+
+        <a href="./index.html"
+           class="px-4 py-2 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition">
+          ← Back to Home
+        </a>
+      </header>
+
+      <!-- SHOP CONTAINER -->
+      <main class="max-w-5xl mx-auto px-6 py-10">
+
+        <h2 class="text-xl font-semibold mb-6">All Products</h2>
+
+        <!-- Shop Items Grid -->
+        <div id="shopItems" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      </main>
+
+      <!-- JS ITEM BUILDER -->
+      <script>
+        function addShopItem(name, price, image, link) {
+          const container = document.getElementById("shopItems");
+
+          const item = document.createElement("div");
+          item.className =
+            "bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-lg transition hover:scale-[1.02] hover:shadow-brand/20";
+
+          item.innerHTML = `
+            <img alt="" src="${image}" class="w-full h-40 object-cover rounded-xl mb-4 border border-white/10">
+
+            <h3 class="text-lg font-semibold">${name}</h3>
+            <p class="text-gray-400 text-sm mb-4">${price}$</p>
+
+            <a href="${link}" target="_blank"
+               class="inline-block bg-brand text-black font-semibold px-4 py-2 rounded-lg hover:bg-brand/80 transition">
+              Buy →
+            </a>
+          `;
+
+          container.appendChild(item);
+        }
+
+        // Example items — replace with your real ones:
+        addShopItem("Fidget Spinner", 1.25, "./images/fidgetspinner.png", "https://www.paypal.com/ncp/payment/JDDULBSP3A4XN");
+        addShopItem("Fidget Gyro Ring", 1.00, "./images/gyroringfidget.png", "https://www.paypal.com/ncp/payment/99836MVB6AZKA");
+        addShopItem("Door Unlocker", 1.50, "./images/unlocker.png", "https://www.paypal.com/ncp/payment/BT9X7R8B6A4GW")
+      </script>
+
+    </body>
+    </html>
