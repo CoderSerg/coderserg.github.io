@@ -1,39 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoderSerg</title>
-    <link rel="stylesheet" href="styling.css">
-    <link rel="icon" type="icon/x-image" href="https://cdn-icons-png.flaticon.com/512/7274/7274757.png">
-    <script src="main.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop 3D Prints</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#10b981', // emerald-500
+          },
+          keyframes: {
+            glowPulse: {
+              "0%":   { boxShadow: "0 0 20px rgba(16,185,129,0.2)" },
+              "50%":  { boxShadow: "0 0 40px rgba(16,185,129,0.6)" },
+              "100%": { boxShadow: "0 0 20px rgba(16,185,129,0.2)" }
+            }
+          },
+          animation: {
+            glowPulse: "glowPulse 6s ease-in-out infinite",
+          }
+        }
+      }
+    };
+  </script>
 </head>
-<body>
-    <center>
-<br>
-    <h1>Hi!</h1>
-    <p>
-    My name is Serhii. <br />
-    This is my website <br />
-    built using my
-    <a href="https://github.com/CoderSerg/coderserg.github.io" style="color:rgb(48, 151, 216);">Github <br />repository</a>.
-    You can get snippets of <br />code,
-    cool stuff, and other! <br />
-    Have fun!
+
+<body class="bg-gray-950 min-h-screen text-white font-sans">
+
+  <main class="flex-1">
+    <div class="max-w-5xl mx-auto px-6 py-14 lg:py-20">
+
+      <!-- HERO -->
+<div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+
+  <!-- LEFT SIDE (TEXT) -->
+  <div class="space-y-6 order-2 lg:order-1">
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+      Shop 3D prints,
+      <span class="text-brand"> simply.</span>
+    </h1>
+
+    <p class="text-gray-400 text-sm sm:text-base max-w-xl">
+      High-quality custom 3D printed models delivered fast.
+      Choose from many products or request your own print.
     </p>
-    <img id="cat" style="width: 275px; position: absolute; left: 200px; rotate: -13deg; border: 3px solid rgb(219, 177, 86); border-radius: 5px; opacity: 0; transition: opacity 1s;" src="catmeme.png">
-    <button onclick="showCat()" id="sc">Show da cat</button> <br><br>
-    <button onclick="alert('This is a button')">Click me!</button> <br><br>
-    <button onclick="
-    navigator.clipboard.writeText('Hello World!');
-    document.getElementById('tc').style.borderColor = 'lightgreen';
-    document.getElementById('tc').style.color = 'lightgreen';
-    " id="tc">Copy Text</button>
-    <br><br>
-    <input type="text" id="inputText" placeholder="Type something...">
-    <button onclick="AlertText()">Alert Text!</button>
-    <h1>😃</h1>
-    <h2>bye for now</h2>
-    </center>
+
+    <div class="flex flex-wrap gap-3">
+      <a href="./shop.html">
+      <button class="bg-brand text-black font-semibold px-6 py-3 rounded-lg
+                     hover:bg-brand/80 hover:scale-105 transition-all duration-200 shadow-lg shadow-emerald-500/30">
+        Shop
+      </button>
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE (ICON PANEL) -->
+  <div class="relative flex justify-center lg:justify-start order-1 lg:order-2">
+    <div class="w-[260px] bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl
+                shadow-2xl p-12 flex items-center justify-center animate-glowPulse">
+
+      <svg xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           class="w-32 h-32 text-brand drop-shadow-xl">
+        <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
+        <path d="M12 22V12"/>
+        <polyline points="3.29 7 12 12 20.71 7"/>
+        <path d="m7.5 4.27 9 5.15"/>
+      </svg>
+
+    </div>
+  </div>
+
+</div>
+
+
+      <!-- REVIEWS -->
+      <div class="mt-20">
+        <h2 class="text-2xl font-semibold mb-6">What customers say</h2>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10">
+            <p class="text-gray-300 text-sm">“Amazing detail quality. Better than Etsy sellers.”</p>
+            <p class="text-brand mt-3 text-xs">— Austin</p>
+          </div>
+
+          <div class="bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10">
+            <p class="text-gray-300 text-sm">“Arrived fast. Exactly what I requested.”</p>
+            <p class="text-brand mt-3 text-xs">— Lucas</p>
+          </div>
+
+          <div class="bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10">
+            <p class="text-gray-300 text-sm">“Perfect gift. Clean lines & smooth finish.”</p>
+            <p class="text-brand mt-3 text-xs">— Roman</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ABOUT THE PRINTER -->
+      <div class="mt-20">
+        <h2 class="text-2xl font-semibold mb-6">About the printer</h2>
+
+        <div class="bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10 shadow-xl">
+          <h3 class="text-xl font-semibold mb-4 text-brand">High-precision 3D printing</h3>
+
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Our prints are produced using a high-resolution FDM 3D printer with consistent dimensional
+            accuracy and clean detail. We use premium PLA to ensure smooth surfaces, strong structure,
+            and excellent color quality. Every print is inspected, cleaned, and finished by hand before shipping.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-6 mt-6 text-sm">
+            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+              <p class="text-gray-400">Printer model</p>
+              <p class="text-white font-medium">Bambu P1S</p>
+            </div>
+
+            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+              <p class="text-gray-400">Material</p>
+              <p class="text-white font-medium">PLA</p>
+            </div>
+
+            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+              <p class="text-gray-400">Print speed</p>
+              <p class="text-white font-medium">Standard & fast-print profiles</p>
+            </div>
+
+            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+              <p class="text-gray-400">Max build size</p>
+              <p class="text-white font-medium">256 × 256 × 256 mm</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- FOOTER -->
+      <footer class="mt-20 border-t border-white/10 pt-10 pb-6 text-sm text-gray-400">
+        <div class="flex flex-wrap justify-between">
+
+          <p>© 2025 Serhii 3D Prints</p>
+
+          <div class="flex gap-6">
+            <a href="./contact.html" class="hover:text-white">Contact</a>
+          </div>
+
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
 </body>
 </html>
