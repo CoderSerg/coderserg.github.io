@@ -1,169 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn — Serhii</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn — Cybersecurity</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { brand: "#10b981" }
+          colors: { brand: "#10b981" },
+          transitionProperty: {
+            'fade': 'opacity, transform'
+          }
         }
       }
     };
   </script>
 
   <style>
-    .code-block {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 1rem;
-      border-radius: .75rem;
-      font-family: monospace;
-      white-space: pre;
-      overflow-x: auto;
-      position: relative;
+    .fade-out {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .3s ease, transform .3s ease;
     }
+    .fade-in {
+      opacity: 1;
+      transform: translateY(0px);
+      transition: opacity .3s ease, transform .3s ease;
+    }
+  </style>
+</head>
 
-    .copy-btn {
-      position: absolute;
-        top: .5rem;
-        right: .5rem;
-        background: rgba(255,255,255,0.1);
-        padding: .25rem .5rem;
-        border-radius: .25rem;
-        font-size: .7rem;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body class="bg-gray-950 text-white flex">
+<body class="bg-gray-950 text-white">
 
-    <!-- OLD STYLE SIDEBAR -->
-    <aside class="w-60 bg-gray-900/50 border-r border-white/10 p-6 space-y-3">
-      <h2 class="text-lg font-semibold mb-4">📘 Lessons</h2>
+<div class="flex">
 
-      <button class="lesson-btn block text-left w-full hover:text-brand"
-              onclick="loadLesson('lesson1')">Lesson 1 — Intro</button>
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-gray-900/40 border-r border-white/10 p-6 space-y-6 min-h-screen">
+    <h2 class="text-lg font-semibold flex items-center gap-2">
+      <span class="w-2 h-2 bg-brand rounded-full"></span> Lessons
+    </h2>
 
-      <button class="lesson-btn block text-left w-full hover:text-brand"
-              onclick="loadLesson('lesson2')">Lesson 2 — Malware</button>
+    <nav id="lessonLinks" class="space-y-3 text-sm">
+      <button data-lesson="1" class="block text-left w-full text-white">Lesson 1 — Intro</button>
+      <button data-lesson="2" class="block text-left w-full text-gray-300 hover:text-white">Lesson 2 — Malware</button>
+      <button data-lesson="3" class="block text-left w-full text-gray-300 hover:text-white">Lesson 3 — Ethical Hacking</button>
+      <button data-lesson="4" class="block text-left w-full text-gray-300 hover:text-white">Lesson 4 — JavaScript Example</button>
+      <button data-lesson="5" class="block text-left w-full text-gray-300 hover:text-white">Lesson 5 — Linux Basics</button>
+    </nav>
+  </aside>
 
-      <button class="lesson-btn block text-left w-full hover:text-brand"
-              onclick="loadLesson('lesson3')">Lesson 3 — Ethical Hacking</button>
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-12">
+    <div id="lessonContent" class="fade-in">
 
-      <button class="lesson-btn block text-left w-full hover:text-brand"
-              onclick="loadLesson('lesson4')">Lesson 4 — JavaScript Example</button>
+      <!-- LESSON CONTENT WILL BE INSERTED HERE BY JS -->
 
-      <button class="lesson-btn block text-left w-full hover:text-brand"
-              onclick="loadLesson('lesson5')">Lesson 5 — Linux Basics</button>
-    </aside>
+    </div>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 p-10">
-      <div id="lesson-container" class="max-w-3xl mx-auto"></div>
-    </main>
+    <div class="flex justify-between mt-12 text-sm">
+      <button id="backBtn" class="text-brand hover:underline"></button>
+      <button id="nextBtn" class="text-brand hover:underline"></button>
+    </div>
+  </main>
 
-    <script>
-      const lessons = {
+</div>
 
-        lesson1: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 1 — What is Cybersecurity?</h1>
-          <p class="text-gray-300 mb-4">
-            Cybersecurity means protecting computers, systems, and personal data from attacks.
-            You’ll learn the basics of hacking, defense, and Linux as we continue.
-          </p>
+<script>
+  const lessons = {
+    1: {
+      title: "Lesson 1 — What is Cybersecurity?",
+      body: `
+        Cybersecurity means protecting computers, systems, and personal data from digital attacks.
+        You’ll learn the basics of hacking, defense, and Linux in future lessons.
+      `
+    },
+    2: {
+      title: "Lesson 2 — Malware Explained",
+      body: `
+        Malware includes viruses, worms, trojans, ransomware, and spyware. These programs are built
+        to damage systems or steal information.
+      `
+    },
+    3: {
+      title: "Lesson 3 — Ethical Hacking",
+      body: `
+        Ethical hacking means testing systems legally to find vulnerabilities before attackers do.
+        Tools include Nmap, Wireshark, and Metasploit.
+      `
+    },
+    4: {
+      title: "Lesson 4 — JavaScript Example",
+      body: `
+        JavaScript is used for websites, automation, and hacking tools.
+        Here is a simple example:
+        <div class="bg-gray-900/60 p-4 mt-4 rounded-lg border border-white/10 relative">
+          <button onclick="navigator.clipboard.writeText('console.log(\\'hi\\')')"
+                  class="absolute top-3 right-3 text-xs bg-brand/30 hover:bg-brand/50 px-2 py-1 rounded">
+            Copy
+          </button>
+          <pre class="text-sm text-gray-200">console.log("hi")</pre>
+        </div>
+      `
+    },
+    5: {
+      title: "Lesson 5 — Linux Basics",
+      body: `
+        Linux is a powerful OS used for hacking, servers, and cybersecurity labs.
+        Useful commands include <code>ls</code>, <code>cd</code>, <code>mkdir</code>, and more.
+      `
+    }
+  };
 
-          <div class="flex justify-between mt-10">
-            <span></span>
-            <button class="text-brand" onclick="loadLesson('lesson2')">Next →</button>
-          </div>
-        `,
+  let currentLesson = 1;
 
-        lesson2: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 2 — Malware Explained</h1>
-          <p class="text-gray-300 mb-4">
-            Malware includes viruses, worms, trojans, ransomware, and other harmful programs.
-          </p>
+  function renderLesson(num) {
+    const content = document.getElementById("lessonContent");
 
-          <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-  Malware = Bad software designed to harm computers.
-            </div>
+    // fade out
+    content.classList.remove("fade-in");
+    content.classList.add("fade-out");
 
-          <div class="flex justify-between mt-10">
-            <button class="text-brand" onclick="loadLesson('lesson1')">← Back</button>
-            <button class="text-brand" onclick="loadLesson('lesson3')">Next →</button>
-          </div>
-        `,
+    setTimeout(() => {
+      // Replace content
+      content.innerHTML = `
+        <h1 class="text-3xl font-bold mb-4">${lessons[num].title}</h1>
+        <p class="text-gray-300 max-w-2xl">${lessons[num].body}</p>
+      `;
 
-        lesson3: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 3 — What is Ethical Hacking?</h1>
-          <p class="text-gray-300 mb-4">
-            Ethical hackers use hacking skills for good — testing systems legally to improve security.
-          </p>
+      // fade in
+      content.classList.remove("fade-out");
+      content.classList.add("fade-in");
+    }, 300);
 
-          <div class="flex justify-between mt-10">
-            <button class="text-brand" onclick="loadLesson('lesson2')">← Back</button>
-            <button class="text-brand" onclick="loadLesson('lesson4')">Next →</button>
-          </div>
-        `,
+    currentLesson = num;
+    updateButtons();
+    updateSidebarHighlight();
+  }
 
-        lesson4: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 4 — JavaScript Testing Example</h1>
-          <p class="text-gray-300 mb-4">
-            Sometimes JavaScript is used for testing website input security.
-          </p>
+  function updateButtons() {
+    document.getElementById("backBtn").textContent =
+      currentLesson > 1 ? "← Back" : "";
 
-          <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-  console.log("hi");
-          </div>
+    document.getElementById("nextBtn").textContent =
+      currentLesson < 5 ? "Next →" : "";
+  }
 
-          <div class="flex justify-between mt-10">
-            <button class="text-brand" onclick="loadLesson('lesson3')">← Back</button>
-            <button class="text-brand" onclick="loadLesson('lesson5')">Next →</button>
-          </div>
-        `,
+  function updateSidebarHighlight() {
+    const links = document.querySelectorAll("#lessonLinks button");
+    links.forEach((btn) => {
+      btn.classList.remove("text-white");
+      btn.classList.add("text-gray-300");
+    });
+    const active = document.querySelector(`[data-lesson="${currentLesson}"]`);
+    active.classList.add("text-white");
+  }
 
-        lesson5: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 5 — Linux Basics</h1>
-          <p class="text-gray-300 mb-4">
-            The Linux terminal lets you control the entire system using commands.
-          </p>
+  // Sidebar click
+  document.querySelectorAll("#lessonLinks button").forEach(button => {
+    button.addEventListener("click", () => {
+      renderLesson(parseInt(button.dataset.lesson));
+    });
+  });
 
-          <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-  cd folder/
-  ls
-  pwd
-  mkdir newfolder
-          </div>
+  // Navigation buttons
+  document.getElementById("backBtn").addEventListener("click", () => {
+    if (currentLesson > 1) renderLesson(currentLesson - 1);
+  });
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    if (currentLesson < 5) renderLesson(currentLesson + 1);
+  });
 
-          <div class="flex justify-between mt-10">
-            <button class="text-brand" onclick="loadLesson('lesson4')">← Back</button>
-            <span></span>
-          </div>
-        `
-      };
+  // Load first lesson
+  renderLesson(1);
+</script>
 
-      function loadLesson(id) {
-        document.getElementById("lesson-container").innerHTML = lessons[id];
-      }
-
-      function copyCode(btn) {
-        const text = btn.parentElement.innerText.replace("Copy", "").trim();
-        navigator.clipboard.writeText(text);
-        btn.textContent = "Copied!";
-        setTimeout(() => btn.textContent = "Copy", 800);
-      }
-
-      loadLesson("lesson1"); // Default lesson
-    </script>
-
-  </body>
-  </html>
-  
+</body>
+</html>
