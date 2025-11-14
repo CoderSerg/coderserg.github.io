@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Learn — Cybersecurity</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn — Cybersecurity, Hacking & Linux</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
@@ -11,61 +11,71 @@
       theme: {
         extend: {
           colors: { brand: "#10b981" },
-          transitionProperty: {
-            'fade': 'opacity, transform'
-          }
-        }
-      }
+        },
+      },
     };
   </script>
 
   <style>
     .fade-out {
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity .3s ease, transform .3s ease;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
     .fade-in {
       opacity: 1;
       transform: translateY(0px);
-      transition: opacity .3s ease, transform .3s ease;
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
   </style>
 </head>
-
 <body class="bg-gray-950 text-white">
 
-<div class="flex">
+<div class="flex min-h-screen">
 
   <!-- SIDEBAR -->
-  <aside class="w-64 bg-gray-900/40 border-r border-white/10 p-6 space-y-6 min-h-screen">
-    <h2 class="text-lg font-semibold flex items-center gap-2">
-      <span class="w-2 h-2 bg-brand rounded-full"></span> Lessons
-    </h2>
+  <aside class="w-64 bg-gray-900/40 border-r border-white/10 p-6 space-y-6">
+    <div>
+      <h1 class="text-xl font-bold flex items-center gap-2">
+        <span class="w-2 h-2 bg-brand rounded-full"></span>
+        Learn
+      </h1>
+      <p class="text-xs text-gray-400 mt-1">Cybersecurity • Hacking • Linux • Coding</p>
+    </div>
 
-    <nav id="lessonLinks" class="space-y-3 text-sm">
-      <button data-lesson="1" class="block text-left w-full text-white">Lesson 1 — Intro</button>
-      <button data-lesson="2" class="block text-left w-full text-gray-300 hover:text-white">Lesson 2 — Malware</button>
-      <button data-lesson="3" class="block text-left w-full text-gray-300 hover:text-white">Lesson 3 — Ethical Hacking</button>
-      <button data-lesson="4" class="block text-left w-full text-gray-300 hover:text-white">Lesson 4 — JavaScript Example</button>
-      <button data-lesson="5" class="block text-left w-full text-gray-300 hover:text-white">Lesson 5 — Linux Basics</button>
+    <nav id="lessonLinks" class="space-y-2 text-sm">
+      <button data-lesson="1"  class="block w-full text-left text-white">1 — What is Cybersecurity?</button>
+      <button data-lesson="2"  class="block w-full text-left text-gray-300 hover:text-white">2 — Types of Attacks</button>
+      <button data-lesson="3"  class="block w-full text-left text-gray-300 hover:text-white">3 — Malware Basics</button>
+      <button data-lesson="4"  class="block w-full text-left text-gray-300 hover:text-white">4 — Social Engineering</button>
+      <button data-lesson="5"  class="block w-full text-left text-gray-300 hover:text-white">5 — Passwords & Auth</button>
+      <button data-lesson="6"  class="block w-full text-left text-gray-300 hover:text-white">6 — Networks 101</button>
+      <button data-lesson="7"  class="block w-full text-left text-gray-300 hover:text-white">7 — Ethical Hacking</button>
+      <button data-lesson="8"  class="block w-full text-left text-gray-300 hover:text-white">8 — Safe Lab Setup (Linux)</button>
+      <button data-lesson="9"  class="block w-full text-left text-gray-300 hover:text-white">9 — Linux Terminal Basics</button>
+      <button data-lesson="10" class="block w-full text-left text-gray-300 hover:text-white">10 — Files & Permissions</button>
+      <button data-lesson="11" class="block w-full text-left text-gray-300 hover:text-white">11 — Web Basics (HTTP)</button>
+      <button data-lesson="12" class="block w-full text-left text-gray-300 hover:text-white">12 — Input & XSS Overview</button>
+      <button data-lesson="13" class="block w-full text-left text-gray-300 hover:text-white">13 — SQL Injection Overview</button>
+      <button data-lesson="14" class="block w-full text-left text-gray-300 hover:text-white">14 — Logging & Monitoring</button>
+      <button data-lesson="15" class="block w-full text-left text-gray-300 hover:text-white">15 — JavaScript for Security</button>
+      <button data-lesson="16" class="block w-full text-left text-gray-300 hover:text-white">16 — Python for Automation</button>
+      <button data-lesson="17" class="block w-full text-left text-gray-300 hover:text-white">17 — OSINT Basics</button>
+      <button data-lesson="18" class="block w-full text-left text-gray-300 hover:text-white">18 — Personal Security & OPSEC</button>
+      <button data-lesson="19" class="block w-full text-left text-gray-300 hover:text-white">19 — CTFs & Practice</button>
+      <button data-lesson="20" class="block w-full text-left text-gray-300 hover:text-white">20 — Next Steps</button>
     </nav>
   </aside>
 
   <!-- MAIN CONTENT -->
-  <main class="flex-1 p-12">
-    <div id="lessonContent" class="fade-in">
+  <main class="flex-1 p-8 md:p-12">
+    <div id="lessonContent" class="max-w-3xl mx-auto fade-in"></div>
 
-      <!-- LESSON CONTENT WILL BE INSERTED HERE BY JS -->
-
-    </div>
-
-    <div class="flex justify-between mt-12 text-sm">
+    <div class="flex justify-between mt-10 text-sm">
       <button id="backBtn" class="text-brand hover:underline"></button>
       <button id="nextBtn" class="text-brand hover:underline"></button>
     </div>
   </main>
-
 </div>
 
 <script>
@@ -73,67 +83,401 @@
     1: {
       title: "Lesson 1 — What is Cybersecurity?",
       body: `
-        Cybersecurity means protecting computers, systems, and personal data from digital attacks.
-        You’ll learn the basics of hacking, defense, and Linux in future lessons.
+        <p class="text-gray-300 mb-4">
+          Cybersecurity is about protecting computers, phones, servers, and networks from attacks.
+          Instead of thinking “my device just works”, cybersecurity forces you to ask “what could break this?”
+        </p>
+        <p class="text-gray-300 mb-4">
+          Good security is a mix of technology (firewalls, encryption, updates), people (not falling for scams),
+          and processes (backups, policies, rules). If any of those are weak, attackers get an opening.
+        </p>
+        <p class="text-gray-300">
+          In this course you’ll see both sides: how attacks work at a high level and how to defend against them,
+          plus how Linux and coding fit into all of it.
+        </p>
       `
     },
     2: {
-      title: "Lesson 2 — Malware Explained",
+      title: "Lesson 2 — Types of Cyber Attacks",
       body: `
-        Malware includes viruses, worms, trojans, ransomware, and spyware. These programs are built
-        to damage systems or steal information.
+        <p class="text-gray-300 mb-4">
+          There are many kinds of attacks, but a few categories show up over and over again:
+          malware, social engineering, web attacks, network attacks, and account takeovers.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Malware is software designed to harm or spy. Social engineering targets the human brain:
+          phishing emails, fake login pages, “tech support” scammers, and so on. Web attacks try
+          to break websites by abusing how input is handled.
+        </p>
+        <p class="text-gray-300">
+          As you go through the lessons, try to classify each example: “Is this hitting the human,
+          the software, or the network?” That mindset is exactly how defenders think.
+        </p>
       `
     },
     3: {
-      title: "Lesson 3 — Ethical Hacking",
+      title: "Lesson 3 — Malware Basics",
       body: `
-        Ethical hacking means testing systems legally to find vulnerabilities before attackers do.
-        Tools include Nmap, Wireshark, and Metasploit.
+        <p class="text-gray-300 mb-4">
+          Malware includes viruses, worms, trojans, ransomware, spyware, and more. Each type has
+          the same core idea: run code on a system without the user really wanting it there.
+        </p>
+        <p class="text-gray-300 mb-4">
+          A virus usually attaches to another program or file. A worm spreads on its own across
+          networks. Trojans pretend to be helpful apps but hide bad behavior. Ransomware encrypts
+          files and demands payment to unlock them.
+        </p>
+        <p class="text-gray-300">
+          Modern operating systems, browsers, and antivirus tools are all built with malware in mind.
+          As you learn more, you’ll see that writing malware is much less interesting than
+          learning to spot and block it.
+        </p>
       `
     },
     4: {
-      title: "Lesson 4 — JavaScript Example",
+      title: "Lesson 4 — Social Engineering & Phishing",
       body: `
-        JavaScript is used for websites, automation, and hacking tools.
-        Here is a simple example:
-        <div class="bg-gray-900/60 p-4 mt-4 rounded-lg border border-white/10 relative">
-          <button onclick="navigator.clipboard.writeText('console.log(\\'hi\\')')"
-                  class="absolute top-3 right-3 text-xs bg-brand/30 hover:bg-brand/50 px-2 py-1 rounded">
-            Copy
-          </button>
-          <pre class="text-sm text-gray-200">console.log("hi")</pre>
-        </div>
+        <p class="text-gray-300 mb-4">
+          Social engineering is hacking people instead of machines. If an attacker can convince you
+          to share your password, click a link, or run a program, they don’t need a fancy exploit.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Phishing emails and fake login pages are a classic example. They often copy the design of
+          popular sites and pressure you with messages like “your account will be closed in 24 hours”.
+          The goal is to make you panic and act quickly.
+        </p>
+        <p class="text-gray-300">
+          Defending against this is mostly about habits: check the URL, be suspicious of “urgent”
+          messages, and never type your password into a page you reached from a random link.
+        </p>
       `
     },
     5: {
-      title: "Lesson 5 — Linux Basics",
+      title: "Lesson 5 — Passwords & Authentication",
       body: `
-        Linux is a powerful OS used for hacking, servers, and cybersecurity labs.
-        Useful commands include <code>ls</code>, <code>cd</code>, <code>mkdir</code>, and more.
+        <p class="text-gray-300 mb-4">
+          Passwords are still everywhere, even though they aren’t perfect. Attackers try to guess
+          weak passwords, reuse leaked ones, or steal them with phishing.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Good defense means using long, unique passwords for each site, ideally stored in a password
+          manager. Two-factor authentication (2FA) adds another layer: even if a password leaks, a code
+          from your phone is still required.
+        </p>
+        <p class="text-gray-300">
+          As you learn more about security, you’ll see other options like hardware keys and passkeys.
+          For now, the main idea is simple: one password should not unlock your entire digital life.
+        </p>
+      `
+    },
+    6: {
+      title: "Lesson 6 — Networks 101",
+      body: `
+        <p class="text-gray-300 mb-4">
+          When devices talk to each other, they do it over a network using IP addresses. You can think
+          of an IP as a street address for computers. Data is broken into small packets that move from
+          router to router until they reach the destination.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Most attacks that happen “over the internet” are really just packets with specific data that
+          trigger bugs, misconfigurations, or weak settings. Understanding networks helps you see
+          where firewalls, VPNs, and monitoring tools fit in.
+        </p>
+        <p class="text-gray-300">
+          Later, when you explore tools like ping, traceroute, or network scanners inside your Linux lab,
+          you’ll be looking directly at how machines find and talk to each other.
+        </p>
+      `
+    },
+    7: {
+      title: "Lesson 7 — What is Ethical Hacking?",
+      body: `
+        <p class="text-gray-300 mb-4">
+          Ethical hacking is using hacking skills for defense, not for chaos. Ethical hackers look
+          for weaknesses so they can be fixed before real attackers find them.
+        </p>
+        <p class="text-gray-300 mb-4">
+          The most important rule is permission. Testing systems you don’t own or control is not
+          ethical hacking — it’s just hacking. Real professionals always work with written agreements,
+          clear scopes, and strict rules.
+        </p>
+        <p class="text-gray-300">
+          In this course we stay on the safe side: your own lab, your own machines, and public
+          practice platforms that are designed for learning.
+        </p>
+      `
+    },
+    8: { // Linux lab setup
+      title: "Lesson 8 — Setting Up a Safe Lab (Linux)",
+      body: `
+        <p class="text-gray-300 mb-4">
+          Before experimenting with security tools, it’s best to have a safe playground: a lab that
+          you can break without hurting anything important. The easiest way is to use a virtual
+          machine (VM) instead of installing Linux directly on your main computer.
+        </p>
+        <p class="text-gray-300 mb-4">
+          You’ll need: a computer with enough RAM and disk space, a virtualization app
+          (like VirtualBox or similar), and a Linux ISO image from a trusted distribution’s
+          official website. Download the ISO, create a new VM, and attach the ISO as the
+          “virtual disc” to boot from.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Inside the VM you can install Linux by following the on-screen installer. When it asks
+          about disks, choose the virtual disk, not your real one. Because the VM is just a file,
+          you can make snapshots or delete it if something breaks.
+        </p>
+        <p class="text-gray-300">
+          Once the VM is running, you have a safe place to practice commands, install tools, and
+          explore security concepts without touching your main operating system.
+        </p>
+      `
+    },
+    9: {
+      title: "Lesson 9 — Linux Terminal Basics",
+      body: `
+        <p class="text-gray-300 mb-4">
+          The terminal is where Linux really shines. Instead of clicking through windows,
+          you type commands that tell the system exactly what to do.
+        </p>
+        <p class="text-gray-300 mb-4">
+          A few core commands:
+        </p>
+        <pre class="bg-gray-900/70 border border-white/10 rounded-lg p-3 text-sm text-gray-200 mb-4 overflow-x-auto">
+ls         # list files
+pwd        # print current directory
+cd folder  # change directory
+mkdir test # create a folder
+        </pre>
+        <p class="text-gray-300">
+          Being comfortable in the terminal makes every later lesson easier. Most security tools
+          and scripts you’ll use are built with the command line in mind.
+        </p>
+      `
+    },
+    10: {
+      title: "Lesson 10 — Files & Permissions in Linux",
+      body: `
+        <p class="text-gray-300 mb-4">
+          Linux tracks who owns each file and what they’re allowed to do with it. The three basic
+          actions are read, write, and execute — often shown as <code>r</code>, <code>w</code>,
+          and <code>x</code>.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Every file has permissions for three groups: the owner, the group, and others. Tools like
+          <code>ls -l</code> show a long view that includes permissions, owner, and group for each item.
+        </p>
+        <pre class="bg-gray-900/70 border border-white/10 rounded-lg p-3 text-sm text-gray-200 mb-4 overflow-x-auto">
+ls -l
+chmod 755 script.sh
+        </pre>
+        <p class="text-gray-300">
+          Understanding permissions is key for security. Misconfigured permissions can allow other
+          users on the system to read secrets or run files they shouldn’t.
+        </p>
+      `
+    },
+    11: {
+      title: "Lesson 11 — Web Basics (HTTP & Requests)",
+      body: `
+        <p class="text-gray-300 mb-4">
+          When you open a website, your browser sends an HTTP request to a server, and the server
+          replies with a response (HTML, CSS, JS, etc.). URLs, methods like GET/POST, and headers
+          are all part of that conversation.
+        </p>
+        <p class="text-gray-300 mb-4">
+          From a security view, HTTP is where a lot of interesting behavior happens: cookies store
+          session data, forms send user input, and APIs move data between services.
+        </p>
+        <p class="text-gray-300">
+          Tools like browser devtools or command-line clients let you inspect these requests.
+          Later, this is how you’ll test whether a site handles input safely or exposes too much info.
+        </p>
+      `
+    },
+    12: {
+      title: "Lesson 12 — Input Validation & XSS Overview",
+      body: `
+        <p class="text-gray-300 mb-4">
+          Any time a website accepts input — search boxes, comments, forms — it needs to check and
+          sanitize that input. When it doesn’t, attackers can inject data that changes how the page behaves.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Cross-Site Scripting (XSS) is a type of attack where untrusted input is treated as if it
+          were part of the page’s code. A secure site never directly trusts what users send; it escapes
+          or filters the data before showing it.
+        </p>
+        <p class="text-gray-300">
+          As a beginner, you don’t need to perform XSS attacks. It’s enough to understand that “user
+          input must be treated as dangerous” unless proven safe.
+        </p>
+      `
+    },
+    13: {
+      title: "Lesson 13 — SQL Injection Overview",
+      body: `
+        <p class="text-gray-300 mb-4">
+          Many websites use SQL databases to store users, posts, and other data. If an app combines
+          user input directly into SQL queries, attackers may be able to change what the database does.
+        </p>
+        <p class="text-gray-300 mb-4">
+          SQL injection (SQLi) is the name for that class of bug. Instead of seeing input as just
+          data, the database treats parts of it as commands.
+        </p>
+        <p class="text-gray-300">
+          The correct defense is parameterized queries and strict input handling. Modern frameworks
+          make this easier, but legacy apps and rushed projects sometimes still get it wrong.
+        </p>
+      `
+    },
+    14: {
+      title: "Lesson 14 — Logging & Monitoring",
+      body: `
+        <p class="text-gray-300 mb-4">
+          Even the best defenses can fail, so systems keep logs: records of logins, requests,
+          errors, and important actions. When something weird happens, logs are the first place
+          defenders look.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Good logging isn’t just “turn everything on”. Too little logging and you miss attacks,
+          too much and you drown in noise. Security teams often send logs to a central place to
+          search and alert on patterns.
+        </p>
+        <p class="text-gray-300">
+          As you practice, get used to checking logs when something fails or behaves strangely.
+          It’s one of the best habits you can build early.
+        </p>
+      `
+    },
+    15: {
+      title: "Lesson 15 — JavaScript for Security Work",
+      body: `
+        <p class="text-gray-300 mb-4">
+          JavaScript runs in the browser and is great for understanding how front-end behavior
+          works. Inspecting and writing small JS snippets can help you debug forms, test basic ideas,
+          and understand client-side validation.
+        </p>
+        <p class="text-gray-300 mb-4">
+          The simplest example is just printing to the console. Open DevTools, go to the Console tab,
+          and run:
+        </p>
+        <pre class="bg-gray-900/70 border border-white/10 rounded-lg p-3 text-sm text-gray-200 mb-4 overflow-x-auto">
+console.log("hi");
+        </pre>
+        <p class="text-gray-300">
+          JavaScript can do much more, but even this tiny step teaches you that the browser is not
+          a black box — you can inspect and interact with what it’s doing.
+        </p>
+      `
+    },
+    16: {
+      title: "Lesson 16 — Python for Automation",
+      body: `
+        <p class="text-gray-300 mb-4">
+          Python is insanely popular in security because it’s easy to read and has tons of libraries.
+          You can use it to automate boring tasks, parse logs, talk to APIs, or prototype tools.
+        </p>
+        <p class="text-gray-300 mb-4">
+          A tiny example:
+        </p>
+        <pre class="bg-gray-900/70 border border-white/10 rounded-lg p-3 text-sm text-gray-200 mb-4 overflow-x-auto">
+name = "Serhii"
+print("Hello,", name)
+        </pre>
+        <p class="text-gray-300">
+          As you get more comfortable, writing small Python scripts to explore data or test ideas
+          will feel natural — and it pairs perfectly with Linux.
+        </p>
+      `
+    },
+    17: {
+      title: "Lesson 17 — OSINT Basics",
+      body: `
+        <p class="text-gray-300 mb-4">
+          OSINT (Open-Source Intelligence) is about gathering information from public sources:
+          search engines, social media, public records, and more. It’s used in investigations,
+          security assessments, and sometimes by attackers to plan attacks.
+        </p>
+        <p class="text-gray-300 mb-4">
+          OSINT is powerful but also sensitive. Even though the data is public, you should still
+          think about ethics and privacy. Just because you can find something doesn’t mean you
+          should share it everywhere.
+        </p>
+        <p class="text-gray-300">
+          For now, it’s enough to know that OSINT exists and that many security tasks start with
+          simply understanding what is already exposed online.
+        </p>
+      `
+    },
+    18: {
+      title: "Lesson 18 — Personal Security & OPSEC",
+      body: `
+        <p class="text-gray-300 mb-4">
+          OPSEC (Operational Security) is a fancy way of saying “don’t accidentally leak information
+          about yourself or what you’re doing”. It matters in everyday life too.
+        </p>
+        <p class="text-gray-300 mb-4">
+          Examples: using strong unique passwords, thinking before you post screenshots (they can
+          show usernames, IDs, or locations), and being picky about which apps you install.
+        </p>
+        <p class="text-gray-300">
+          As you dig deeper into security and hacking topics, OPSEC becomes more important — it lets
+          you experiment and learn without revealing more about yourself than you intend.
+        </p>
+      `
+    },
+    19: {
+      title: "Lesson 19 — CTFs & Practice Platforms",
+      body: `
+        <p class="text-gray-300 mb-4">
+          CTFs (Capture the Flag) and practice platforms are safe environments built for learning.
+          They contain intentionally vulnerable challenges that you’re allowed to attack.
+        </p>
+        <p class="text-gray-300 mb-4">
+          These sites usually give you a “flag” string when you solve a challenge. You can work on
+          web, crypto, forensics, reversing, and more — all legally.
+        </p>
+        <p class="text-gray-300">
+          When you’re ready, CTFs are one of the best ways to turn theory into practical skill
+          without touching real-world systems.
+        </p>
+      `
+    },
+    20: {
+      title: "Lesson 20 — Recap & Next Steps",
+      body: `
+        <p class="text-gray-300 mb-4">
+          You’ve seen the big picture: cybersecurity basics, common attacks, ethical hacking mindset,
+          Linux fundamentals, web concepts, and a bit of coding with JavaScript and Python.
+        </p>
+        <p class="text-gray-300 mb-4">
+          The next step is practice: use your Linux lab, explore commands, read logs, write small
+          scripts, and try beginner-friendly CTFs or tutorials that are designed for learning.
+        </p>
+        <p class="text-gray-300">
+          Security is a huge field, but the habits you build now — curiosity, caution, and respect
+          for permissions — will carry you a long way.
+        </p>
       `
     }
   };
 
+  const totalLessons = 20;
   let currentLesson = 1;
 
   function renderLesson(num) {
     const content = document.getElementById("lessonContent");
-
-    // fade out
     content.classList.remove("fade-in");
     content.classList.add("fade-out");
 
     setTimeout(() => {
-      // Replace content
+      const lesson = lessons[num];
       content.innerHTML = `
-        <h1 class="text-3xl font-bold mb-4">${lessons[num].title}</h1>
-        <p class="text-gray-300 max-w-2xl">${lessons[num].body}</p>
+        <h2 class="text-3xl font-bold mb-5">${lesson.title}</h2>
+        ${lesson.body}
       `;
-
-      // fade in
       content.classList.remove("fade-out");
       content.classList.add("fade-in");
-    }, 300);
+    }, 200);
 
     currentLesson = num;
     updateButtons();
@@ -141,39 +485,47 @@
   }
 
   function updateButtons() {
-    document.getElementById("backBtn").textContent =
-      currentLesson > 1 ? "← Back" : "";
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
 
-    document.getElementById("nextBtn").textContent =
-      currentLesson < 5 ? "Next →" : "";
+    backBtn.textContent = currentLesson > 1 ? "← Back" : "";
+    nextBtn.textContent = currentLesson < totalLessons ? "Next →" : "";
+
+    backBtn.disabled = currentLesson === 1;
+    nextBtn.disabled = currentLesson === totalLessons;
+    backBtn.classList.toggle("opacity-40", currentLesson === 1);
+    nextBtn.classList.toggle("opacity-40", currentLesson === totalLessons);
   }
 
   function updateSidebarHighlight() {
-    const links = document.querySelectorAll("#lessonLinks button");
-    links.forEach((btn) => {
+    document.querySelectorAll("#lessonLinks button").forEach(btn => {
       btn.classList.remove("text-white");
       btn.classList.add("text-gray-300");
     });
-    const active = document.querySelector(`[data-lesson="${currentLesson}"]`);
-    active.classList.add("text-white");
+    const active = document.querySelector(`#lessonLinks button[data-lesson="${currentLesson}"]`);
+    if (active) {
+      active.classList.add("text-white");
+      active.classList.remove("text-gray-300");
+    }
   }
 
-  // Sidebar click
+  // Sidebar clicks
   document.querySelectorAll("#lessonLinks button").forEach(button => {
     button.addEventListener("click", () => {
-      renderLesson(parseInt(button.dataset.lesson));
+      const num = parseInt(button.dataset.lesson, 10);
+      renderLesson(num);
     });
   });
 
-  // Navigation buttons
+  // Back / Next
   document.getElementById("backBtn").addEventListener("click", () => {
     if (currentLesson > 1) renderLesson(currentLesson - 1);
   });
   document.getElementById("nextBtn").addEventListener("click", () => {
-    if (currentLesson < 5) renderLesson(currentLesson + 1);
+    if (currentLesson < totalLessons) renderLesson(currentLesson + 1);
   });
 
-  // Load first lesson
+  // Initial load
   renderLesson(1);
 </script>
 
