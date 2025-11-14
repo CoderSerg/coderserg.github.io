@@ -17,115 +17,105 @@
   </script>
 
   <style>
-      .code-block {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: .75rem;
-        padding: 1rem;
-        position: relative;
-        font-family: monospace;
-        white-space: pre-wrap;
-      }
+    .code-block {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 1rem;
+      border-radius: .75rem;
+      font-family: monospace;
+      white-space: pre;
+      overflow-x: auto;
+      position: relative;
+    }
 
-      .copy-btn {
-        position: absolute;
+    .copy-btn {
+      position: absolute;
         top: .5rem;
         right: .5rem;
         background: rgba(255,255,255,0.1);
         padding: .25rem .5rem;
         border-radius: .25rem;
-        font-size: .75rem;
+        font-size: .7rem;
         cursor: pointer;
       }
     </style>
   </head>
   <body class="bg-gray-950 text-white flex">
 
-    <!-- SIDEBAR -->
-    <aside class="w-64 bg-gray-900/50 border-r border-white/10 p-5 space-y-4">
-      <h2 class="text-lg font-semibold mb-4">📘 Learn</h2>
+    <!-- OLD STYLE SIDEBAR -->
+    <aside class="w-60 bg-gray-900/50 border-r border-white/10 p-6 space-y-3">
+      <h2 class="text-lg font-semibold mb-4">📘 Lessons</h2>
 
-      <p class="text-xs uppercase text-gray-400">Chapter 1 — Cybersecurity</p>
-      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson1')">Lesson 1 — What is Cybersecurity?</button>
-      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson2')">Lesson 2 — Threats & Malware</button>
+      <button class="lesson-btn block text-left w-full hover:text-brand"
+              onclick="loadLesson('lesson1')">Lesson 1 — Intro</button>
 
-      <p class="text-xs uppercase text-gray-400 mt-6">Chapter 2 — Hacking Fundamentals</p>
-      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson3')">Lesson 3 — Ethical Hacking</button>
-      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson4')">Lesson 4 — Basic JavaScript Attack Example</button>
+      <button class="lesson-btn block text-left w-full hover:text-brand"
+              onclick="loadLesson('lesson2')">Lesson 2 — Malware</button>
 
-      <p class="text-xs uppercase text-gray-400 mt-6">Chapter 3 — Linux Essentials</p>
-      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson5')">Lesson 5 — Linux Terminal Basics</button>
-      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson6')">Lesson 6 — File Permissions</button>
+      <button class="lesson-btn block text-left w-full hover:text-brand"
+              onclick="loadLesson('lesson3')">Lesson 3 — Ethical Hacking</button>
+
+      <button class="lesson-btn block text-left w-full hover:text-brand"
+              onclick="loadLesson('lesson4')">Lesson 4 — JavaScript Example</button>
+
+      <button class="lesson-btn block text-left w-full hover:text-brand"
+              onclick="loadLesson('lesson5')">Lesson 5 — Linux Basics</button>
     </aside>
 
-    <!-- MAIN LESSON DISPLAY -->
+    <!-- MAIN CONTENT -->
     <main class="flex-1 p-10">
       <div id="lesson-container" class="max-w-3xl mx-auto"></div>
     </main>
 
-    <!-- LESSON DATA -->
     <script>
       const lessons = {
 
         lesson1: `
           <h1 class="text-3xl font-bold mb-4">Lesson 1 — What is Cybersecurity?</h1>
           <p class="text-gray-300 mb-4">
-            Cybersecurity protects computers, networks, and data from unauthorized access.
-            It includes defense strategies, encryption, firewalls, and monitoring systems.
+            Cybersecurity means protecting computers, systems, and personal data from attacks.
+            You’ll learn the basics of hacking, defense, and Linux as we continue.
           </p>
-
-          <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-            Cybersecurity = Protecting computers from threats.
-          </div>
 
           <div class="flex justify-between mt-10">
             <span></span>
-            <button onclick="loadLesson('lesson2')" class="text-brand">Next →</button>
+            <button class="text-brand" onclick="loadLesson('lesson2')">Next →</button>
           </div>
         `,
 
         lesson2: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 2 — Threats & Malware</h1>
+          <h1 class="text-3xl font-bold mb-4">Lesson 2 — Malware Explained</h1>
           <p class="text-gray-300 mb-4">
-            Malware includes viruses, worms, trojans, ransomware, spyware, adware, and more.
-            Understanding malware helps you defend systems effectively.
+            Malware includes viruses, worms, trojans, ransomware, and other harmful programs.
           </p>
 
           <div class="code-block">
             <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-            Malware: software designed to harm or exploit devices.
-          </div>
+  Malware = Bad software designed to harm computers.
+            </div>
 
           <div class="flex justify-between mt-10">
-            <button onclick="loadLesson('lesson1')" class="text-brand">← Back</button>
-            <button onclick="loadLesson('lesson3')" class="text-brand">Next →</button>
+            <button class="text-brand" onclick="loadLesson('lesson1')">← Back</button>
+            <button class="text-brand" onclick="loadLesson('lesson3')">Next →</button>
           </div>
         `,
 
         lesson3: `
           <h1 class="text-3xl font-bold mb-4">Lesson 3 — What is Ethical Hacking?</h1>
           <p class="text-gray-300 mb-4">
-            Ethical hackers (white hats) find vulnerabilities to fix them, not exploit them.
-            They follow laws and permissions before testing systems.
+            Ethical hackers use hacking skills for good — testing systems legally to improve security.
           </p>
 
-          <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-            Ethical hacking = Using hacking skills legally to protect systems.
-          </div>
-
           <div class="flex justify-between mt-10">
-            <button onclick="loadLesson('lesson2')" class="text-brand">← Back</button>
-            <button onclick="loadLesson('lesson4')" class="text-brand">Next →</button>
+            <button class="text-brand" onclick="loadLesson('lesson2')">← Back</button>
+            <button class="text-brand" onclick="loadLesson('lesson4')">Next →</button>
           </div>
         `,
 
         lesson4: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 4 — Basic JavaScript Attack Example</h1>
+          <h1 class="text-3xl font-bold mb-4">Lesson 4 — JavaScript Testing Example</h1>
           <p class="text-gray-300 mb-4">
-            JavaScript can be used in security testing to demonstrate input sanitization issues.
-            Example: testing if input is executed as code (XSS testing).
+            Sometimes JavaScript is used for testing website input security.
           </p>
 
           <div class="code-block">
@@ -134,16 +124,15 @@
           </div>
 
           <div class="flex justify-between mt-10">
-            <button onclick="loadLesson('lesson3')" class="text-brand">← Back</button>
-            <button onclick="loadLesson('lesson5')" class="text-brand">Next →</button>
+            <button class="text-brand" onclick="loadLesson('lesson3')">← Back</button>
+            <button class="text-brand" onclick="loadLesson('lesson5')">Next →</button>
           </div>
-       `,
+        `,
 
         lesson5: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 5 — Linux Terminal Basics</h1>
+          <h1 class="text-3xl font-bold mb-4">Lesson 5 — Linux Basics</h1>
           <p class="text-gray-300 mb-4">
-            The Linux terminal lets you control your system using commands.
-            Here are basic navigation commands:
+            The Linux terminal lets you control the entire system using commands.
           </p>
 
           <div class="code-block">
@@ -155,26 +144,7 @@
           </div>
 
           <div class="flex justify-between mt-10">
-            <button onclick="loadLesson('lesson4')" class="text-brand">← Back</button>
-            <button onclick="loadLesson('lesson6')" class="text-brand">Next →</button>
-          </div>
-        `,
-
-        lesson6: `
-          <h1 class="text-3xl font-bold mb-4">Lesson 6 — Linux File Permissions</h1>
-          <p class="text-gray-300 mb-4">
-            Linux permissions use <strong>rwx</strong> (read, write, execute).
-            Every file belongs to a user and a group.
-          </p>
-
-          <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-  chmod 755 script.sh
-  ls -l
-          </div>
-
-          <div class="flex justify-between mt-10">
-            <button onclick="loadLesson('lesson5')" class="text-brand">← Back</button>
+            <button class="text-brand" onclick="loadLesson('lesson4')">← Back</button>
             <span></span>
           </div>
         `
@@ -185,15 +155,15 @@
       }
 
       function copyCode(btn) {
-        const code = btn.parentElement.textContent.replace("Copy", "").trim();
-        navigator.clipboard.writeText(code);
+        const text = btn.parentElement.innerText.replace("Copy", "").trim();
+        navigator.clipboard.writeText(text);
         btn.textContent = "Copied!";
-        setTimeout(() => btn.textContent = "Copy", 1000);
+        setTimeout(() => btn.textContent = "Copy", 800);
       }
 
-      // Load first lesson by default
-      loadLesson("lesson1");
+      loadLesson("lesson1"); // Default lesson
     </script>
+
   </body>
   </html>
   
