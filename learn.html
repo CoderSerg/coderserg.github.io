@@ -1,158 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Learn Cybersecurity</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn — Serhii</title>
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { brand: "#10b981" },
-        },
-      },
+          colors: { brand: "#10b981" }
+        }
+      }
     };
   </script>
-</head>
 
-<body class="bg-gray-950 text-white font-sans min-h-screen flex">
+  <style>
+      .code-block {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: .75rem;
+        padding: 1rem;
+        position: relative;
+        font-family: monospace;
+        white-space: pre-wrap;
+      }
 
-<!-- SIDEBAR -->
-<aside class="w-64 bg-gray-900/40 backdrop-blur-xl border-r border-white/10 hidden md:flex flex-col">
+      .copy-btn {
+        position: absolute;
+        top: .5rem;
+        right: .5rem;
+        background: rgba(255,255,255,0.1);
+        padding: .25rem .5rem;
+        border-radius: .25rem;
+        font-size: .75rem;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-950 text-white flex">
 
-  <div class="px-6 py-6 border-b border-white/10">
-    <h1 class="text-xl font-bold">Cyber Tutorials</h1>
-    <p class="text-gray-400 text-sm">By Serhii</p>
-  </div>
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-gray-900/50 border-r border-white/10 p-5 space-y-4">
+      <h2 class="text-lg font-semibold mb-4">📘 Learn</h2>
 
-  <nav class="flex-1 px-4 py-4 text-sm space-y-1">
-    <button onclick="openTab('intro')" id="tab-intro"
-      class="w-full text-left px-3 py-2 rounded-md bg-white/10 text-brand font-semibold">
-      Introduction
-    </button>
+      <p class="text-xs uppercase text-gray-400">Chapter 1 — Cybersecurity</p>
+      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson1')">Lesson 1 — What is Cybersecurity?</button>
+      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson2')">Lesson 2 — Threats & Malware</button>
 
-    <button onclick="openTab('lesson1')" id="tab-lesson1"
-      class="w-full text-left px-3 py-2 rounded-md text-gray-400 hover:bg-white/10 hover:text-white">
-      Lesson 1 — How Hackers Think
-    </button>
+      <p class="text-xs uppercase text-gray-400 mt-6">Chapter 2 — Hacking Fundamentals</p>
+      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson3')">Lesson 3 — Ethical Hacking</button>
+      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson4')">Lesson 4 — Basic JavaScript Attack Example</button>
 
-    <button onclick="openTab('lesson2')" id="tab-lesson2"
-      class="w-full text-left px-3 py-2 rounded-md text-gray-400 hover:bg-white/10 hover:text-white">
-      Lesson 2 — Safe Testing Environment
-    </button>
+      <p class="text-xs uppercase text-gray-400 mt-6">Chapter 3 — Linux Essentials</p>
+      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson5')">Lesson 5 — Linux Terminal Basics</button>
+      <button class="lesson-btn text-left w-full hover:text-brand" onclick="loadLesson('lesson6')">Lesson 6 — File Permissions</button>
+    </aside>
 
-    <button onclick="openTab('lesson3')" id="tab-lesson3"
-      class="w-full text-left px-3 py-2 rounded-md text-gray-400 hover:bg-white/10 hover:text-white">
-      Lesson 3 — Simple Attacks
-    </button>
-  </nav>
+    <!-- MAIN LESSON DISPLAY -->
+    <main class="flex-1 p-10">
+      <div id="lesson-container" class="max-w-3xl mx-auto"></div>
+    </main>
 
-</aside>
+    <!-- LESSON DATA -->
+    <script>
+      const lessons = {
 
+        lesson1: `
+          <h1 class="text-3xl font-bold mb-4">Lesson 1 — What is Cybersecurity?</h1>
+          <p class="text-gray-300 mb-4">
+            Cybersecurity protects computers, networks, and data from unauthorized access.
+            It includes defense strategies, encryption, firewalls, and monitoring systems.
+          </p>
 
-<!-- MAIN CONTENT -->
-<main class="flex-1 px-6 py-10 md:px-12">
-  <div class="max-w-3xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl p-8 rounded-3xl">
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            Cybersecurity = Protecting computers from threats.
+          </div>
 
-    <!-- INTRO TAB -->
-    <div class="tab-content" id="intro">
-      <h2 class="text-3xl font-bold mb-6">Introduction to Cybersecurity</h2>
+          <div class="flex justify-between mt-10">
+            <span></span>
+            <button onclick="loadLesson('lesson2')" class="text-brand">Next →</button>
+          </div>
+        `,
 
-      <p class="text-gray-300 leading-relaxed mb-6">
-        Welcome! This tutorial teaches you safe, legal cybersecurity. You’ll learn
-        how attackers think, how to stay protected, and how to test your own systems.
-      </p>
+        lesson2: `
+          <h1 class="text-3xl font-bold mb-4">Lesson 2 — Threats & Malware</h1>
+          <p class="text-gray-300 mb-4">
+            Malware includes viruses, worms, trojans, ransomware, spyware, adware, and more.
+            Understanding malware helps you defend systems effectively.
+          </p>
 
-      <p class="text-gray-300 leading-relaxed">
-        Use the sidebar to switch lessons. Each lesson appears instantly without loading a new page.
-      </p>
-    </div>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            Malware: software designed to harm or exploit devices.
+          </div>
 
+          <div class="flex justify-between mt-10">
+            <button onclick="loadLesson('lesson1')" class="text-brand">← Back</button>
+            <button onclick="loadLesson('lesson3')" class="text-brand">Next →</button>
+          </div>
+        `,
 
-    <!-- LESSON 1 -->
-    <div class="tab-content hidden" id="lesson1">
-      <h2 class="text-3xl font-bold mb-6">How Hackers Think</h2>
+        lesson3: `
+          <h1 class="text-3xl font-bold mb-4">Lesson 3 — What is Ethical Hacking?</h1>
+          <p class="text-gray-300 mb-4">
+            Ethical hackers (white hats) find vulnerabilities to fix them, not exploit them.
+            They follow laws and permissions before testing systems.
+          </p>
 
-      <p class="text-gray-300 leading-relaxed mb-6">
-        Hackers think differently from normal users. They look for:
-      </p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            Ethical hacking = Using hacking skills legally to protect systems.
+          </div>
 
-      <ul class="list-disc list-inside text-gray-300 space-y-2">
-        <li>Weak input fields</li>
-        <li>Bad passwords</li>
-        <li>Unprotected admin pages</li>
-        <li>Misconfigured servers</li>
-      </ul>
+          <div class="flex justify-between mt-10">
+            <button onclick="loadLesson('lesson2')" class="text-brand">← Back</button>
+            <button onclick="loadLesson('lesson4')" class="text-brand">Next →</button>
+          </div>
+        `,
 
-      <p class="mt-6 text-gray-300">
-        Learning the mindset helps you defend your own systems better.
-      </p>
-    </div>
+        lesson4: `
+          <h1 class="text-3xl font-bold mb-4">Lesson 4 — Basic JavaScript Attack Example</h1>
+          <p class="text-gray-300 mb-4">
+            JavaScript can be used in security testing to demonstrate input sanitization issues.
+            Example: testing if input is executed as code (XSS testing).
+          </p>
 
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+  console.log("hi");
+          </div>
 
-    <!-- LESSON 2 -->
-    <div class="tab-content hidden" id="lesson2">
-      <h2 class="text-3xl font-bold mb-6">Safe Testing Environment</h2>
+          <div class="flex justify-between mt-10">
+            <button onclick="loadLesson('lesson3')" class="text-brand">← Back</button>
+            <button onclick="loadLesson('lesson5')" class="text-brand">Next →</button>
+          </div>
+       `,
 
-      <p class="text-gray-300 leading-relaxed mb-6">
-        Ethical hackers always test inside a safe environment, such as:
-      </p>
+        lesson5: `
+          <h1 class="text-3xl font-bold mb-4">Lesson 5 — Linux Terminal Basics</h1>
+          <p class="text-gray-300 mb-4">
+            The Linux terminal lets you control your system using commands.
+            Here are basic navigation commands:
+          </p>
 
-      <ul class="list-disc list-inside text-gray-300 space-y-2">
-        <li>Virtual machines (VirtualBox, VMware)</li>
-        <li>Kali Linux or Parrot OS</li>
-        <li>DVWA (Damn Vulnerable Web App)</li>
-        <li>Localhost-only testing</li>
-      </ul>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+  cd folder/
+  ls
+  pwd
+  mkdir newfolder
+          </div>
 
-      <p class="mt-6 text-gray-300">
-        Never test on real websites or networks that you don’t own.
-      </p>
-    </div>
+          <div class="flex justify-between mt-10">
+            <button onclick="loadLesson('lesson4')" class="text-brand">← Back</button>
+            <button onclick="loadLesson('lesson6')" class="text-brand">Next →</button>
+          </div>
+        `,
 
+        lesson6: `
+          <h1 class="text-3xl font-bold mb-4">Lesson 6 — Linux File Permissions</h1>
+          <p class="text-gray-300 mb-4">
+            Linux permissions use <strong>rwx</strong> (read, write, execute).
+            Every file belongs to a user and a group.
+          </p>
 
-    <!-- LESSON 3 -->
-    <div class="tab-content hidden" id="lesson3">
-      <h2 class="text-3xl font-bold mb-6">Simple Attacks Explained</h2>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+  chmod 755 script.sh
+  ls -l
+          </div>
 
-      <p class="text-gray-300 leading-relaxed mb-6">
-        Here are basic examples hackers use — but ONLY in safe environments:
-      </p>
+          <div class="flex justify-between mt-10">
+            <button onclick="loadLesson('lesson5')" class="text-brand">← Back</button>
+            <span></span>
+          </div>
+        `
+      };
 
-      <ul class="list-disc list-inside text-gray-300 space-y-2">
-        <li>SQL Injection (like `' OR 1=1 --`)</li>
-        <li>XSS (Cross-Site Scripting)</li>
-        <li>Password brute forcing</li>
-        <li>Packet sniffing on your own network</li>
-      </ul>
+      function loadLesson(id) {
+        document.getElementById("lesson-container").innerHTML = lessons[id];
+      }
 
-      <p class="mt-6 text-gray-300">
-        More advanced examples will come in future lessons.
-      </p>
-    </div>
+      function copyCode(btn) {
+        const code = btn.parentElement.textContent.replace("Copy", "").trim();
+        navigator.clipboard.writeText(code);
+        btn.textContent = "Copied!";
+        setTimeout(() => btn.textContent = "Copy", 1000);
+      }
 
-  </div>
-</main>
-
-
-<!-- TAB SWITCH SCRIPT -->
-<script>
-function openTab(tabName) {
-  document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
-  document.getElementById(tabName).classList.remove("hidden");
-
-  document.querySelectorAll("aside button").forEach(btn => {
-    btn.classList.remove("bg-white/10", "text-brand", "font-semibold");
-    btn.classList.add("text-gray-400");
-  });
-
-  const active = document.getElementById("tab-" + tabName);
-  active.classList.add("bg-white/10", "text-brand", "font-semibold");
-  active.classList.remove("text-gray-400");
-}
-</script>
-
-</body>
-</html>
+      // Load first lesson by default
+      loadLesson("lesson1");
+    </script>
+  </body>
+  </html>
+  
