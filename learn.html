@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn Cybersecurity</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: "#10b981" },
+        },
+      },
+    };
+  </script>
+</head>
+
+<body class="bg-gray-950 text-white font-sans min-h-screen flex">
+
+<!-- SIDEBAR -->
+<aside class="w-64 bg-gray-900/40 backdrop-blur-xl border-r border-white/10 hidden md:flex flex-col">
+
+  <div class="px-6 py-6 border-b border-white/10">
+    <h1 class="text-xl font-bold">Cyber Tutorials</h1>
+    <p class="text-gray-400 text-sm">By Serhii</p>
+  </div>
+
+  <nav class="flex-1 px-4 py-4 text-sm space-y-1">
+    <button onclick="openTab('intro')" id="tab-intro"
+      class="w-full text-left px-3 py-2 rounded-md bg-white/10 text-brand font-semibold">
+      Introduction
+    </button>
+
+    <button onclick="openTab('lesson1')" id="tab-lesson1"
+      class="w-full text-left px-3 py-2 rounded-md text-gray-400 hover:bg-white/10 hover:text-white">
+      Lesson 1 — How Hackers Think
+    </button>
+
+    <button onclick="openTab('lesson2')" id="tab-lesson2"
+      class="w-full text-left px-3 py-2 rounded-md text-gray-400 hover:bg-white/10 hover:text-white">
+      Lesson 2 — Safe Testing Environment
+    </button>
+
+    <button onclick="openTab('lesson3')" id="tab-lesson3"
+      class="w-full text-left px-3 py-2 rounded-md text-gray-400 hover:bg-white/10 hover:text-white">
+      Lesson 3 — Simple Attacks
+    </button>
+  </nav>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+<main class="flex-1 px-6 py-10 md:px-12">
+  <div class="max-w-3xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl p-8 rounded-3xl">
+
+    <!-- INTRO TAB -->
+    <div class="tab-content" id="intro">
+      <h2 class="text-3xl font-bold mb-6">Introduction to Cybersecurity</h2>
+
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Welcome! This tutorial teaches you safe, legal cybersecurity. You’ll learn
+        how attackers think, how to stay protected, and how to test your own systems.
+      </p>
+
+      <p class="text-gray-300 leading-relaxed">
+        Use the sidebar to switch lessons. Each lesson appears instantly without loading a new page.
+      </p>
+    </div>
+
+
+    <!-- LESSON 1 -->
+    <div class="tab-content hidden" id="lesson1">
+      <h2 class="text-3xl font-bold mb-6">How Hackers Think</h2>
+
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Hackers think differently from normal users. They look for:
+      </p>
+
+      <ul class="list-disc list-inside text-gray-300 space-y-2">
+        <li>Weak input fields</li>
+        <li>Bad passwords</li>
+        <li>Unprotected admin pages</li>
+        <li>Misconfigured servers</li>
+      </ul>
+
+      <p class="mt-6 text-gray-300">
+        Learning the mindset helps you defend your own systems better.
+      </p>
+    </div>
+
+
+    <!-- LESSON 2 -->
+    <div class="tab-content hidden" id="lesson2">
+      <h2 class="text-3xl font-bold mb-6">Safe Testing Environment</h2>
+
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Ethical hackers always test inside a safe environment, such as:
+      </p>
+
+      <ul class="list-disc list-inside text-gray-300 space-y-2">
+        <li>Virtual machines (VirtualBox, VMware)</li>
+        <li>Kali Linux or Parrot OS</li>
+        <li>DVWA (Damn Vulnerable Web App)</li>
+        <li>Localhost-only testing</li>
+      </ul>
+
+      <p class="mt-6 text-gray-300">
+        Never test on real websites or networks that you don’t own.
+      </p>
+    </div>
+
+
+    <!-- LESSON 3 -->
+    <div class="tab-content hidden" id="lesson3">
+      <h2 class="text-3xl font-bold mb-6">Simple Attacks Explained</h2>
+
+      <p class="text-gray-300 leading-relaxed mb-6">
+        Here are basic examples hackers use — but ONLY in safe environments:
+      </p>
+
+      <ul class="list-disc list-inside text-gray-300 space-y-2">
+        <li>SQL Injection (like `' OR 1=1 --`)</li>
+        <li>XSS (Cross-Site Scripting)</li>
+        <li>Password brute forcing</li>
+        <li>Packet sniffing on your own network</li>
+      </ul>
+
+      <p class="mt-6 text-gray-300">
+        More advanced examples will come in future lessons.
+      </p>
+    </div>
+
+  </div>
+</main>
+
+
+<!-- TAB SWITCH SCRIPT -->
+<script>
+function openTab(tabName) {
+  document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+  document.getElementById(tabName).classList.remove("hidden");
+
+  document.querySelectorAll("aside button").forEach(btn => {
+    btn.classList.remove("bg-white/10", "text-brand", "font-semibold");
+    btn.classList.add("text-gray-400");
+  });
+
+  const active = document.getElementById("tab-" + tabName);
+  active.classList.add("bg-white/10", "text-brand", "font-semibold");
+  active.classList.remove("text-gray-400");
+}
+</script>
+
+</body>
+</html>
