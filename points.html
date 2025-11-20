@@ -62,9 +62,9 @@
     }
 
     async function loadLeaderboard() {
-      const { data } = await supabaseClient
+      const { data: leaderboard, error } = await supabase
         .from("points")
-        .select("points, user_id")
+        .select("points, profiles(full_name)")
         .order("points", { ascending: false })
         .limit(10);
 
@@ -75,7 +75,7 @@
         box.innerHTML += `
           <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl">
             <span class="text-brand font-bold mr-2">#${i + 1}</span>
-            <span class="text-gray-300">${row.user_id.slice(0, 6)}...</span>
+            <span>${row.profiles?.full_name || "Unknown"}</span>
             <span class="float-right font-bold">${row.points}</span>
           </div>`;
       });
