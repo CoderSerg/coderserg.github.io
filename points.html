@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Points</title>
-  <script src="https://cdn.tailwindcss.com"></script>
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -31,28 +31,29 @@
   </div>
 
   <div class="max-w-3xl mx-auto pt-24 px-6">
-
     <h1 class="text-3xl font-bold mb-6">Points</h1>
 
-    <!-- Leaderboard -->
     <h2 class="text-2xl font-bold mt-12 mb-4">Leaderboard</h2>
-
     <div id="leaderboard" class="space-y-3"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <!-- SUPABASE JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
   <script>
-    const supabaseUrl = "https://ixrcmespfkbvubxsaqvf.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
-    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+    const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
 
+    /* IMPORTANT: use _supabase so we don't break the global supabase object */
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    /* Load user points (top-right) */
     async function loadPoints() {
-      const { data: userData } = await supabaseClient.auth.getUser();
+      const { data: userData } = await _supabase.auth.getUser();
       const user = userData.user;
       if (!user) return;
 
-      const { data } = await supabaseClient
+      const { data } = await _supabase
         .from("points")
         .select("points")
         .eq("user_id", user.id)
@@ -61,27 +62,36 @@
       document.getElementById("points").textContent = data?.points ?? 0;
     }
 
+    /* Load leaderboard */
     async function loadLeaderboard() {
-      const { data: leaderboard, error } = await supabase
+      const box = document.getElementById("leaderboard");
+      box.innerHTML = "<div class='text-gray-500'>Loading...</div>";
+
+      const { data, error } = await _supabase
         .from("points")
         .select("points, profiles(full_name)")
         .order("points", { ascending: false })
         .limit(10);
 
-      const box = document.getElementById("leaderboard");
+      if (error) {
+        console.error(error);
+        box.innerHTML = "<div class='text-red-500'>Failed to load.</div>";
+        return;
+      }
+
       box.innerHTML = "";
 
       data.forEach((row, i) => {
         box.innerHTML += `
-          <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl">
-            <span class="text-brand font-bold mr-2">#${i + 1}</span>
+          <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
+            <span class="text-brand font-bold">#${i + 1}</span>
             <span>${row.profiles?.full_name || "Unknown"}</span>
-            <span class="float-right font-bold">${row.points}</span>
-          </div>`;
+            <span class="font-bold">${row.points}</span>
+          </div>
+        `;
       });
     }
 
-    // Init
     loadPoints();
     loadLeaderboard();
   </script>
