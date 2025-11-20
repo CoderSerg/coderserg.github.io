@@ -8,7 +8,7 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Your Tailwind config (same as index.html) -->
+  <!-- Match the site's Tailwind config -->
   <script>
     tailwind.config = {
       theme: {
@@ -30,13 +30,19 @@
       }
     };
   </script>
+
+  <style>
+    /* Prevent page flash while loading */
+    body { opacity: 0; transition: opacity 0.3s ease; }
+    body.ready { opacity: 1; }
+  </style>
 </head>
 
 <body class="bg-gray-950 min-h-screen text-white font-sans flex items-center justify-center">
 
   <div class="text-center space-y-6">
 
-    <!-- Panel matching your style (white/5, blur, border) -->
+    <!-- Panel matching your site -->
     <div class="bg-white/5 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 shadow-2xl max-w-sm mx-auto animate-glowPulse">
 
       <!-- Spinner -->
@@ -49,25 +55,36 @@
 
   </div>
 
-  <!-- Supabase SDK -->
+  <!-- Load Supabase FIRST -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js"></script>
 
-  <!-- Supabase login handler -->
+  <!-- THEN execute callback logic -->
   <script>
     const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
+    const SUPABASE_ANON_KEY = "YOUR_ANON_KEY_HERE";
 
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    document.body.classList.add("ready");
+
     (async () => {
-      const code = new URL(window.location.href).searchParams.get("code");
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get("code");
+
+      console.log("OAuth code received:", code);
 
       if (code) {
-        await supabase.auth.exchangeCodeForSession(code);
-        window.location.replace("/");  // redirect back home
+        try {
+          await supabase.auth.exchangeCodeForSession(code);
+          console.log("Session exchanged successfully.");
+        } catch (err) {
+          console.error("Error exchanging code:", err);
+        }
       }
+
+      // Redirect back home automatically
+      window.location.replace("https://coderserg.github.io/");
     })();
   </script>
-
 </body>
 </html>
