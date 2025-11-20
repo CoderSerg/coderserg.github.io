@@ -21,7 +21,7 @@
   <!-- TOP-RIGHT POINT COUNTER -->
   <div id="points-box"
        class="fixed top-4 right-4 bg-gray-800 border border-gray-700 px-4 py-2 rounded-xl flex items-center gap-2">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
       fill="none" stroke="currentColor" stroke-width="2"
       stroke-linecap="round" stroke-linejoin="round">
       <path d="M11.051 7.616a1 1 0 0 1 1.909.024l.737 1.452a1 1 0 0 0 .737.535l1.634.256a1 1 0 0 1 .588 1.806l-1.172 1.168a1 1 0 0 0-.282.866l.259 1.613a1 1 0 0 1-1.541 1.134l-1.465-.75a1 1 0 0 0-.912 0l-1.465.75a1 1 0 0 1-1.539-1.133l.258-1.613a1 1 0 0 0-.282-.867l-1.156-1.152a1 1 0 0 1 .572-1.822l1.633-.256a1 1 0 0 0 .737-.535z"/>
@@ -34,14 +34,6 @@
 
     <h1 class="text-3xl font-bold mb-6">Points</h1>
 
-    <!-- Daily reward button -->
-    <button id="reward-btn"
-      class="px-6 py-3 bg-brand text-black font-bold rounded-lg hover:bg-brand/80 transition">
-      Claim Daily +30
-    </button>
-
-    <p id="reward-status" class="mt-3 text-gray-400"></p>
-
     <!-- Leaderboard -->
     <h2 class="text-2xl font-bold mt-12 mb-4">Leaderboard</h2>
 
@@ -52,7 +44,7 @@
 
   <script>
     const supabaseUrl = "https://ixrcmespfkbvubxsaqvf.supabase.co";
-    const supabaseKey = "YOUR_ANON_KEY";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
     async function loadPoints() {
