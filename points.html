@@ -89,22 +89,6 @@
       });
     }
 
-    async function claimDaily() {
-      const token = (await supabaseClient.auth.getSession()).data.session?.access_token;
-      const res = await fetch(supabaseUrl + "/functions/v1/rewardDaily", {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      });
-
-      document.getElementById("reward-status").textContent = await res.text();
-      loadPoints();
-      loadLeaderboard();
-    }
-
-    document.getElementById("reward-btn").onclick = claimDaily;
-
     // Init
     loadPoints();
     loadLeaderboard();
