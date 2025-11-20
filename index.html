@@ -232,8 +232,11 @@
         userNameEl.textContent = user.user_metadata.full_name || user.email;
         loginBtn.classList.add("hidden");
         userNav.classList.remove("hidden");
+      } else {
+        loginBtn.classList.remove("hidden");
+        userNav.classList.add("hidden");
       }
-    });
+    });    
   </script>
 
 </body>
