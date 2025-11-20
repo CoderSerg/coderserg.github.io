@@ -6,34 +6,11 @@
   <title>Signing In…</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: "#10b981" },
-          keyframes: {
-            glowPulse: {
-              "0%":   { boxShadow: "0 0 20px rgba(16,185,129,0.2)" },
-              "50%":  { boxShadow: "0 0 40px rgba(16,185,129,0.6)" },
-              "100%": { boxShadow: "0 0 20px rgba(16,185,129,0.2)" }
-            }
-          },
-          animation: { glowPulse: "glowPulse 6s ease-in-out infinite" }
-        }
-      }
-    };
-  </script>
-
-  <style>
-    body { opacity: 0; transition: opacity .2s ease; }
-    body.ready { opacity: 1; }
-  </style>
 </head>
 
 <body class="bg-gray-950 min-h-screen text-white font-sans flex items-center justify-center">
 
-  <div class="bg-white/5 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 shadow-2xl max-w-sm mx-auto animate-glowPulse text-center">
+  <div class="bg-white/5 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 shadow-2xl max-w-sm mx-auto text-center">
     <div class="w-12 h-12 mx-auto border-4 border-gray-700 border-t-brand rounded-full animate-spin mb-6"></div>
     <h1 class="text-2xl font-semibold">Signing you in…</h1>
     <p class="text-gray-400 text-sm">Just a moment.</p>
@@ -43,20 +20,17 @@
 
   <script>
     const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
+    const SUPABASE_ANON_KEY = "YOUR_KEY";
 
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    document.body.classList.add("ready");
-
     (async () => {
-      const code = new URL(location.href).searchParams.get("code");
-      if (code) {
-        await _supabase.auth.exchangeCodeForSession(code);
-      }
-      location.replace("https://coderserg.github.io/");
+      // Let Supabase auto-handle the callback parameters
+      const { data, error } = await _supabase.auth.getSession();
+
+      // Regardless, redirect back home
+      window.location.replace("https://coderserg.github.io/");
     })();
   </script>
-
 </body>
 </html>
