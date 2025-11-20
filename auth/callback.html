@@ -5,17 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signing In…</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Match the site's Tailwind config -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            brand: '#10b981',
-          },
+          colors: { brand: "#10b981" },
           keyframes: {
             glowPulse: {
               "0%":   { boxShadow: "0 0 20px rgba(16,185,129,0.2)" },
@@ -23,68 +19,44 @@
               "100%": { boxShadow: "0 0 20px rgba(16,185,129,0.2)" }
             }
           },
-          animation: {
-            glowPulse: "glowPulse 6s ease-in-out infinite",
-          }
+          animation: { glowPulse: "glowPulse 6s ease-in-out infinite" }
         }
       }
     };
   </script>
 
   <style>
-    /* Prevent page flash while loading */
-    body { opacity: 0; transition: opacity 0.3s ease; }
+    body { opacity: 0; transition: opacity .2s ease; }
     body.ready { opacity: 1; }
   </style>
 </head>
 
 <body class="bg-gray-950 min-h-screen text-white font-sans flex items-center justify-center">
 
-  <div class="text-center space-y-6">
-
-    <!-- Panel matching your site -->
-    <div class="bg-white/5 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 shadow-2xl max-w-sm mx-auto animate-glowPulse">
-
-      <!-- Spinner -->
-      <div class="w-12 h-12 mx-auto border-4 border-gray-700 border-t-brand rounded-full animate-spin mb-6"></div>
-
-      <h1 class="text-2xl font-semibold">Signing you in…</h1>
-      <p class="text-gray-400 text-sm">Just a moment.</p>
-
-    </div>
-
+  <div class="bg-white/5 backdrop-blur-2xl p-10 rounded-3xl border border-white/10 shadow-2xl max-w-sm mx-auto animate-glowPulse text-center">
+    <div class="w-12 h-12 mx-auto border-4 border-gray-700 border-t-brand rounded-full animate-spin mb-6"></div>
+    <h1 class="text-2xl font-semibold">Signing you in…</h1>
+    <p class="text-gray-400 text-sm">Just a moment.</p>
   </div>
 
-  <!-- Load Supabase FIRST -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js"></script>
 
-  <!-- THEN execute callback logic -->
   <script>
     const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
     const SUPABASE_ANON_KEY = "YOUR_ANON_KEY_HERE";
 
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     document.body.classList.add("ready");
 
     (async () => {
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get("code");
-
-      console.log("OAuth code received:", code);
-
+      const code = new URL(location.href).searchParams.get("code");
       if (code) {
-        try {
-          await supabase.auth.exchangeCodeForSession(code);
-          console.log("Session exchanged successfully.");
-        } catch (err) {
-          console.error("Error exchanging code:", err);
-        }
+        await _supabase.auth.exchangeCodeForSession(code);
       }
-
-      // Redirect back home automatically
-      window.location.replace("https://coderserg.github.io/");
+      location.replace("https://coderserg.github.io/");
     })();
   </script>
+
 </body>
 </html>
