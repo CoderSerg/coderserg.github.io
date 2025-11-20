@@ -36,6 +36,33 @@
 
 <body class="bg-gray-950 min-h-screen text-white font-sans">
 
+  <!-- NAVBAR -->
+  <nav id="navbar" class="fixed top-0 left-0 w-full bg-gray-900/90 backdrop-blur-lg border-b border-white/10 z-50">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-end">
+
+      <!-- User info container -->
+      <div id="user-nav" class="hidden items-center gap-3 text-sm">
+
+        <!-- Username -->
+        <span id="user-name" class="text-gray-200 font-medium"></span>
+
+        <!-- Logout icon -->
+        <button onclick="logout()"
+          class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white transition">
+          <!-- Lucide logout icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+
   <main class="flex-1">
     <div class="max-w-5xl mx-auto px-6 py-14 lg:py-20">
 
@@ -173,6 +200,34 @@
 
     </div>
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js"></script>
+
+  <script>
+    const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function logout() {
+      await supabase.auth.signOut();
+      location.reload();
+    }
+
+    // Load user on page load
+    document.addEventListener("DOMContentLoaded", async () => {
+      const { data } = await supabase.auth.getUser();
+      const user = data.user;
+
+      const userNav = document.getElementById("user-nav");
+      const userNameEl = document.getElementById("user-name");
+
+      if (user) {
+        const name = user.user_metadata.full_name || user.email;
+        userNameEl.textContent = name;
+        userNav.classList.remove("hidden");
+      }
+    });
+  </script>
 
 </body>
 </html>
