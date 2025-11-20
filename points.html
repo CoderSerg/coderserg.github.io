@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Points</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: "#10b981" },
+          keyframes: {
+            glowPulse: {
+              "0%": { boxShadow: "0 0 20px rgba(16,185,129,0.2)" },
+              "50%": { boxShadow: "0 0 40px rgba(16,185,129,0.6)" },
+              "100%": { boxShadow: "0 0 20px rgba(16,185,129,0.2)" }
+            }
+          },
+          animation: { glowPulse: "glowPulse 6s ease-in-out infinite" }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="bg-gray-950 min-h-screen text-white font-sans">
+
+  <!-- ⭐ POINTS COUNTER (TOP RIGHT) -->
+  <div id="points-counter"
+       class="fixed top-4 right-4 flex items-center gap-2
+              bg-gray-900/70 backdrop-blur-lg border border-white/10
+              px-4 py-2 rounded-xl shadow-lg text-white text-sm">
+
+    <!-- Star Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+         class="lucide lucide-circle-star text-brand">
+      <path d="M11.051 7.616a1 1 0 0 1 1.909.024l.737 1.452a1 1 0 0 0 .737.535l1.634.256a1 1 0 0 1 .588 1.806l-1.172 1.168a1 1 0 0 0-.282.866l.259 1.613a1 1 0 0 1-1.541 1.134l-1.465-.75a1 1 0 0 0-.912 0l-1.465.75a1 1 0 0 1-1.539-1.133l.258-1.613a1 1 0 0 0-.282-.867l-1.156-1.152a1 1 0 0 1 .572-1.822l1.633-.256a1 1 0 0 0 .737-.535z"/>
+      <circle cx="12" cy="12" r="10"/>
+    </svg>
+
+    <span id="points-value" class="font-semibold text-brand text-lg">0</span>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex flex-col items-center justify-center h-screen text-center">
+
+    <h1 class="text-4xl font-bold mb-6">Points System</h1>
+    <p class="text-gray-400 mb-10">Click the button to claim +30 points.</p>
+
+    <button id="claim-btn"
+      class="px-6 py-3 bg-brand text-black font-semibold rounded-xl hover:bg-brand/80 transition shadow-lg">
+      Claim +30 Points
+    </button>
+
+    <p id="claim-status" class="text-gray-400 text-sm mt-5"></p>
+
+  </main>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js"></script>
+
+  <script>
+    const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
+
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    /* LOAD USER POINTS */
+    async function loadPoints() {
+      const pointsEl = document.getElementById("points-value");
+
+      const { data: session } = await _supabase.auth.getSession();
+      const user = session?.session?.user;
+
+      if (!user) {
+        pointsEl.textContent = "0";
+        return;
+      }
+
+      const { data: row } = await _supabase
+        .from("points")
+        .select("points")
+        .eq("user_id", user.id)
+        .single();
+
+      pointsEl.textContent = row?.points ?? 0;
+    }
+
+    /* CLAIM +30 POINTS */
+    async function claimPoints() {
+      const status = document.getElementById("claim-status");
+      status.textContent = "Claiming…";
+
+      const { data: session } = await _supabase.auth.getSession();
+      const token = session?.session?.access_token;
+      const user = session?.session?.user;
+
+      if (!user) {
+        status.textContent = "You must be logged in!";
+        return;
+      }
+
+      const res = await fetch(
+        "https://ixrcmespfkbvubxsaqvf.supabase.co/functions/v1/reward30",
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      status.textContent = await res.text();
+      loadPoints(); // refresh UI
+    }
+
+    document.getElementById("claim-btn").addEventListener("click", claimPoints);
+
+    document.addEventListener("DOMContentLoaded", loadPoints);
+  </script>
+
+</body>
+</html>
