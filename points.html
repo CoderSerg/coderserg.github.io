@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Points</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -18,7 +18,7 @@
 
 <body class="bg-gray-950 text-white min-h-screen">
 
-  <!-- TOP-RIGHT POINT COUNTER -->
+  <!-- POINTS COUNTER (top-right) -->
   <div id="points-box"
        class="fixed top-4 right-4 bg-gray-800 border border-gray-700 px-4 py-2 rounded-xl flex items-center gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -31,23 +31,47 @@
   </div>
 
   <div class="max-w-3xl mx-auto pt-24 px-6">
+
+    <!-- POINTS SECTION -->
     <h1 class="text-3xl font-bold mb-6">Points</h1>
 
-    <h2 class="text-2xl font-bold mt-12 mb-4">Leaderboard</h2>
-    <div id="leaderboard" class="space-y-3"></div>
+    <button onclick="claimPoints()"
+            class="bg-brand text-black font-semibold px-6 py-3 rounded-lg hover:bg-brand/80 transition">
+      Claim 30 Points
+    </button>
+
+    <!-- REWARDS SECTION -->
+    <h2 class="text-2xl font-bold mt-12 mb-4">Rewards</h2>
+
+    <div class="space-y-4">
+
+      <!-- Reward Item Example -->
+      <div class="bg-gray-800 border border-gray-700 p-4 rounded-xl flex items-center justify-between">
+        <div>
+          <p class="font-semibold">Cool Reward</p>
+          <p class="text-gray-400 text-sm">Costs 50 points</p>
+        </div>
+
+        <button onclick="reward1()"
+                class="bg-emerald-600 text-black px-4 py-2 rounded-lg hover:bg-emerald-500 transition">
+          Buy
+        </button>
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- SUPABASE JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
-    const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
+    const supabaseUrl = "https://ixrcmespfkbvubxsaqvf.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
 
-    /* IMPORTANT: use _supabase so we don't break the global supabase object */
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    /* Load user points (top-right) */
+    /* -------------------- LOAD POINTS -------------------- */
     async function loadPoints() {
       const { data: userData } = await _supabase.auth.getUser();
       const user = userData.user;
@@ -62,38 +86,68 @@
       document.getElementById("points").textContent = data?.points ?? 0;
     }
 
-    /* Load leaderboard */
-    async function loadLeaderboard() {
-      const box = document.getElementById("leaderboard");
-      box.innerHTML = "<div class='text-gray-500'>Loading...</div>";
+    /* -------------------- CLAIM 30 POINTS -------------------- */
+    async function claimPoints() {
+      const { data: userData } = await _supabase.auth.getUser();
+      const user = userData.user;
+      if (!user) return alert("Login first");
 
-      const { data, error } = await _supabase
-        .from("points")
-        .select("points, profiles(full_name)")
-        .order("points", { ascending: false })
-        .limit(10);
+      const token = userData.session.access_token;
 
-      if (error) {
-        console.error(error);
-        box.innerHTML = "<div class='text-red-500'>Failed to load.</div>";
-        return;
+      await fetch(
+        "https://ixrcmespfkbvubxsaqvf.supabase.co/functions/v1/reward30",
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      loadPoints();
+    }
+
+    /* -------------------- BUY REWARD -------------------- */
+    async function buyReward(cost, callback) {
+      const { data: userData } = await _supabase.auth.getUser();
+      const user = userData.user;
+      if (!user) return alert("Login first");
+
+      const token = userData.session.access_token;
+
+      const res = await fetch(
+        "https://ixrcmespfkbvubxsaqvf.supabase.co/functions/v1/buy_reward",
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ cost })
+        }
+      );
+
+      const json = await res.json();
+
+      if (json.ok) {
+        callback();
+        loadPoints();
+      } else {
+        alert("Not enough points");
       }
+    }
 
-      box.innerHTML = "";
-
-      data.forEach((row, i) => {
-        box.innerHTML += `
-          <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
-            <span class="text-brand font-bold">#${i + 1}</span>
-            <span>${row.profiles?.full_name || "Unknown"}</span>
-            <span class="font-bold">${row.points}</span>
-          </div>
-        `;
+    /* -------------------- REWARD EXAMPLE -------------------- */
+    function reward1() {
+      buyReward(50, () => {
+        console.log("Reward bought!");
+        alert("You bought the reward!");
       });
     }
 
+    /* -------------------- INIT -------------------- */
     loadPoints();
-    loadLeaderboard();
   </script>
 
 </body>
