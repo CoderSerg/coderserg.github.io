@@ -40,6 +40,13 @@
   <nav id="navbar" class="fixed top-0 left-0 w-full bg-gray-900/90 backdrop-blur-lg border-b border-white/10 z-50">
     <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-end">
 
+      <!-- LOGIN BUTTON -->
+      <button onclick="signInWithGoogle()"
+        id="login-btn"
+        class="px-4 py-2 bg-brand text-black font-semibold rounded-lg hover:bg-brand/80 transition mr-3">
+        Login
+      </button>
+
       <!-- User info container -->
       <div id="user-nav" class="hidden items-center gap-3 text-sm">
 
@@ -206,6 +213,7 @@
   <script>
     const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
+
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     async function logout() {
@@ -213,18 +221,36 @@
       location.reload();
     }
 
-    // Load user on page load
+    async function signInWithGoogle() {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: "https://coderserg.github.io/auth/callback.html"
+        }
+      });
+
+      if (error) console.error(error);
+      if (data?.url) window.location.href = data.url;
+    }
+
+    // Load user on page load (ONE time)
     document.addEventListener("DOMContentLoaded", async () => {
       const { data } = await supabase.auth.getUser();
       const user = data.user;
 
       const userNav = document.getElementById("user-nav");
       const userNameEl = document.getElementById("user-name");
+      const loginBtn = document.getElementById("login-btn");
 
       if (user) {
         const name = user.user_metadata.full_name || user.email;
+
+        // Show user info + logout
         userNameEl.textContent = name;
         userNav.classList.remove("hidden");
+
+        // Hide login button
+        loginBtn.classList.add("hidden");
       }
     });
   </script>
