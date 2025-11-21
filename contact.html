@@ -1,72 +1,80 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="High-quality custom 3D printed models delivered fast. Shop unique prints made by Serhii.">
-  <meta name="keywords" content="3D print, custom 3d printing, PLA, fidget toys, keychains, Serhii">
-  <meta name="author" content="Serhii">  
-  <title>Contact · Serhii 3D Shop</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Contact · Serhii</title>
+
+  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Tailwind Custom -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            brand: '#10b981', // emerald-500
-          },
+          colors: { brand: "#10b981" },
         },
       },
     };
   </script>
 </head>
 
-<body class="bg-gray-950 min-h-screen text-white font-sans flex items-center justify-center">
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
 
-  <main class="w-full max-w-2xl px-6 py-16">
-    <a href="./index.html"
-       class="inline-block mb-10 text-sm text-gray-400 hover:text-white hover:underline">
-      ← Go back
-    </a>
-    
+  <!-- TOP GRADIENT BLOB -->
+  <div aria-hidden="true"
+       class="absolute inset-x-0 top-0 h-[300px] blur-3xl opacity-30 pointer-events-none">
+    <div class="w-[40rem] mx-auto aspect-[1155/678] bg-gradient-to-tr from-emerald-500 to-emerald-300"></div>
+  </div>
 
-    <!-- HEADER -->
-    <div class="text-center mb-12">
-      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight">
-        Contact <span class="text-brand">Serhii.</span>
+  <main class="flex flex-1 items-center justify-center px-6 pt-32 pb-20 relative z-10">
+    <div class="w-full max-w-xl text-center">
+
+      <!-- Back -->
+      <a href="./index.html"
+         class="text-sm text-gray-400 hover:text-brand transition inline-flex items-center mb-10">
+        ← Back
+      </a>
+
+      <!-- Header -->
+      <h1 class="text-5xl sm:text-6xl font-bold tracking-tight">
+        Contact <span class="text-brand">Serhii</span>
       </h1>
-      <p class="text-gray-400 mt-3">
-        Need help with prints or tutorials?
-        Here’s how you can reach me.
+
+      <p class="text-gray-400 mt-4 text-lg">
+        Need help with prints, orders, or tutorials?
+        I got you.
       </p>
-    </div>
 
-    <!-- CONTACT CARD -->
-    <div class="bg-white/5 backdrop-blur-xl p-10 rounded-3xl border border-white/10 shadow-xl space-y-6">
+      <!-- Contact Card -->
+      <div class="mt-12 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl p-10 text-left space-y-8">
 
-      <div>
-        <p class="text-gray-400 text-sm">Phone</p>
-        <p class="text-white font-medium text-lg">
-          <a href="tel:17373284031" class="text-brand hover:underline">(737) 328-4031</a>
-        </p>
-      </div>
+        <div>
+          <p class="text-gray-400 text-sm">Phone</p>
+          <a href="tel:17373284031"
+             class="text-brand font-medium text-lg hover:underline">
+            (737) 328-4031
+          </a>
+        </div>
 
-      <div>
-        <p class="text-gray-400 text-sm">Email</p>
-        <p class="text-white font-medium text-lg">
-          <a href="mailto:serhiipoklonsky2@gmail.com" class="text-brand hover:underline">
+        <div>
+          <p class="text-gray-400 text-sm">Email</p>
+          <a href="mailto:serhiipoklonsky2@gmail.com"
+             class="text-brand font-medium text-lg hover:underline">
             serhiipoklonsky2@gmail.com
           </a>
-        </p>
+        </div>
+
       </div>
 
+      <!-- Footer -->
+      <footer class="mt-16 text-sm text-gray-400">
+        © 2025 Serhii
+      </footer>
     </div>
-    <!-- FOOTER -->
-    <footer class="mt-16 text-center text-sm text-gray-400">
-      <p>© 2025 Serhii 3D Prints</p>
-    </footer>
   </main>
 
 </body>
