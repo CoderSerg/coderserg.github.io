@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,31 +12,28 @@
 
   <title>Serhii</title>
 
-  <!-- TailwindCSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Flowbite CSS (includes neutral-* etc) -->
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
 
-  <!-- TailwindPlus Elements (required for menu) -->
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+  <!-- TailwindCSS CDN (v4 play) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
   <!-- Tailwind custom config -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { brand: "#10b981" },
-        },
-      },
-    };
-  </script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-brand: #10b981;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen">
-  <!-- NAV -->
-  <header class="absolute inset-x-0 top-0 z-50">
-    <nav aria-label="Global" class="flex items-center justify-between p-6 lg:px-8">
 
-      <!-- LOGO -->
-      <div class="flex lg:flex-1">
+  <!-- NAV -->
+  <header class="fixed inset-x-0 top-0 z-50 bg-gray-900/80 backdrop-blur border-b border-gray-800">
+    <nav aria-label="Global" class="mx-auto max-w-6xl flex items-center justify-between px-4 py-3 lg:px-8">
+
+      <!-- LEFT: LOGO + SIDEBAR TOGGLE (MOBILE) -->
+      <div class="flex items-center gap-2">
         <a href="/" class="-m-1.5 p-1.5 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand">
             <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
@@ -46,26 +43,29 @@
           </svg>
           <span class="font-bold text-lg">Serhii</span>
         </a>
-      </div>
 
-      <!-- MOBILE MENU BTN -->
-      <div class="flex lg:hidden">
-        <button command="show-modal" commandfor="mobile-menu"
-          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-200">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+        <!-- SIDEBAR TOGGLE (MOBILE) -->
+        <button
+          data-drawer-target="default-sidebar"
+          data-drawer-toggle="default-sidebar"
+          aria-controls="default-sidebar"
+          type="button"
+          class="text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base ms-2 text-sm p-2 focus:outline-none inline-flex sm:hidden"
+        >
+          <span class="sr-only">Open sidebar</span>
+          <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
           </svg>
         </button>
       </div>
 
-      <!-- DESKTOP NAV RIGHT SIDE -->
+      <!-- RIGHT: LOGIN / USER -->
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
 
         <!-- LOGIN BUTTON -->
         <button id="login-btn"
           onclick="signInWithGoogle()"
-          class="px-4 py-2 rounded-md bg-brand text-black font-semibold hover:bg-brand/80 transition">
+          class="px-4 py-2 rounded-md bg-brand text-black font-semibold hover:bg-emerald-400 transition">
           Login
         </button>
 
@@ -80,105 +80,156 @@
             </svg>
           </button>
         </div>
-
       </div>
     </nav>
-
-    <!-- MOBILE MENU -->
-    <el-dialog>
-      <dialog id="mobile-menu" class="backdrop:bg-transparent lg:hidden">
-        <div class="fixed inset-0">
-          <el-dialog-panel class="fixed inset-y-0 right-0 z-50 w-full sm:max-w-sm p-6 overflow-y-auto bg-gray-900 ring-1 ring-white/10">
-
-            <div class="flex items-center justify-between mb-6">
-              <span class="text-lg font-semibold">Menu</span>
-
-              <button command="close" commandfor="mobile-menu"
-                class="rounded-md p-2 text-gray-200">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M6 18 18 6M6 6l12 12"/>
-                </svg>
-              </button>
-            </div>
-
-            <!-- MOBILE LOGIN -->
-            <button id="m-login-btn"
-              onclick="signInWithGoogle()"
-              class="w-full py-3 rounded-lg bg-brand text-black font-semibold hover:bg-brand/80 transition">
-              Login
-            </button>
-
-            <!-- MOBILE USER INFO -->
-            <div id="m-user-nav" class="hidden mt-6 flex items-center justify-between">
-              <span id="m-user-name" class="text-gray-200"></span>
-              <button onclick="logout()" class="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700">
-                Logout
-              </button>
-            </div>
-
-          </el-dialog-panel>
-        </div>
-      </dialog>
-    </el-dialog>
-
   </header>
 
-  <!-- HERO -->
-  <div class="relative isolate px-6 pt-32 lg:px-8">
-
-    <!-- TOP BG BLOB -->
-    <div aria-hidden="true"
-      class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-      <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[40rem]
-        -translate-x-1/2 rotate-30 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
-        sm:left-[calc(50%-30rem)] sm:w-[70rem]">
-      </div>
+  <!-- FLOWBITE SIDEBAR -->
+  <aside id="default-sidebar"
+    class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0 pt-14"
+    aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
+      <ul class="space-y-2 font-medium">
+        <li>
+          <a href="/" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <svg class="w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z" />
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z" />
+            </svg>
+            <span class="ms-3">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="./learn.html" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8" />
+            </svg>
+            <span class="flex-1 ms-3 whitespace-nowrap">Learn</span>
+          </a>
+        </li>
+        <li>
+          <a href="./shop.html" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8" />
+            </svg>
+            <span class="flex-1 ms-3 whitespace-nowrap">Shop</span>
+          </a>
+        </li>
+        <li>
+          <a href="./contact.html" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+            <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8" />
+            </svg>
+            <span class="flex-1 ms-3 whitespace-nowrap">Contact</span>
+          </a>
+        </li>
+      </ul>
     </div>
+  </aside>
 
-    <!-- CONTENT -->
-    <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 text-center">
+  <!-- MAIN CONTENT (shifted when sidebar visible) -->
+  <main class="pt-20 sm:pt-24">
+    <div class="p-4 sm:ml-64">
 
-      <h1 class="text-5xl font-semibold tracking-tight sm:text-7xl">
-        Everything all in one.
-      </h1>
+      <!-- HERO -->
+      <section class="relative isolate px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 overflow-hidden rounded-3xl border border-gray-800 bg-gray-900/60">
 
-      <p class="mt-8 text-lg text-gray-400">
-        Learn cybersecurity, shop for items, done all here.
-      </p>
+        <!-- TOP BG BLOB -->
+        <div aria-hidden="true"
+          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+          <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[40rem]
+            -translate-x-1/2 rotate-30 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
+            sm:left-[calc(50%-30rem)] sm:w-[70rem]">
+          </div>
+        </div>
 
-      <div class="mt-10 flex items-center justify-center gap-x-6">
-        <!-- SHOP (Primary Button) -->
-        <a href="./shop.html"
-          class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-brand/80 shadow-lg">
-          Shop
-        </a>
+        <!-- CONTENT -->
+        <div class="mx-auto max-w-2xl py-20 sm:py-24 lg:py-28 text-center">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight">
+            Everything all in one.
+          </h1>
 
-        <!-- LEARN (Text Link like the example) -->
-        <a href="./learn.html"
-          class="text-sm font-semibold text-white hover:text-brand transition">
-          Learn <span aria-hidden="true">→</span>
-        </a>
-      </div>      
+          <p class="mt-6 text-lg text-gray-300">
+            Learn cybersecurity, shop for items, done all here.
+          </p>
+
+          <div class="mt-10 flex items-center justify-center gap-x-6">
+            <!-- SHOP (Primary Button) -->
+            <a href="./shop.html"
+              class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-emerald-400 shadow-lg">
+              Shop
+            </a>
+
+            <!-- LEARN (Text Link) -->
+            <a href="./learn.html"
+              class="text-sm font-semibold text-white hover:text-brand transition">
+              Learn <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- BOTTOM BG BLOB -->
+        <div aria-hidden="true"
+          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+          <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[40rem]
+            -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
+            sm:left-[calc(50%+36rem)] sm:w-[70rem]">
+          </div>
+        </div>
+      </section>
+
+      <!-- REVIEW SECTION -->
+      <section class="max-w-3xl mx-auto mt-16">
+        <h2 class="text-xl font-semibold mb-4">Review</h2>
+        <figure class="bg-neutral-primary-soft border border-default rounded-base p-6">
+          <blockquote class="text-xl italic font-semibold text-heading tracking-tight">
+            <svg class="w-9 h-9 text-heading mb-4" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+              viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 11V8a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1Zm0 0v2a4 4 0 0 1-4 4H5m14-6V8a1 1 0 0 0-1-1h-3a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1Zm0 0v2a4 4 0 0 1-4 4h-1" />
+            </svg>
+            <p>"Serhii test review"</p>
+          </blockquote>
+        </figure>
+      </section>
+
+      <!-- SPACER BEFORE FOOTER -->
+      <div class="h-16"></div>
+
+      <!-- FOOTER -->
+      <footer class="bg-neutral-primary-soft rounded-base shadow-xs border border-default mt-8">
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+          <span class="text-sm text-body sm:text-center">
+            © 2025 Serhii. All Rights Reserved.
+          </span>
+          <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
+            <li>
+              <a href="./contact.html" class="hover:underline">
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </footer>
 
     </div>
-
-    <!-- BOTTOM BG BLOB -->
-    <div aria-hidden="true"
-      class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
-      <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[40rem]
-        -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
-        sm:left-[calc(50%+36rem)] sm:w-[70rem]">
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Placeholder (you’ll add reviews later) -->
-  <div class="h-48"></div>
+  </main>
 
   <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js"></script>
+
+  <!-- Flowbite JS (for sidebar/drawer etc) -->
+  <script src="https://unpkg.com/flowbite@latest/dist/flowbite.bundle.js"></script>
 
   <script>
     const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
@@ -210,20 +261,14 @@
       const userNav = document.getElementById("user-nav");
       const userNameEl = document.getElementById("user-name");
 
-      const mLoginBtn = document.getElementById("m-login-btn");
-      const mUserNav = document.getElementById("m-user-nav");
-      const mUserNameEl = document.getElementById("m-user-name");
+      // (no separate mobile login UI here, sidebar is for nav only)
 
       if (user) {
-        loginBtn.classList.add("hidden");
-        mLoginBtn.classList.add("hidden");
+        if (loginBtn) loginBtn.classList.add("hidden");
+        if (userNav) userNav.classList.remove("hidden");
 
-        userNav.classList.remove("hidden");
-        mUserNav.classList.remove("hidden");
-
-        const name = user.user_metadata.full_name || user.email;
-        userNameEl.textContent = name;
-        mUserNameEl.textContent = name;
+        const name = user.user_metadata?.full_name || user.email;
+        if (userNameEl) userNameEl.textContent = name;
       }
     });
   </script>
