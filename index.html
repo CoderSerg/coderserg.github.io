@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,29 +12,28 @@
 
   <title>Serhii</title>
 
-  <!-- Flowbite CSS (includes neutral-* etc) -->
-  <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
-
-  <!-- TailwindCSS CDN (v4 play) -->
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Tailwind custom config -->
-  <style type="text/tailwindcss">
-    @theme {
-      --color-brand: #10b981;
-    }
-  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: "#10b981" },
+        },
+      },
+    };
+  </script>
 </head>
 
-<body class="bg-gray-900 text-white min-h-screen">
-
-  <!-- NAV -->
-  <header class="fixed inset-x-0 top-0 z-50 bg-gray-900/80 backdrop-blur border-b border-gray-800">
-    <nav aria-label="Global" class="mx-auto max-w-6xl flex items-center justify-between px-4 py-3 lg:px-8">
-
-      <!-- LEFT: LOGO + SIDEBAR TOGGLE (MOBILE) -->
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+  <!-- NAVBAR -->
+  <header class="fixed inset-x-0 top-0 z-50 bg-gray-900/90 backdrop-blur border-b border-white/10">
+    <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8 h-14" aria-label="Global">
+      <!-- Logo -->
       <div class="flex items-center gap-2">
-        <a href="/" class="-m-1.5 p-1.5 flex items-center gap-2">
+        <a href="/" class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand">
             <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
             <path d="M12 22V12"/>
@@ -43,37 +42,42 @@
           </svg>
           <span class="font-bold text-lg">Serhii</span>
         </a>
-
-        <!-- SIDEBAR TOGGLE (MOBILE) -->
-        <button
-          data-drawer-target="default-sidebar"
-          data-drawer-toggle="default-sidebar"
-          aria-controls="default-sidebar"
-          type="button"
-          class="text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base ms-2 text-sm p-2 focus:outline-none inline-flex sm:hidden"
-        >
-          <span class="sr-only">Open sidebar</span>
-          <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/>
-          </svg>
-        </button>
       </div>
 
-      <!-- RIGHT: LOGIN / USER -->
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-button"
+        type="button"
+        class="inline-flex items-center justify-center rounded-md p-2 text-gray-300 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-gray-900 lg:hidden"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg class="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h12" />
+        </svg>
+      </button>
 
-        <!-- LOGIN BUTTON -->
-        <button id="login-btn"
+      <!-- Desktop right side -->
+      <div class="hidden lg:flex lg:items-center lg:gap-4">
+        <!-- Login button (shown when logged out) -->
+        <button
+          id="login-btn"
           onclick="signInWithGoogle()"
-          class="px-4 py-2 rounded-md bg-brand text-black font-semibold hover:bg-emerald-400 transition">
+          class="px-4 py-2 rounded-md bg-brand text-black font-semibold hover:bg-brand/80 transition"
+        >
           Login
         </button>
 
-        <!-- USER INFO -->
-        <div id="user-nav" class="hidden flex items-center gap-4">
-          <span id="user-name" class="text-gray-200 text-sm"></span>
-          <button onclick="logout()" class="rounded-md p-2 bg-gray-800 hover:bg-gray-700 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- User info (shown when logged in) -->
+        <div id="user-nav" class="hidden flex items-center gap-3 text-sm">
+          <span id="user-name" class="text-gray-200"></span>
+          <button
+            onclick="logout()"
+            class="rounded-md p-2 bg-gray-800 hover:bg-gray-700 transition text-gray-200 hover:text-white"
+            title="Log out"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
               <polyline points="16 17 21 12 16 7"/>
               <line x1="21" y1="12" x2="9" y2="12"/>
@@ -82,154 +86,105 @@
         </div>
       </div>
     </nav>
+
+    <!-- Mobile menu panel -->
+    <div id="mobile-menu" class="lg:hidden hidden border-t border-white/10 bg-gray-900/95 backdrop-blur">
+      <div class="space-y-1 px-4 py-3">
+        <!-- Shop + Learn links for mobile -->
+        <a href="./shop.html" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-800">
+          Shop
+        </a>
+        <a href="./learn.html" class="block rounded-md px-3 py-2 text-base font-medium text-gray-200 hover:bg-gray-800">
+          Learn
+        </a>
+
+        <!-- Mobile login -->
+        <button
+          id="mobile-login"
+          onclick="signInWithGoogle()"
+          class="mt-2 w-full rounded-md bg-brand px-3 py-2 text-sm font-semibold text-black hover:bg-brand/80"
+        >
+          Login
+        </button>
+
+        <!-- Mobile user info (when logged in) -->
+        <div id="mobile-user" class="hidden mt-2 flex items-center justify-between rounded-md border border-white/10 px-3 py-2 text-sm">
+          <span id="mobile-user-name" class="text-gray-200 truncate"></span>
+          <button onclick="logout()" class="text-gray-300 hover:text-white text-xs">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <!-- FLOWBITE SIDEBAR -->
-  <aside id="default-sidebar"
-    class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0 pt-14"
-    aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
-      <ul class="space-y-2 font-medium">
-        <li>
-          <a href="/" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-            <svg class="w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z" />
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z" />
-            </svg>
-            <span class="ms-3">Dashboard</span>
+  <!-- MAIN -->
+  <main class="flex-1">
+    <!-- HERO -->
+    <div class="relative isolate px-6 pt-32 lg:px-8">
+
+      <!-- TOP BG BLOB -->
+      <div aria-hidden="true"
+        class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+        <div
+          class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[40rem]
+          -translate-x-1/2 rotate-30 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
+          sm:left-[calc(50%-30rem)] sm:w-[70rem]">
+        </div>
+      </div>
+
+      <!-- HERO CONTENT -->
+      <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 text-center">
+        <h1 class="text-5xl font-semibold tracking-tight sm:text-7xl">
+          Everything all in one.
+        </h1>
+
+        <p class="mt-8 text-lg text-gray-400">
+          Learn cybersecurity, shop for items, done all here.
+        </p>
+
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <!-- SHOP (primary) -->
+          <a href="./shop.html"
+            class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-brand/80 shadow-lg">
+            Shop
           </a>
-        </li>
-        <li>
-          <a href="./learn.html" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-            <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8" />
-            </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap">Learn</span>
+
+          <!-- LEARN (text link) -->
+          <a href="./learn.html"
+            class="text-sm font-semibold text-white hover:text-brand transition">
+            Learn <span aria-hidden="true">→</span>
           </a>
-        </li>
-        <li>
-          <a href="./shop.html" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-            <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8" />
-            </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap">Shop</span>
-          </a>
-        </li>
-        <li>
-          <a href="./contact.html" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-            <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8" />
-            </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap">Contact</span>
-          </a>
-        </li>
-      </ul>
+        </div>
+      </div>
+
+      <!-- BOTTOM BG BLOB -->
+      <div aria-hidden="true"
+        class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+        <div
+          class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[40rem]
+          -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
+          sm:left-[calc(50%+36rem)] sm:w-[70rem]">
+        </div>
+      </div>
     </div>
-  </aside>
 
-  <!-- MAIN CONTENT (shifted when sidebar visible) -->
-  <main class="pt-20 sm:pt-24">
-    <div class="p-4 sm:ml-64">
-
-      <!-- HERO -->
-      <section class="relative isolate px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 overflow-hidden rounded-3xl border border-gray-800 bg-gray-900/60">
-
-        <!-- TOP BG BLOB -->
-        <div aria-hidden="true"
-          class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-          <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[40rem]
-            -translate-x-1/2 rotate-30 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
-            sm:left-[calc(50%-30rem)] sm:w-[70rem]">
-          </div>
-        </div>
-
-        <!-- CONTENT -->
-        <div class="mx-auto max-w-2xl py-20 sm:py-24 lg:py-28 text-center">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight">
-            Everything all in one.
-          </h1>
-
-          <p class="mt-6 text-lg text-gray-300">
-            Learn cybersecurity, shop for items, done all here.
-          </p>
-
-          <div class="mt-10 flex items-center justify-center gap-x-6">
-            <!-- SHOP (Primary Button) -->
-            <a href="./shop.html"
-              class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-emerald-400 shadow-lg">
-              Shop
-            </a>
-
-            <!-- LEARN (Text Link) -->
-            <a href="./learn.html"
-              class="text-sm font-semibold text-white hover:text-brand transition">
-              Learn <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- BOTTOM BG BLOB -->
-        <div aria-hidden="true"
-          class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
-          <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[40rem]
-            -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
-            sm:left-[calc(50%+36rem)] sm:w-[70rem]">
-          </div>
-        </div>
-      </section>
-
-      <!-- REVIEW SECTION -->
-      <section class="max-w-3xl mx-auto mt-16">
-        <h2 class="text-xl font-semibold mb-4">Review</h2>
-        <figure class="bg-neutral-primary-soft border border-default rounded-base p-6">
-          <blockquote class="text-xl italic font-semibold text-heading tracking-tight">
-            <svg class="w-9 h-9 text-heading mb-4" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-              viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M10 11V8a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1Zm0 0v2a4 4 0 0 1-4 4H5m14-6V8a1 1 0 0 0-1-1h-3a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1Zm0 0v2a4 4 0 0 1-4 4h-1" />
-            </svg>
-            <p>"Serhii test review"</p>
-          </blockquote>
-        </figure>
-      </section>
-
-      <!-- SPACER BEFORE FOOTER -->
-      <div class="h-16"></div>
-
-      <!-- FOOTER -->
-      <footer class="bg-neutral-primary-soft rounded-base shadow-xs border border-default mt-8">
-        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-          <span class="text-sm text-body sm:text-center">
-            © 2025 Serhii. All Rights Reserved.
-          </span>
-          <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
-            <li>
-              <a href="./contact.html" class="hover:underline">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </div>
-      </footer>
-
-    </div>
+    <!-- Spacer where you can add sections later (reviews, products, whatever) -->
+    <div class="h-24"></div>
   </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-6 text-sm text-gray-400">
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+      <p>© 2025 Serhii</p>
+      <a href="./contact.html" class="hover:text-white">
+        Contact
+      </a>
+    </div>
+  </footer>
 
   <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js"></script>
-
-  <!-- Flowbite JS (for sidebar/drawer etc) -->
-  <script src="https://unpkg.com/flowbite@latest/dist/flowbite.bundle.js"></script>
 
   <script>
     const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
@@ -237,6 +192,7 @@
 
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // Auth actions
     async function signInWithGoogle() {
       const { data, error } = await _supabase.auth.signInWithOAuth({
         provider: "google",
@@ -253,7 +209,16 @@
       location.reload();
     }
 
+    // Simple mobile menu toggle
     document.addEventListener("DOMContentLoaded", async () => {
+      const mobileBtn = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      mobileBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      // Supabase user state
       const { data } = await _supabase.auth.getUser();
       const user = data.user;
 
@@ -261,14 +226,22 @@
       const userNav = document.getElementById("user-nav");
       const userNameEl = document.getElementById("user-name");
 
-      // (no separate mobile login UI here, sidebar is for nav only)
+      const mobileLogin = document.getElementById("mobile-login");
+      const mobileUser = document.getElementById("mobile-user");
+      const mobileUserName = document.getElementById("mobile-user-name");
 
       if (user) {
+        const name = user.user_metadata?.full_name || user.email || "User";
+
+        // Desktop
         if (loginBtn) loginBtn.classList.add("hidden");
         if (userNav) userNav.classList.remove("hidden");
-
-        const name = user.user_metadata?.full_name || user.email;
         if (userNameEl) userNameEl.textContent = name;
+
+        // Mobile
+        if (mobileLogin) mobileLogin.classList.add("hidden");
+        if (mobileUser) mobileUser.classList.remove("hidden");
+        if (mobileUserName) mobileUserName.textContent = name;
       }
     });
   </script>
