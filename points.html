@@ -14,98 +14,60 @@
       }
     };
   </script>
-
-  <style>
-    /* Fullscreen iframe container */
-    #gameOverlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: none;
-      z-index: 50;  /* iframe layer */
-    }
-
-    #gameFrame {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* Reward popup on top of iframe */
-    #rewardPopup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 60;  /* above iframe */
-      display: none;
-    }
-  </style>
 </head>
 
 <body class="bg-gray-950 text-white min-h-screen">
 
-  <!-- TOP-RIGHT POINT COUNTER -->
+  <!-- POINT COUNTER (Top Right) -->
   <div id="points-box"
-       class="fixed top-4 right-4 bg-gray-800 border border-gray-700 px-4 py-2 rounded-xl flex items-center gap-2 z-40">
-
-    <!-- Star icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+       class="fixed top-4 right-4 bg-gray-800 border border-gray-700 px-4 py-2 rounded-xl flex items-center gap-2 text-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
       fill="none" stroke="currentColor" stroke-width="2"
       stroke-linecap="round" stroke-linejoin="round">
       <path d="M11.051 7.616a1 1 0 0 1 1.909.024l.737 1.452a1 1 0 0 0 .737.535l1.634.256a1 1 0 0 1 .588 1.806l-1.172 1.168a1 1 0 0 0-.282.866l.259 1.613a1 1 0 0 1-1.541 1.134l-1.465-.75a1 1 0 0 0-.912 0l-1.465.75a1 1 0 0 1-1.539-1.133l.258-1.613a1 1 0 0 0-.282-.867l-1.156-1.152a1 1 0 0 1 .572-1.822l1.633-.256a1 1 0 0 0 .737-.535z"/>
       <circle cx="12" cy="12" r="10"/>
     </svg>
-
-    <span id="points" class="font-bold text-lg">0</span>
+    <span id="points" class="font-bold">0</span>
   </div>
 
-  <!-- CONTENT -->
-  <div class="max-w-3xl mx-auto pt-24 px-6 relative z-30">
-
+  <div class="max-w-3xl mx-auto pt-24 px-6">
     <h1 class="text-3xl font-bold mb-6">Points & Rewards</h1>
 
-    <button onclick="startSliceMaster()"
-            class="px-6 py-3 bg-brand text-black rounded-xl font-bold hover:bg-brand/80">
-      Play Slice Master (+150 pts)
+    <!-- Rewards Section -->
+    <h2 class="text-2xl font-semibold mt-10 mb-4">Waste Your Time</h2>
+
+    <p class="text-gray-400 mb-3">
+      Spend 10 seconds doing absolutely nothing and earn <span class="text-brand font-bold">+250 points</span>.
+    </p>
+
+    <button onclick="startWasteTime()"
+            class="px-6 py-3 bg-gray-800 border border-gray-600 rounded-xl hover:bg-gray-700 transition">
+      Waste your time!
     </button>
 
+    <!-- Fake Loading Overlay -->
+    <div id="waste-screen"
+         class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl flex flex-col items-center justify-center text-center z-50">
+
+      <div class="w-16 h-16 border-4 border-gray-600 border-t-brand rounded-full animate-spin mb-6"></div>
+
+      <h2 class="text-2xl font-semibold mb-2">Wasting your time…</h2>
+      <p class="text-gray-400 mb-4">Please wait <span id="timer">10</span> seconds.</p>
+    </div>
   </div>
 
-  <!-- GAME OVERLAY (IFRAME) -->
-  <div id="gameOverlay">
-    <iframe
-      id="gameFrame"
-      src="https://www.coolmathgames.com/0-slice-master/play"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <!-- REWARD POPUP -->
-  <div id="rewardPopup"
-       class="bg-gray-900 text-white p-6 rounded-2xl shadow-xl border border-gray-700 text-center w-72">
-    <h1 class="text-2xl font-bold mb-2">+150 Points!</h1>
-    <p class="text-gray-300 mb-4">Thanks for playing Slice Master 🎉</p>
-    <button onclick="closeReward()"
-            class="px-6 py-2 bg-brand text-black rounded-lg font-semibold">
-      OK
-    </button>
-  </div>
-
+  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
     const supabaseUrl = "https://ixrcmespfkbvubxsaqvf.supabase.co";
-    const supabaseKey =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
-
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
     const sb = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // --------------------------
-    // Load points
-    // --------------------------
+    /* Load current points */
     async function loadPoints() {
-      const user = (await sb.auth.getUser()).data.user;
+      const { data: userData } = await sb.auth.getUser();
+      const user = userData.user;
       if (!user) return;
 
       const { data } = await sb
@@ -117,46 +79,55 @@
       document.getElementById("points").textContent = data?.points ?? 0;
     }
 
-    loadPoints();
+    /* Reward purchase → call edge function */
+    async function buyReward(cost, rewardName) {
+      const { data: session } = await sb.auth.getSession();
+      const token = session?.session?.access_token;
+      if (!token) return;
 
-    // --------------------------
-    // Start the game
-    // --------------------------
-    function startSliceMaster() {
-      document.getElementById("gameOverlay").style.display = "block";
-
-      setTimeout(() => {
-        reward150();
-      }, 2 * 60 * 1000); // 2 minutes
-    }
-
-    // --------------------------
-    // Give 150 points
-    // --------------------------
-    async function reward150() {
-      const session = (await sb.auth.getSession()).data.session;
-      if (!session) return;
-
-      await fetch(
-        "https://ixrcmespfkbvubxsaqvf.supabase.co/functions/v1/reward30",
+      const res = await fetch(
+        "https://ixrcmespfkbvubxsaqvf.supabase.co/functions/v1/buy_reward",
         {
           method: "POST",
           headers: {
-            "Authorization": "Bearer " + session.access_token,
-            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify({ amount: 150 }),
+          body: JSON.stringify({
+            cost,
+            reward_name: rewardName
+          })
         }
       );
 
-      document.getElementById("gameOverlay").style.display = "none";
-      document.getElementById("rewardPopup").style.display = "block";
-      loadPoints();
+      if (res.ok) {
+        loadPoints();
+      }
     }
 
-    function closeReward() {
-      document.getElementById("rewardPopup").style.display = "none";
+    /* Waste your time reward */
+    function startWasteTime() {
+      const screen = document.getElementById("waste-screen");
+      const timer = document.getElementById("timer");
+
+      screen.classList.remove("hidden");
+
+      let timeLeft = 10;
+      timer.textContent = timeLeft;
+
+      const interval = setInterval(() => {
+        timeLeft--;
+        timer.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          screen.classList.add("hidden");
+          buyReward(250, "waste_time_10s");
+        }
+      }, 1000);
     }
+
+    loadPoints();
   </script>
 
 </body>
