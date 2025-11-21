@@ -1,216 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="High-quality custom 3D printed models delivered fast. Shop unique prints made by Serhii.">
-  <meta name="keywords" content="3D print, custom 3d printing, PLA, fidget toys, keychains, Serhii">
-  <meta name="google-site-verification" content="WnqRZaSz9r8kIwmoRkG3jvT2X68B3tIiqCAyFY2vo8g">
-  <meta name="author" content="Serhii">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="Learn cybersecurity, shop for items — all in one place." />
+  <meta name="keywords" content="cybersecurity, 3D print, shop, serhii, learn" />
+  <meta name="author" content="Serhii" />
+  <meta name="google-site-verification" content="WnqRZaSz9r8kIwmoRkG3jvT2X68B3tIiqCAyFY2vo8g" />
+
   <title>Serhii</title>
 
-  <!-- Tailwind CDN -->
+  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tailwind config -->
+  <!-- TailwindPlus Elements (required for menu) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+
+  <!-- Tailwind custom config -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { brand: '#10b981' },
-          keyframes: {
-            glowPulse: {
-              "0%":   { boxShadow: "0 0 20px rgba(16,185,129,0.2)" },
-              "50%":  { boxShadow: "0 0 40px rgba(16,185,129,0.6)" },
-              "100%": { boxShadow: "0 0 20px rgba(16,185,129,0.2)" }
-            }
-          },
-          animation: { glowPulse: "glowPulse 6s ease-in-out infinite" }
-        }
-      }
+          colors: { brand: "#10b981" },
+        },
+      },
     };
   </script>
 </head>
 
-<body class="bg-gray-950 min-h-screen text-white font-sans">
+<body class="bg-gray-900 text-white min-h-screen">
+  <!-- NAV -->
+  <header class="absolute inset-x-0 top-0 z-50">
+    <nav aria-label="Global" class="flex items-center justify-between p-6 lg:px-8">
 
-  <!-- NAVBAR -->
-  <nav class="fixed top-0 left-0 w-full bg-gray-900/90 backdrop-blur-lg border-b border-white/10 z-50">
-    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-end">
+      <!-- LOGO -->
+      <div class="flex lg:flex-1">
+        <a href="/" class="-m-1.5 p-1.5 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand">
+            <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
+            <path d="M12 22V12"/>
+            <polyline points="3.29 7 12 12 20.71 7"/>
+            <path d="m7.5 4.27 9 5.15"/>
+          </svg>
+          <span class="font-bold text-lg">Serhii</span>
+        </a>
+      </div>
 
-      <!-- LOGIN BUTTON -->
-      <button id="login-btn"
-        onclick="signInWithGoogle()"
-        class="px-4 py-2 bg-brand text-black font-semibold rounded-lg hover:bg-brand/80 transition mr-3">
-        Login
-      </button>
+      <!-- MOBILE MENU BTN -->
+      <div class="flex lg:hidden">
+        <button command="show-modal" commandfor="mobile-menu"
+          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-200">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+          </svg>
+        </button>
+      </div>
 
-      <!-- USER INFO -->
-<!-- USER INFO (hidden when logged out) -->
-<div id="user-nav" class="hidden flex items-center gap-3 text-sm">
-  <span id="user-name" class="text-gray-200 font-medium"></span>
+      <!-- DESKTOP NAV RIGHT SIDE -->
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
 
-  <button onclick="logout()"
-          class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white transition">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-      <polyline points="16 17 21 12 16 7"/>
-      <line x1="21" y1="12" x2="9" y2="12"/>
-    </svg>
-  </button>
-</div>
+        <!-- LOGIN BUTTON -->
+        <button id="login-btn"
+          onclick="signInWithGoogle()"
+          class="px-4 py-2 rounded-md bg-brand text-black font-semibold hover:bg-brand/80 transition">
+          Login
+        </button>
 
-
-    </div>
-  </nav>
-
-
-  <!-- MAIN CONTENT -->
-  <main class="flex-1">
-    <div class="max-w-5xl mx-auto px-6 py-14 lg:py-20">
-
-      <!-- HERO -->
-      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-
-        <div class="space-y-6 order-2 lg:order-1">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-            Learn cybersecurity, shop for items,
-            <span class="text-brand"> all in one.</span>
-          </h1>
-
-          <p class="text-gray-400 text-sm sm:text-base max-w-xl">
-            High-quality custom 3D printed models delivered fast.
-            Choose from many products or request your own print.
-            Learn cybersecurity easily with tutorials.
-          </p>
-
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a href="./learn.html"
-               class="bg-brand text-black font-semibold px-6 py-3 rounded-lg text-center
-                      hover:bg-brand/80 hover:scale-105 transition-all duration-200 shadow-lg shadow-emerald-500/30">
-              Learn
-            </a>
-
-            <a href="./shop.html"
-               class="bg-emerald-600 text-black font-semibold px-6 py-3 rounded-lg text-center
-                      hover:bg-emerald-500 hover:scale-105 transition-all duration-200 shadow-lg shadow-emerald-600/30">
-              Shop
-            </a>           
-          </div>
-        </div>
-
-        <!-- RIGHT IMAGE -->
-        <div class="relative flex justify-center lg:justify-start order-1 lg:order-2">
-          <div class="w-[260px] bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl
-                      shadow-2xl p-12 flex items-center justify-center animate-glowPulse">
-
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round"
-                 class="w-32 h-32 text-brand drop-shadow-xl">
-              <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
-              <path d="M12 22V12"/>
-              <polyline points="3.29 7 12 12 20.71 7"/>
-              <path d="m7.5 4.27 9 5.15"/>
+        <!-- USER INFO -->
+        <div id="user-nav" class="hidden flex items-center gap-4">
+          <span id="user-name" class="text-gray-200 text-sm"></span>
+          <button onclick="logout()" class="rounded-md p-2 bg-gray-800 hover:bg-gray-700 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
             </svg>
-
-          </div>
+          </button>
         </div>
 
       </div>
+    </nav>
 
-      <!-- REVIEWS -->
-      <div class="mt-20">
-        <h2 class="text-2xl font-semibold mb-6">What customers say</h2>
+    <!-- MOBILE MENU -->
+    <el-dialog>
+      <dialog id="mobile-menu" class="backdrop:bg-transparent lg:hidden">
+        <div class="fixed inset-0">
+          <el-dialog-panel class="fixed inset-y-0 right-0 z-50 w-full sm:max-w-sm p-6 overflow-y-auto bg-gray-900 ring-1 ring-white/10">
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10">
-            <p class="text-gray-300 text-sm">“Amazing detail quality. Better than Etsy sellers.”</p>
-            <p class="text-brand mt-3 text-xs">— Austin</p>
-          </div>
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-lg font-semibold">Menu</span>
 
-          <div class="bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10">
-            <p class="text-gray-300 text-sm">“Arrived fast. Exactly what I requested.”</p>
-            <p class="text-brand mt-3 text-xs">— Lucas</p>
-          </div>
+              <button command="close" commandfor="mobile-menu"
+                class="rounded-md p-2 text-gray-200">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M6 18 18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
 
-          <div class="bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10">
-            <p class="text-gray-300 text-sm">“Perfect gift. Clean lines & smooth finish.”</p>
-            <p class="text-brand mt-3 text-xs">— Roman</p>
-          </div>
+            <!-- MOBILE LOGIN -->
+            <button id="m-login-btn"
+              onclick="signInWithGoogle()"
+              class="w-full py-3 rounded-lg bg-brand text-black font-semibold hover:bg-brand/80 transition">
+              Login
+            </button>
+
+            <!-- MOBILE USER INFO -->
+            <div id="m-user-nav" class="hidden mt-6 flex items-center justify-between">
+              <span id="m-user-name" class="text-gray-200"></span>
+              <button onclick="logout()" class="px-4 py-2 bg-gray-800 rounded-md hover:bg-gray-700">
+                Logout
+              </button>
+            </div>
+
+          </el-dialog-panel>
         </div>
+      </dialog>
+    </el-dialog>
+
+  </header>
+
+  <!-- HERO -->
+  <div class="relative isolate px-6 pt-32 lg:px-8">
+
+    <!-- TOP BG BLOB -->
+    <div aria-hidden="true"
+      class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+      <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[40rem]
+        -translate-x-1/2 rotate-30 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
+        sm:left-[calc(50%-30rem)] sm:w-[70rem]">
       </div>
+    </div>
 
-      <!-- PRINTER INFO -->
-      <div class="mt-20">
-        <h2 class="text-2xl font-semibold mb-6">About the printer</h2>
+    <!-- CONTENT -->
+    <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 text-center">
 
-        <div class="bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10 shadow-xl">
+      <h1 class="text-5xl font-semibold tracking-tight sm:text-7xl">
+        Everything all in one.
+      </h1>
 
-          <h3 class="text-xl font-semibold mb-4 text-brand">High-precision 3D printing</h3>
+      <p class="mt-8 text-lg text-gray-400">
+        Learn cybersecurity, shop for items, done all here.
+      </p>
 
-          <p class="text-gray-300 text-sm leading-relaxed">
-            Our prints are produced using a high-resolution FDM 3D printer with consistent dimensional
-            accuracy and clean detail. We use premium PLA to ensure smooth surfaces, strong structure,
-            and excellent color quality. Every print is inspected, cleaned, and finished by hand before shipping.
-          </p>
+      <div class="mt-10 flex items-center justify-center gap-x-6">
+        <a href="./learn.html"
+          class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-brand/80 shadow-lg">
+          Learn
+        </a>
 
-          <div class="grid sm:grid-cols-2 gap-6 mt-6 text-sm">
-            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-              <p class="text-gray-400">Printer model</p>
-              <p class="text-white font-medium">Bambu P1S</p>
-            </div>
-
-            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-              <p class="text-gray-400">Material</p>
-              <p class="text-white font-medium">PLA</p>
-            </div>
-
-            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-              <p class="text-gray-400">Print speed</p>
-              <p class="text-white font-medium">Standard & fast-print profiles</p>
-            </div>
-
-            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-              <p class="text-gray-400">Max build size</p>
-              <p class="text-white font-medium">256 × 256 × 256 mm</p>
-            </div>
-          </div>
-        </div>
+        <a href="./shop.html"
+          class="rounded-md bg-emerald-600 px-6 py-3 text-sm font-semibold text-black hover:bg-emerald-500 shadow-lg">
+          Shop
+        </a>
       </div>
-
-      <!-- FOOTER -->
-      <footer class="mt-20 border-t border-white/10 pt-10 pb-6 text-sm text-gray-400">
-        <div class="flex flex-wrap justify-between">
-          <p>© 2025 Serhii</p>
-          <div class="flex gap-6">
-            <a href="./contact.html" class="hover:text-white">Contact</a>
-          </div>
-        </div>
-      </footer>
 
     </div>
-  </main>
 
+    <!-- BOTTOM BG BLOB -->
+    <div aria-hidden="true"
+      class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+      <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[40rem]
+        -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
+        sm:left-[calc(50%+36rem)] sm:w-[70rem]">
+      </div>
+    </div>
 
-  <!-- SUPABASE SCRIPT -->
+  </div>
+
+  <!-- Placeholder (you’ll add reviews later) -->
+  <div class="h-48"></div>
+
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js"></script>
 
   <script>
     const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
 
-    // FIXED: do NOT name this "supabase"
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     async function signInWithGoogle() {
       const { data, error } = await _supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: "https://coderserg.github.io/auth/callback.html" }
+        options: {
+          redirectTo: "https://coderserg.github.io/auth/callback.html",
+        },
       });
-
       if (data?.url) window.location.href = data.url;
       if (error) console.error(error);
     }
@@ -228,16 +208,22 @@
       const userNav = document.getElementById("user-nav");
       const userNameEl = document.getElementById("user-name");
 
-      if (user) {
-        userNameEl.textContent = user.user_metadata.full_name || user.email;
-        loginBtn.classList.add("hidden");
-        userNav.classList.remove("hidden");
-      } else {
-        loginBtn.classList.remove("hidden");
-        userNav.classList.add("hidden");
-      }
-    });    
-  </script>
+      const mLoginBtn = document.getElementById("m-login-btn");
+      const mUserNav = document.getElementById("m-user-nav");
+      const mUserNameEl = document.getElementById("m-user-name");
 
+      if (user) {
+        loginBtn.classList.add("hidden");
+        mLoginBtn.classList.add("hidden");
+
+        userNav.classList.remove("hidden");
+        mUserNav.classList.remove("hidden");
+
+        const name = user.user_metadata.full_name || user.email;
+        userNameEl.textContent = name;
+        mUserNameEl.textContent = name;
+      }
+    });
+  </script>
 </body>
 </html>
