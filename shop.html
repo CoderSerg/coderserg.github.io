@@ -6,76 +6,103 @@
   <meta name="description" content="High-quality custom 3D printed models delivered fast. Shop unique prints made by Serhii.">
   <meta name="keywords" content="3D print, custom 3d printing, PLA, fidget toys, keychains, Serhii">
   <meta name="author" content="Serhii">  
-  <title>Shop – 3D Prints</title>
+  <title>Shop · Serhii</title>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
   <script>
     tailwind.config = {
       theme: {
-            extend: {
+        extend: {
           colors: {
-            brand: '#10b981',
-          }
-            }
-          }
-        };
-      </script>
-    </head>
+            brand: "#10b981", // Emerald
+          },
+        },
+      },
+    };
+  </script>
+</head>
 
-    <body class="bg-gray-950 min-h-screen text-white font-sans">
+<body class="bg-gray-950 min-h-screen text-white font-sans">
 
-      <!-- HEADER -->
-      <header class="max-w-5xl mx-auto px-6 py-6 flex justify-between items-center">
-        <h1 class="text-2xl font-semibold">Shop</h1>
+  <!-- HEADER (NO NAVBAR — per your rules) -->
+  <header class="max-w-5xl mx-auto px-6 py-10 flex justify-between items-center">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">
+      Shop <span class="text-brand">Items.</span>
+    </h1>
 
-        <a href="./index.html"
-           class="px-4 py-2 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition">
-          ← Back to Home
+    <a href="./index.html"
+       class="px-4 py-2 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 transition text-sm">
+      ← Back
+    </a>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-5xl mx-auto px-6 pb-20">
+
+    <h2 class="text-xl font-semibold mb-6 text-gray-300">All Products</h2>
+
+    <!-- Grid -->
+    <div id="shopItems" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+  </main>
+
+
+  <!-- JS BUILDER (UPGRADED LOOK) -->
+  <script>
+    function addShopItem(name, price, image, link) {
+      const container = document.getElementById("shopItems");
+
+      const card = document.createElement("div");
+      card.className =
+        "bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-xl p-6 flex flex-col hover:scale-[1.03] transition-all duration-200 hover:shadow-brand/30";
+
+      card.innerHTML = `
+        <div class="relative mb-4">
+          <img src="${image}" alt="${name}"
+               class="w-full h-48 object-cover rounded-2xl border border-white/10 bg-gray-900/40">
+
+          <span class="absolute bottom-2 right-2 bg-brand text-black px-3 py-1 rounded-md text-xs font-semibold shadow">
+            $${price}
+          </span>
+        </div>
+
+        <h3 class="text-lg font-semibold">${name}</h3>
+        <p class="text-gray-400 text-sm mb-4">High-quality custom 3D print</p>
+
+        <a href="${link}" target="_blank"
+            class="mt-auto inline-block bg-brand text-black font-semibold px-4 py-2 rounded-xl hover:bg-brand/80 transition shadow-lg text-center">
+          Buy →
         </a>
-      </header>
+      `;
 
-      <!-- SHOP CONTAINER -->
-      <main class="max-w-5xl mx-auto px-6 py-10">
+      container.appendChild(card);
+    }
 
-        <h2 class="text-xl font-semibold mb-6">All Products</h2>
+    /* ---------------------
+       Add your products
+       (matches your old list)
+    --------------------- */
 
-        <!-- Shop Items Grid -->
-        <div id="shopItems" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    addShopItem("Fidget Spinner", 1.25, "./images/fidgetspinner.png",
+                "https://www.paypal.com/ncp/payment/JDDULBSP3A4XN");
 
-      </main>
+    addShopItem("Fidget Gyro Ring", 1.00, "./images/gyroringfidget.png",
+                "https://www.paypal.com/ncp/payment/99836MVB6AZKA");
 
-      <!-- JS ITEM BUILDER -->
-      <script>
-        function addShopItem(name, price, image, link) {
-          const container = document.getElementById("shopItems");
+    addShopItem("Door Unlocker", 1.50, "./images/unlocker.png",
+                "https://www.paypal.com/ncp/payment/BT9X7R8B6A4GW");
 
-          const item = document.createElement("div");
-          item.className =
-            "bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-lg transition hover:scale-[1.02] hover:shadow-brand/20";
+    addShopItem("Sword", 15.00, "./images/sword.png",
+                "https://www.paypal.com/ncp/payment/U4ATUL6P8NBG4");
 
-          item.innerHTML = `
-            <img alt="" src="${image}" class="w-full h-40 object-cover rounded-xl mb-4 border border-white/10">
+    addShopItem("Dragon", 20.00, "./images/dragon.png",
+                "https://www.paypal.com/ncp/payment/G4KKAXJA7QBYL");
 
-            <h3 class="text-lg font-semibold">${name}</h3>
-            <p class="text-gray-400 text-sm mb-4">${price}$</p>
+    addShopItem("Air Slides", 35.00, "./images/shoes.png",
+                "https://www.paypal.com/ncp/payment/E7R82UPT6U9U6");
+  </script>
 
-            <a href="${link}" target="_blank"
-               class="inline-block bg-brand text-black font-semibold px-4 py-2 rounded-lg hover:bg-brand/80 transition">
-              Buy →
-            </a>
-          `;
-
-          container.appendChild(item);
-        }
-
-        // Example items — replace with your real ones:
-        addShopItem("Fidget Spinner", 1.25, "./images/fidgetspinner.png", "https://www.paypal.com/ncp/payment/JDDULBSP3A4XN");
-        addShopItem("Fidget Gyro Ring", 1.00, "./images/gyroringfidget.png", "https://www.paypal.com/ncp/payment/99836MVB6AZKA");
-        addShopItem("Door Unlocker", 1.50, "./images/unlocker.png", "https://www.paypal.com/ncp/payment/BT9X7R8B6A4GW")
-        addShopItem("Sword", 15.00, "", "https://www.paypal.com/ncp/payment/U4ATUL6P8NBG4")
-        addShopItem("Dragon", 20.00, "", "https://www.paypal.com/ncp/payment/G4KKAXJA7QBYL")
-        addShopItem("Air Slides", 35.00, "./images/shoes.png", "https://www.paypal.com/ncp/payment/E7R82UPT6U9U6")
-      </script>
-
-    </body>
-    </html>
+</body>
+</html>
