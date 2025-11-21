@@ -14,57 +14,101 @@
       }
     };
   </script>
+
+  <style>
+    /* Fullscreen iframe container */
+    #gameOverlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: none;
+      z-index: 50;  /* iframe layer */
+    }
+
+    #gameFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Reward popup on top of iframe */
+    #rewardPopup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 60;  /* above iframe */
+      display: none;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-950 text-white min-h-screen">
 
-  <!-- POINTS COUNTER TOP RIGHT -->
+  <!-- TOP-RIGHT POINT COUNTER -->
   <div id="points-box"
-       class="fixed top-4 right-4 bg-gray-800 border border-gray-700 px-4 py-2 rounded-xl flex items-center gap-2">
+       class="fixed top-4 right-4 bg-gray-800 border border-gray-700 px-4 py-2 rounded-xl flex items-center gap-2 z-40">
+
+    <!-- Star icon -->
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
       fill="none" stroke="currentColor" stroke-width="2"
       stroke-linecap="round" stroke-linejoin="round">
       <path d="M11.051 7.616a1 1 0 0 1 1.909.024l.737 1.452a1 1 0 0 0 .737.535l1.634.256a1 1 0 0 1 .588 1.806l-1.172 1.168a1 1 0 0 0-.282.866l.259 1.613a1 1 0 0 1-1.541 1.134l-1.465-.75a1 1 0 0 0-.912 0l-1.465.75a1 1 0 0 1-1.539-1.133l.258-1.613a1 1 0 0 0-.282-.867l-1.156-1.152a1 1 0 0 1 .572-1.822l1.633-.256a1 1 0 0 0 .737-.535z"/>
       <circle cx="12" cy="12" r="10"/>
     </svg>
-    <span id="points" class="font-bold">0</span>
+
+    <span id="points" class="font-bold text-lg">0</span>
   </div>
 
-  <div class="max-w-3xl mx-auto pt-24 px-6">
+  <!-- CONTENT -->
+  <div class="max-w-3xl mx-auto pt-24 px-6 relative z-30">
 
-    <h1 class="text-3xl font-bold mb-6">Points</h1>
+    <h1 class="text-3xl font-bold mb-6">Points & Rewards</h1>
 
-    <!-- CLAIM -->
-    <button onclick="claimPoints()"
-            class="bg-brand text-black font-semibold px-6 py-3 rounded-lg hover:bg-brand/80 transition">
-      Claim +30 points
+    <button onclick="startSliceMaster()"
+            class="px-6 py-3 bg-brand text-black rounded-xl font-bold hover:bg-brand/80">
+      Play Slice Master (+150 pts)
     </button>
 
-    <!-- REWARDS -->
-    <h2 class="text-2xl font-bold mt-12 mb-4">Rewards</h2>
-
-    <div id="rewards" class="space-y-4"></div>
-
   </div>
 
-  <!-- SUPABASE -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest/dist/umd/supabase.js"></script>
+  <!-- GAME OVERLAY (IFRAME) -->
+  <div id="gameOverlay">
+    <iframe
+      id="gameFrame"
+      src="https://www.coolmathgames.com/0-slice-master/play"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- REWARD POPUP -->
+  <div id="rewardPopup"
+       class="bg-gray-900 text-white p-6 rounded-2xl shadow-xl border border-gray-700 text-center w-72">
+    <h1 class="text-2xl font-bold mb-2">+150 Points!</h1>
+    <p class="text-gray-300 mb-4">Thanks for playing Slice Master 🎉</p>
+    <button onclick="closeReward()"
+            class="px-6 py-2 bg-brand text-black rounded-lg font-semibold">
+      OK
+    </button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
-    const SUPABASE_URL = "https://ixrcmespfkbvubxsaqvf.supabase.co";
-    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
+    const supabaseUrl = "https://ixrcmespfkbvubxsaqvf.supabase.co";
+    const supabaseKey =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94";
 
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    const sb = supabase.createClient(supabaseUrl, supabaseKey);
 
-    /* ---------------------------
-       Load current points
-    ----------------------------*/
+    // --------------------------
+    // Load points
+    // --------------------------
     async function loadPoints() {
-      const { data: userData } = await _supabase.auth.getUser();
-      const user = userData.user;
+      const user = (await sb.auth.getUser()).data.user;
       if (!user) return;
 
-      const { data } = await _supabase
+      const { data } = await sb
         .from("points")
         .select("points")
         .eq("user_id", user.id)
@@ -73,88 +117,46 @@
       document.getElementById("points").textContent = data?.points ?? 0;
     }
 
-    /* ---------------------------
-       Claim +30 via Edge Function
-    ----------------------------*/
-    async function claimPoints() {
-      const sessionData = await _supabase.auth.getSession();
-      const token = sessionData.data.session?.access_token;
-      if (!token) return alert("Please login first");
+    loadPoints();
 
-      await fetch(SUPABASE_URL + "/functions/v1/reward30", {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${token}` }
-      });
+    // --------------------------
+    // Start the game
+    // --------------------------
+    function startSliceMaster() {
+      document.getElementById("gameOverlay").style.display = "block";
 
+      setTimeout(() => {
+        reward150();
+      }, 2 * 60 * 1000); // 2 minutes
+    }
+
+    // --------------------------
+    // Give 150 points
+    // --------------------------
+    async function reward150() {
+      const session = (await sb.auth.getSession()).data.session;
+      if (!session) return;
+
+      await fetch(
+        "https://ixrcmespfkbvubxsaqvf.supabase.co/functions/v1/reward30",
+        {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + session.access_token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount: 150 }),
+        }
+      );
+
+      document.getElementById("gameOverlay").style.display = "none";
+      document.getElementById("rewardPopup").style.display = "block";
       loadPoints();
     }
 
-    /* ---------------------------
-       Reward builder
-    ----------------------------*/
-    function addReward(name, price, callback) {
-      const box = document.getElementById("rewards");
-
-      const el = document.createElement("div");
-      el.className = "bg-gray-800 border border-gray-700 p-4 rounded-xl flex justify-between items-center";
-
-      el.innerHTML = `
-        <div>
-          <p class="text-lg font-semibold">${name}</p>
-          <p class="text-gray-400 text-sm">${price} points</p>
-        </div>
-        <button class="bg-brand text-black font-semibold px-4 py-2 rounded-lg hover:bg-brand/80 transition">
-          Buy
-        </button>
-      `;
-
-      const btn = el.querySelector("button");
-
-      btn.onclick = async () => {
-        const { data: userData } = await _supabase.auth.getUser();
-        const user = userData.user;
-        if (!user) return alert("Login first");
-
-        const sessionData = await _supabase.auth.getSession();
-        const token = sessionData.data.session?.access_token;
-        if (!token) return alert("Please login again");
-
-        // server-side check & subtract
-        const res = await fetch(SUPABASE_URL + "/functions/v1/buy_reward", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ cost: price })
-        });
-
-        const json = await res.json();
-
-        if (json.ok) {
-          callback();   // run the reward action
-          loadPoints(); // refresh
-        } else {
-          alert("Not enough points");
-        }
-      };
-
-      box.appendChild(el);
+    function closeReward() {
+      document.getElementById("rewardPopup").style.display = "none";
     }
-
-    /* ---------------------------
-       Add rewards
-    ----------------------------*/
-    addReward("Hi Test", 50, () => {
-      console.log("hi");
-    });
-
-    addReward("Super Reward", 100, () => {
-      alert("You bought Super Reward!");
-    });
-
-    /* Init */
-    loadPoints();
   </script>
 
 </body>
