@@ -143,19 +143,27 @@
           Learn cybersecurity, shop for items, done all here.
         </p>
 
-        <div class="mt-10 flex items-center justify-center gap-x-6">
-          <!-- SHOP (primary) -->
-          <a href="./shop.html"
-            class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-brand/80 shadow-lg">
-            Shop
-          </a>
+<div class="mt-10 flex items-center justify-center gap-x-6">
 
-          <!-- LEARN (text link) -->
-          <a href="./learn.html"
-            class="text-sm font-semibold text-white hover:text-brand transition">
-            Learn <span aria-hidden="true">→</span>
-          </a>
-        </div>
+  <!-- SHOP -->
+  <a href="./shop.html"
+    class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-brand/80 shadow-lg">
+    Shop
+  </a>
+
+  <!-- LEARN -->
+  <a href="./learn.html"
+    class="text-sm font-semibold text-white hover:text-brand transition">
+    Learn →
+  </a>
+
+  <!-- PREMIUM (shown only when logged in) -->
+  <a id="premium-btn" href="./plans.html"
+    class="hidden rounded-md bg-emerald-600 px-6 py-3 text-sm font-semibold text-black hover:bg-emerald-500 shadow-lg">
+    Premium
+  </a>
+
+</div>
       </div>
 
       <!-- BOTTOM BG BLOB -->
@@ -245,5 +253,21 @@
       }
     });
   </script>
+  <script>
+  // SHOW PREMIUM ON LOGIN ONLY
+async function showPremiumButton() {
+  const { data } = await _supabase.auth.getUser();
+  const user = data?.user;
+
+  const premiumBtn = document.getElementById("premium-btn");
+
+  if (user) {
+    // Logged in → show premium button
+    premiumBtn.classList.remove("hidden");
+  }
+}
+
+showPremiumButton();
+</script>
 </body>
 </html>
