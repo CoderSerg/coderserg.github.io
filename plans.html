@@ -1,106 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plans — Serhii</title>
+  <title>Plans | Serhii</title>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { brand: "#10b981" } // emerald green
+          colors: { brand: "#10b981" },
         }
       }
     };
   </script>
 
+  <!-- PayPal -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AeeDQWbLUdmvUObHxQwKbo1y726RTAIncLFYijLEkPTTPum8wFU45Iy0RyPVOMSGlofEFnbEJe7VWJW3&vault=true&intent=subscription"></script>
+
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const _supabase = supabase.createClient(
-      "https://ixrcmespfkbvubxsaqvf.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94"
-    );
-  </script>
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR (same as index) -->
   <header class="fixed inset-x-0 top-0 z-50 bg-gray-900/90 backdrop-blur border-b border-white/10">
     <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
-      <div class="flex items-center gap-2">
-        <a href="/" class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" stroke="currentColor" fill="none"
-            stroke-width="2" class="text-brand">
-            <path
-              d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
-            <path d="M12 22V12" />
-            <polyline points="3.29 7 12 12 20.71 7" />
-          </svg>
-          <span class="font-bold text-lg">Serhii</span>
-        </a>
-      </div>
+      <a href="/" class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" stroke="currentColor" fill="none" stroke-width="2" class="text-brand">
+          <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
+          <path d="M12 22V12"/>
+          <polyline points="3.29 7 12 12 20.71 7"/>
+        </svg>
+        <span class="font-bold text-lg">Serhii</span>
+      </a>
     </nav>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="pt-32 pb-24 relative isolate px-6 lg:px-8">
+  <!-- MAIN -->
+  <main class="flex-1">
+    <div class="relative isolate px-6 pt-32 lg:px-8">
 
-    <!-- TOP BLOB -->
-    <div aria-hidden="true"
-      class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-      <div
-        class="relative left-[50%] aspect-[1155/678] w-[40rem] -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30">
+      <!-- TOP BLOB -->
+      <div aria-hidden="true"
+        class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl opacity-30">
+        <div
+          class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[40rem]
+          -translate-x-1/2 rotate-30 bg-gradient-to-tr from-emerald-500 to-emerald-300 sm:w-[70rem]">
+        </div>
       </div>
-    </div>
 
-    <!-- TITLE -->
-    <div class="text-center max-w-3xl mx-auto">
-      <h2 class="text-brand font-semibold uppercase tracking-wide">Pricing</h2>
-      <h1 class="mt-2 text-5xl font-semibold">Choose your plan</h1>
-      <p class="mt-4 text-gray-400">Access premium features instantly.</p>
-    </div>
-
-    <!-- PLAN CARD -->
-    <div class="mt-16 max-w-xl mx-auto">
-      <div class="bg-gradient-to-b from-emerald-950 to-emerald-900 border border-emerald-700/40 rounded-3xl p-10 shadow-xl">
-
-        <h3 class="text-white font-semibold text-lg">Normal</h3>
-
-        <p class="mt-4 flex items-baseline gap-x-2">
-          <span class="text-5xl font-semibold">$2.99</span>
-          <span class="text-gray-300">/month</span>
+      <!-- CONTENT -->
+      <div class="mx-auto max-w-2xl text-center">
+        <h1 class="text-5xl font-semibold tracking-tight sm:text-7xl">
+          Choose your plan
+        </h1>
+        <p class="mt-4 text-gray-400 text-lg">
+          Unlock premium tools and exclusive features.
         </p>
+      </div>
 
-        <p class="mt-6 text-gray-300">
-          Unlock all premium features for a low monthly price.
-        </p>
+      <!-- PRICING CARD -->
+      <div class="mx-auto max-w-md mt-16 bg-gray-800 border border-white/10 rounded-3xl p-8 shadow-xl">
+        <h2 class="text-2xl font-semibold mb-3 text-brand">Normal Plan</h2>
+        <p class="text-5xl font-bold">$2.99<span class="text-xl text-gray-400">/month</span></p>
+        <p class="mt-4 text-gray-300">Access premium tools, private lessons, and exclusive features.</p>
 
-        <ul class="mt-8 space-y-3 text-gray-300">
-          <li class="flex items-center gap-2"><span class="text-brand text-xl">✓</span> Full access</li>
-          <li class="flex items-center gap-2"><span class="text-brand text-xl">✓</span> Premium tools</li>
-          <li class="flex items-center gap-2"><span class="text-brand text-xl">✓</span> Fast updates</li>
-          <li class="flex items-center gap-2"><span class="text-brand text-xl">✓</span> Early access</li>
+        <ul class="mt-6 space-y-3 text-gray-300 text-left">
+          <li>✔ Premium learning content</li>
+          <li>✔ Private shop items</li>
+          <li>✔ Faster support</li>
+          <li>✔ Early feature access</li>
         </ul>
 
-        <!-- Trigger button -->
-        <button id="start-sub"
-          class="mt-10 w-full bg-brand text-black font-semibold py-3 rounded-md hover:bg-brand/80 transition">
-          Get started
+        <!-- Get started button -->
+        <button
+          onclick="showPayPal()"
+          class="w-full mt-8 rounded-md bg-brand px-5 py-3 text-black font-semibold hover:bg-brand/80 transition">
+          Get Started
         </button>
 
+        <!-- PayPal container (initially hidden) -->
+        <div id="paypal-container" class="mt-6 hidden"></div>
+      </div>
+
+      <!-- BOTTOM BLOB -->
+      <div aria-hidden="true"
+        class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl opacity-30">
+        <div
+          class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[40rem]
+          -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 sm:w-[70rem]">
+        </div>
       </div>
     </div>
-
-    <!-- Hidden PayPal Button -->
-    <div id="paypal-button-container-P-4KP604620S678291ANEQ6Q3I" class="hidden"></div>
-
   </main>
 
   <!-- FOOTER -->
@@ -108,54 +103,36 @@
     © 2025 Serhii
   </footer>
 
-  <!-- PAYPAL SDK -->
-  <script
-    src="https://www.paypal.com/sdk/js?client-id=AeeDQWbLUdmvUObHxQwKbo1y726RTAIncLFYijLEkPTTPum8wFU45Iy0RyPVOMSGlofEFnbEJe7VWJW3&vault=true&intent=subscription">
-  </script>
-
-  <!-- SUBSCRIPTION LOGIC -->
   <script>
-    paypal.Buttons({
+    const _supabase = supabase.createClient(
+      "https://ixrcmespfkbvubxsaqvf.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94"
+    );
 
-      style: {
-        shape: 'rect',
-        color: 'white',
-        layout: 'vertical',
-        label: 'subscribe'
-      },
+    // Show PayPal button only after clicking "Get Started"
+    function showPayPal() {
+      const box = document.getElementById("paypal-container");
+      if (!box.classList.contains("hidden")) return;
+      box.classList.remove("hidden");
 
-      createSubscription(data, actions) {
-        return actions.subscription.create({
-          plan_id: 'P-4KP604620S678291ANEQ6Q3I'
-        });
-      },
-
-      async onApprove(data) {
-        console.log("Subscription ID:", data.subscriptionID);
-
-        const { data: userData } = await _supabase.auth.getUser();
-        const user = userData.user;
-
-        if (!user) {
-          alert("You must be logged in.");
-          return;
+      paypal.Buttons({
+        style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+        },
+        createSubscription: function(data, actions) {
+          return actions.subscription.create({
+            plan_id: "P-4KP604620S678291ANEQ6Q3I"
+          });
+        },
+        onApprove: async function(data, actions) {
+          // Redirect to success page
+          window.location.href = "/success.html";
         }
-
-        await _supabase.from("subscriptions").insert({
-          user_id: user.id,
-          subscription_id: data.subscriptionID,
-          status: "active"
-        });
-
-        window.location.href = "/success.html";
-      }
-
-    }).render("#paypal-button-container-P-4KP604620S678291ANEQ6Q3I");
-
-    // When user clicks your green button → activate PayPal popup
-    document.getElementById("start-sub").addEventListener("click", () => {
-      document.querySelector("#paypal-button-container-P-4KP604620S678291ANEQ6Q3I button").click();
-    });
+      }).render('#paypal-container');
+    }
   </script>
 
 </body>
