@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plans — Serhii</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: "#10b981" } // emerald green
+        }
+      }
+    };
+  </script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const _supabase = supabase.createClient(
+      "https://ixrcmespfkbvubxsaqvf.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94"
+    );
+  </script>
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+
+  <!-- NAVBAR -->
+  <header class="fixed inset-x-0 top-0 z-50 bg-gray-900/90 backdrop-blur border-b border-white/10">
+    <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
+      <div class="flex items-center gap-2">
+        <a href="/" class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" stroke="currentColor" fill="none"
+            stroke-width="2" class="text-brand">
+            <path
+              d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+            <path d="M12 22V12" />
+            <polyline points="3.29 7 12 12 20.71 7" />
+          </svg>
+          <span class="font-bold text-lg">Serhii</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="pt-32 pb-24 relative isolate px-6 lg:px-8">
+
+    <!-- TOP BLOB -->
+    <div aria-hidden="true"
+      class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+      <div
+        class="relative left-[50%] aspect-[1155/678] w-[40rem] -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30">
+      </div>
+    </div>
+
+    <!-- TITLE -->
+    <div class="text-center max-w-3xl mx-auto">
+      <h2 class="text-brand font-semibold uppercase tracking-wide">Pricing</h2>
+      <h1 class="mt-2 text-5xl font-semibold">Choose your plan</h1>
+      <p class="mt-4 text-gray-400">Access premium features instantly.</p>
+    </div>
+
+    <!-- PLAN CARD -->
+    <div class="mt-16 max-w-xl mx-auto">
+      <div class="bg-gradient-to-b from-emerald-950 to-emerald-900 border border-emerald-700/40 rounded-3xl p-10 shadow-xl">
+
+        <h3 class="text-white font-semibold text-lg">Normal</h3>
+
+        <p class="mt-4 flex items-baseline gap-x-2">
+          <span class="text-5xl font-semibold">$2.99</span>
+          <span class="text-gray-300">/month</span>
+        </p>
+
+        <p class="mt-6 text-gray-300">
+          Unlock all premium features for a low monthly price.
+        </p>
+
+        <ul class="mt-8 space-y-3 text-gray-300">
+          <li class="flex items-center gap-2"><span class="text-brand text-xl">✓</span> Full access</li>
+          <li class="flex items-center gap-2"><span class="text-brand text-xl">✓</span> Premium tools</li>
+          <li class="flex items-center gap-2"><span class="text-brand text-xl">✓</span> Fast updates</li>
+          <li class="flex items-center gap-2"><span class="text-brand text-xl">✓</span> Early access</li>
+        </ul>
+
+        <!-- Trigger button -->
+        <button id="start-sub"
+          class="mt-10 w-full bg-brand text-black font-semibold py-3 rounded-md hover:bg-brand/80 transition">
+          Get started
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Hidden PayPal Button -->
+    <div id="paypal-button-container-P-4KP604620S678291ANEQ6Q3I" class="hidden"></div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-6 text-center text-gray-400 text-sm">
+    © 2025 Serhii
+  </footer>
+
+  <!-- PAYPAL SDK -->
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=AeeDQWbLUdmvUObHxQwKbo1y726RTAIncLFYijLEkPTTPum8wFU45Iy0RyPVOMSGlofEFnbEJe7VWJW3&vault=true&intent=subscription">
+  </script>
+
+  <!-- SUBSCRIPTION LOGIC -->
+  <script>
+    paypal.Buttons({
+
+      style: {
+        shape: 'rect',
+        color: 'white',
+        layout: 'vertical',
+        label: 'subscribe'
+      },
+
+      createSubscription(data, actions) {
+        return actions.subscription.create({
+          plan_id: 'P-4KP604620S678291ANEQ6Q3I'
+        });
+      },
+
+      async onApprove(data) {
+        console.log("Subscription ID:", data.subscriptionID);
+
+        const { data: userData } = await _supabase.auth.getUser();
+        const user = userData.user;
+
+        if (!user) {
+          alert("You must be logged in.");
+          return;
+        }
+
+        await _supabase.from("subscriptions").insert({
+          user_id: user.id,
+          subscription_id: data.subscriptionID,
+          status: "active"
+        });
+
+        window.location.href = "/success.html";
+      }
+
+    }).render("#paypal-button-container-P-4KP604620S678291ANEQ6Q3I");
+
+    // When user clicks your green button → activate PayPal popup
+    document.getElementById("start-sub").addEventListener("click", () => {
+      document.querySelector("#paypal-button-container-P-4KP604620S678291ANEQ6Q3I button").click();
+    });
+  </script>
+
+</body>
+</html>
