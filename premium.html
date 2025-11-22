@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium | Serhii</title>
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: "#10b981" }
+        }
+      }
+    };
+  </script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+
+  <!-- NAVBAR (optional – same as index) -->
+  <header class="fixed inset-x-0 top-0 z-50 bg-gray-900/90 backdrop-blur border-b border-white/10">
+    <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
+      <a href="/" class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" stroke="currentColor" fill="none" stroke-width="2" class="text-brand">
+          <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
+          <path d="M12 22V12"/>
+          <polyline points="3.29 7 12 12 20.71 7"/>
+        </svg>
+        <span class="font-bold text-lg">Serhii</span>
+      </a>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 pt-28 px-6">
+    <!-- BG Blob -->
+    <div aria-hidden="true"
+      class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl opacity-25">
+      <div class="relative left-1/2 aspect-[1155/678] w-[40rem] -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300"></div>
+    </div>
+
+    <div id="content" class="max-w-3xl mx-auto text-center hidden">
+      <h1 class="text-5xl font-bold">Premium Access</h1>
+      <p class="mt-4 text-gray-300 text-lg">
+        You’re all set. Enjoy all premium features!
+      </p>
+
+      <div class="mt-10 p-6 rounded-3xl bg-gray-800 border border-white/10 text-left">
+        <h2 class="text-2xl font-semibold mb-4">Exclusive Content</h2>
+        <ul class="space-y-3 text-gray-300">
+          <li>✔ Access to premium tools</li>
+          <li>✔ Extra cybersecurity lessons</li>
+          <li>✔ Private shop items</li>
+          <li>✔ Faster support</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="loading" class="text-center mt-32 text-xl text-gray-400">
+      Checking your subscription…
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-6 text-sm text-gray-400 text-center">
+    © 2025 Serhii
+  </footer>
+
+<script>
+  const _supabase = supabase.createClient(
+    "https://ixrcmespfkbvubxsaqvf.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cmNtZXNwZmtidnVieHNhcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODc3MDgsImV4cCI6MjA3OTE2MzcwOH0.OONsZEtb-VUAsBgTICYixl8M-GU4dMT6FK-Gg3s3i94"
+  );
+
+  async function checkPremium() {
+    const { data: auth } = await _supabase.auth.getUser();
+    const user = auth.user;
+
+    if (!user) {
+      window.location.href = "/plans.html";
+      return;
+    }
+
+    const { data: sub } = await _supabase
+      .from("subscriptions")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("status", "active")
+      .maybeSingle();
+
+    if (!sub) {
+      window.location.href = "/plans.html";
+      return;
+    }
+
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("content").classList.remove("hidden");
+  }
+
+  checkPremium();
+</script>
+</body>
+</html>
