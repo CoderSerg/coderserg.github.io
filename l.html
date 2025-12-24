@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Show My Location</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2em;
+      text-align: center;
+    }
+    #address {
+      margin-top: 1em;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    #error {
+      color: red;
+      margin-top: 1em;
+    }
+    h1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 40vh;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="address">Getting your address...</h1>
+  <div id="error"></div>
+  <script>
+    const addressH1 = document.getElementById('address');
+    const errorDiv = document.getElementById('error');
+
+    function showError(message) {
+      errorDiv.textContent = message;
+      addressH1.textContent = 'Could not retrieve address';
+    }
+
+    function reverseGeocode(lat, lon) {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`;
+      fetch(url, { headers: { 'Accept': 'application/json' } })
+        .then(res => res.json())
+        .then(data => {
+          if (data.error || !data.display_name) {
+            showError('Could not find address for your location.');
+          } else {
+            addressH1.textContent = data.display_name;
+            alert(data.display_name);
+          }
+        })
+        .catch(() => showError('Failed to get address from coordinates.'));
+    }
+
+    function getLocationAndDisplay() {
+      if (!navigator.geolocation) {
+        showError('Geolocation is not supported by this browser.');
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          addressH1.textContent = 'Looking up address...';
+          reverseGeocode(latitude, longitude);
+        },
+        (error) => {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              showError('Permission denied. Please allow location access.');
+              break;
+            case error.POSITION_UNAVAILABLE:
+              showError('Location information is unavailable.');
+              break;
+            case error.TIMEOUT:
+              showError('The request to get your location timed out.');
+              break;
+            default:
+              showError('An unknown error occurred.');
+          }
+        }
+      );
+    }
+
+    window.onload = getLocationAndDisplay;
+  </script>
+</body>
+</html>
