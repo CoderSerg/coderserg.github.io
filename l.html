@@ -14,6 +14,11 @@
       font-weight: bold;
       font-size: 1.1em;
     }
+    #coords {
+      margin-top: 0.5em;
+      color: #444;
+      font-size: 0.95em;
+    }
     #error {
       color: red;
       margin-top: 1em;
@@ -28,14 +33,17 @@
 </head>
 <body>
   <h1 id="address">Getting your address...</h1>
+  <div id="coords"></div>
   <div id="error"></div>
   <script>
     const addressH1 = document.getElementById('address');
     const errorDiv = document.getElementById('error');
+    const coordsDiv = document.getElementById('coords');
 
     function showError(message) {
       errorDiv.textContent = message;
       addressH1.textContent = 'Could not retrieve address';
+      coordsDiv.textContent = '';
     }
 
     function reverseGeocode(lat, lon) {
@@ -60,7 +68,8 @@
       }
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const { latitude, longitude } = position.coords;
+          const { latitude, longitude, accuracy } = position.coords;
+          coordsDiv.textContent = `Coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} (Accuracy: ±${Math.round(accuracy)} meters)`;
           addressH1.textContent = 'Looking up address...';
           reverseGeocode(latitude, longitude);
         },
@@ -78,7 +87,8 @@
             default:
               showError('An unknown error occurred.');
           }
-        }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     }
 
