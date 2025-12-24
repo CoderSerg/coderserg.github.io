@@ -19,6 +19,11 @@
       color: #444;
       font-size: 0.95em;
     }
+    #accuracy-warning {
+      color: orange;
+      font-size: 0.9em;
+      margin-top: 0.5em;
+    }
     #error {
       color: red;
       margin-top: 1em;
@@ -34,16 +39,22 @@
 <body>
   <h1 id="address">Getting your address...</h1>
   <div id="coords"></div>
+  <div id="accuracy-warning"></div>
   <div id="error"></div>
   <script>
     const addressH1 = document.getElementById('address');
     const errorDiv = document.getElementById('error');
     const coordsDiv = document.getElementById('coords');
+    const accuracyDiv = document.getElementById('accuracy-warning');
+    let lastAccuracy = null;
+    let minAccuracy = 100000;
+    let lastAddress = '';
 
     function showError(message) {
       errorDiv.textContent = message;
       addressH1.textContent = 'Could not retrieve address';
       coordsDiv.textContent = '';
+      accuracyDiv.textContent = '';
     }
 
     function reverseGeocode(lat, lon) {
@@ -55,24 +66,35 @@
             showError('Could not find address for your location.');
           } else {
             addressH1.textContent = data.display_name;
-            alert(data.display_name);
+            if (data.display_name !== lastAddress) alert(data.display_name);
+            lastAddress = data.display_name;
           }
         })
         .catch(() => showError('Failed to get address from coordinates.'));
     }
 
-    function getLocationAndDisplay() {
+    function showPosition(position) {
+      const { latitude, longitude, accuracy } = position.coords;
+      coordsDiv.textContent = `Coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} (Accuracy: ±${Math.round(accuracy)} meters)`;
+
+      if (accuracy < minAccuracy) {
+        minAccuracy = accuracy;
+        accuracyDiv.textContent = '';
+        reverseGeocode(latitude, longitude);
+      } else if (accuracy > 50) {
+        accuracyDiv.textContent = 'Waiting for a more precise fix...';
+      } else {
+        accuracyDiv.textContent = '';
+      }
+    }
+
+    function startLocationWatch() {
       if (!navigator.geolocation) {
         showError('Geolocation is not supported by this browser.');
         return;
       }
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude, accuracy } = position.coords;
-          coordsDiv.textContent = `Coordinates: ${latitude.toFixed(6)}, ${longitude.toFixed(6)} (Accuracy: ±${Math.round(accuracy)} meters)`;
-          addressH1.textContent = 'Looking up address...';
-          reverseGeocode(latitude, longitude);
-        },
+      navigator.geolocation.watchPosition(
+        showPosition,
         (error) => {
           switch (error.code) {
             case error.PERMISSION_DENIED:
@@ -88,11 +110,11 @@
               showError('An unknown error occurred.');
           }
         },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
       );
     }
 
-    window.onload = getLocationAndDisplay;
+    window.onload = startLocationWatch;
   </script>
 </body>
 </html>
