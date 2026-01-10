@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>404 — Page not found</title>
 
   <!-- Tailwind -->
@@ -17,6 +16,72 @@
       },
     };
   </script>
+
+  <!-- GLITCH + GLOW -->
+  <style>
+    .glitch {
+      position: relative;
+      color: #10b981;
+      text-shadow:
+        0 0 10px rgba(16,185,129,.8),
+        0 0 30px rgba(16,185,129,.6),
+        0 0 60px rgba(16,185,129,.4);
+      animation: glow 2s infinite alternate;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .glitch::before {
+      color: #34d399;
+      clip-path: inset(0 0 50% 0);
+      animation: glitchTop 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      color: #059669;
+      clip-path: inset(50% 0 0 0);
+      animation: glitchBottom 1.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitchTop {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, -2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-2px, 2px); }
+      80% { transform: translate(2px, 2px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes glitchBottom {
+      0% { transform: translate(0); }
+      20% { transform: translate(2px, 2px); }
+      40% { transform: translate(-2px, 2px); }
+      60% { transform: translate(2px, -2px); }
+      80% { transform: translate(-2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow:
+          0 0 10px rgba(16,185,129,.6),
+          0 0 30px rgba(16,185,129,.4);
+      }
+      to {
+        text-shadow:
+          0 0 20px rgba(16,185,129,1),
+          0 0 60px rgba(16,185,129,.9);
+      }
+    }
+  </style>
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen flex flex-col overflow-hidden">
@@ -25,12 +90,14 @@
   <header class="fixed inset-x-0 top-0 z-50 bg-gray-900/90 backdrop-blur border-b border-white/10">
     <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 h-14">
       <a href="/" class="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
-          stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+          stroke="currentColor" fill="none" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"
           class="text-brand">
           <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
           <path d="M12 22V12"/>
           <polyline points="3.29 7 12 12 20.71 7"/>
+          <path d="m7.5 4.27 9 5.15"/>
         </svg>
         <span class="font-bold text-lg">Serhii</span>
       </a>
@@ -42,28 +109,27 @@
   </header>
 
   <!-- MAIN -->
-  <main class="flex-1 flex items-center justify-center px-6 pt-32 relative isolate">
+  <main class="flex-1 flex items-center justify-center px-6 pt-32 relative isolate text-center">
 
-    <!-- BG BLOB -->
+    <!-- BLOBS -->
     <div aria-hidden="true"
-      class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl">
+      class="absolute inset-x-0 -top-40 -z-10 blur-3xl">
       <div
-        class="relative left-1/2 aspect-[1155/678] w-[40rem] -translate-x-1/2 rotate-30
-        bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30 sm:w-[70rem]">
+        class="relative left-1/2 w-[40rem] -translate-x-1/2 rotate-30
+        bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30 aspect-[1155/678] sm:w-[70rem]">
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="text-center max-w-xl">
-      <p class="text-brand font-semibold tracking-widest mb-4">ERROR 404</p>
-
-      <h1 class="text-6xl sm:text-7xl font-bold tracking-tight">
-        You’re lost.
+    <div>
+      <!-- GLITCH 404 -->
+      <h1
+        class="glitch text-7xl sm:text-8xl font-extrabold tracking-tight"
+        data-text="404">
+        404
       </h1>
 
       <p class="mt-6 text-lg text-gray-400">
-        The page you’re looking for doesn’t exist, got deleted,
-        or never existed in the first place.
+        yeah… this page isn’t real
       </p>
 
       <div class="mt-10 flex items-center justify-center gap-4">
@@ -71,29 +137,16 @@
           class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-brand/80 shadow-lg">
           Go home
         </a>
-
         <a href="./contact.html"
-          class="text-sm font-semibold text-white hover:text-brand transition">
+          class="text-sm font-semibold hover:text-brand transition">
           Contact →
         </a>
       </div>
     </div>
-
-    <!-- BOTTOM BLOB -->
-    <div aria-hidden="true"
-      class="absolute inset-x-0 top-[calc(100%-10rem)] -z-10 transform-gpu overflow-hidden blur-3xl">
-      <div
-        class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[40rem]
-        -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30 sm:w-[70rem]">
-      </div>
-    </div>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-white/10 py-6 text-sm text-gray-400">
-    <div class="mx-auto max-w-5xl px-4 text-center">
-      © 2025 Serhii
-    </div>
+  <footer class="border-t border-white/10 py-6 text-sm text-gray-400 text-center">
+    © 2025 Serhii
   </footer>
 
 </body>
