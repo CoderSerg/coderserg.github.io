@@ -152,12 +152,6 @@
     Learn →
   </a>
 
-  <!-- PREMIUM (shown only when logged in) -->
-  <a id="premium-btn" href="./plans.html"
-    class="hidden rounded-md bg-emerald-600 px-6 py-3 text-sm font-semibold text-black hover:bg-emerald-500 shadow-lg">
-    Premium
-  </a>
-
 </div>
       </div>
 
@@ -249,21 +243,5 @@
       }
     });
   </script>
-  <script>
-  // SHOW PREMIUM ON LOGIN ONLY
-async function showPremiumButton() {
-  const { data } = await _supabase.auth.getUser();
-  const user = data?.user;
-
-  const premiumBtn = document.getElementById("premium-btn");
-
-  if (user) {
-    // Logged in → show premium button
-    premiumBtn.classList.remove("hidden");
-  }
-}
-
-showPremiumButton();
-</script>
 </body>
 </html>
