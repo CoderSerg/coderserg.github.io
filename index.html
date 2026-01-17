@@ -25,6 +25,35 @@
       },
     };
   </script>
+
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    .float { animation: float 3s ease-in-out infinite; }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(to right, #10b981, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
@@ -33,8 +62,8 @@
     <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8 h-14" aria-label="Global">
       <!-- Logo -->
       <div class="flex items-center gap-2">
-        <a href="/" class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand">
+        <a href="/" class="flex items-center gap-2 group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand group-hover:scale-110 transition-transform">
             <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
             <path d="M12 22V12"/>
             <polyline points="3.29 7 12 12 20.71 7"/>
@@ -86,10 +115,10 @@
     <div id="mobile-menu" class="lg:hidden hidden border-t border-white/10 bg-gray-900/95 backdrop-blur">
       <div class="space-y-1 px-4 py-3">
         <!-- Shop + Learn links for mobile -->
-        <a href="./shop.html" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-800">
+        <a href="/shop" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-800">
           Shop
         </a>
-        <a href="./learn.html" class="block rounded-md px-3 py-2 text-base font-medium text-gray-200 hover:bg-gray-800">
+        <a href="/learn" class="block rounded-md px-3 py-2 text-base font-medium text-gray-200 hover:bg-gray-800">
           Learn
         </a>
 
@@ -123,36 +152,43 @@
         class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
         <div
           class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[40rem]
-          -translate-x-1/2 rotate-30 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
+          -translate-x-1/2 rotate-30 bg-gradient-to-tr from-emerald-500 via-cyan-400 to-blue-500 opacity-30
           sm:left-[calc(50%-30rem)] sm:w-[70rem]">
         </div>
       </div>
 
-      <!-- HERO CONTENT -->
-      <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 text-center">
-        <h1 class="text-5xl font-semibold tracking-tight sm:text-7xl">
-          Everything all in one.
+      <!-- HERO CONTENT -->      <div class="mx-auto max-w-3xl py-32 sm:py-48 lg:py-56 text-center">
+        <div class="mb-4">
+          <span class="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-sm font-medium text-brand ring-1 ring-inset ring-brand/20">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Your cybersecurity hub
+          </span>
+        </div>
+
+        <h1 class="text-5xl font-bold tracking-tight sm:text-7xl">
+          Everything <span class="gradient-text">all in one.</span>
         </h1>
 
-        <p class="mt-8 text-lg text-gray-400">
-          Learn cybersecurity, shop for items, done all here.
+        <p class="mt-8 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
+          Master cybersecurity skills, discover unique products, and join a community of tech enthusiasts—all in one seamless platform.
         </p>
 
-<div class="mt-10 flex items-center justify-center gap-x-6">
+        <div class="mt-10 flex items-center justify-center gap-x-6 flex-wrap">
+          <!-- SHOP -->
+          <a href="/shop"
+            class="group rounded-lg bg-brand px-8 py-4 text-base font-semibold text-black hover:bg-brand/80 shadow-lg hover:shadow-brand/50 transition-all">
+            Shop Now
+            <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
+          </a>
 
-  <!-- SHOP -->
-  <a href="./shop.html"
-    class="rounded-md bg-brand px-6 py-3 text-sm font-semibold text-black hover:bg-brand/80 shadow-lg">
-    Shop
-  </a>
-
-  <!-- LEARN -->
-  <a href="./learn.html"
-    class="text-sm font-semibold text-white hover:text-brand transition">
-    Learn →
-  </a>
-
-</div>
+          <!-- LEARN -->
+          <a href="/learn"
+            class="rounded-lg border border-white/10 px-8 py-4 text-base font-semibold text-white hover:bg-white/5 transition-all">
+            Start Learning
+          </a>
+        </div>
       </div>
 
       <!-- BOTTOM BG BLOB -->
@@ -160,23 +196,124 @@
         class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
         <div
           class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[40rem]
-          -translate-x-1/2 bg-gradient-to-tr from-emerald-500 to-emerald-300 opacity-30
+          -translate-x-1/2 bg-gradient-to-tr from-purple-500 via-emerald-400 to-cyan-500 opacity-30
           sm:left-[calc(50%+36rem)] sm:w-[70rem]">
         </div>
       </div>
     </div>
 
-    <!-- Spacer where you can add sections later (reviews, products, whatever) -->
-    <div class="h-24"></div>
+    <!-- FEATURES SECTION -->
+    <div class="py-24 sm:py-32 bg-gray-900/50">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center mb-16">
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+            Why Choose <span class="gradient-text">Serhii?</span>
+          </h2>
+          <p class="mt-4 text-lg text-gray-400">
+            Everything you need to level up your tech skills and gear.
+          </p>
+        </div>
+
+        <div class="mx-auto max-w-5xl">
+          <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <!-- Feature 1 -->
+            <div class="group relative rounded-2xl bg-gray-800/50 p-8 hover:bg-gray-800 transition-all border border-white/5 hover:border-brand/50">
+              <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-brand/10 text-brand mb-5 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Learn Cybersecurity</h3>
+              <p class="text-gray-400">Master the fundamentals and advanced concepts with hands-on tutorials and real-world scenarios.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="group relative rounded-2xl bg-gray-800/50 p-8 hover:bg-gray-800 transition-all border border-white/5 hover:border-brand/50">
+              <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-brand/10 text-brand mb-5 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Curated Shop</h3>
+              <p class="text-gray-400">Discover hand-picked tech gear, 3D prints, and cybersecurity tools for enthusiasts and professionals.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="group relative rounded-2xl bg-gray-800/50 p-8 hover:bg-gray-800 transition-all border border-white/5 hover:border-brand/50">
+              <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-brand/10 text-brand mb-5 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Community Driven</h3>
+              <p class="text-gray-400">Join a vibrant community of learners and makers sharing knowledge and supporting each other.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="group relative rounded-2xl bg-gray-800/50 p-8 hover:bg-gray-800 transition-all border border-white/5 hover:border-brand/50">
+              <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-brand/10 text-brand mb-5 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">24/7 Support</h3>
+              <p class="text-gray-400">Get help whenever you need it with our round-the-clock support team ready to assist you.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA SECTION -->
+    <div class="py-24 sm:py-32 bg-gray-900/30">
+      <div class="mx-auto max-w-4xl px-6 lg:px-8">
+        <div class="relative isolate overflow-hidden rounded-3xl bg-gray-800/80 backdrop-blur-sm px-8 py-20 text-center shadow-2xl ring-1 ring-white/10 sm:px-16">
+          <!-- Subtle gradient overlay -->
+          <div class="absolute inset-0 -z-10 bg-gradient-to-br from-brand/20 via-transparent to-cyan-500/20"></div>
+          
+          <div class="mx-auto max-w-2xl">
+            <h2 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              Ready to start your <span class="gradient-text">journey?</span>
+            </h2>
+            <p class="mt-6 text-lg leading-8 text-gray-300">
+              Join hundreds of learners mastering cybersecurity today. Start learning for free and level up your skills.
+            </p>
+            <div class="mt-10 flex items-center justify-center gap-x-6">
+              <a href="/learn" class="group rounded-lg bg-brand px-8 py-4 text-base font-semibold text-black shadow-lg hover:bg-brand/80 transition-all hover:scale-105">
+                Get Started Free
+                <span class="inline-block group-hover:translate-x-1 transition-transform ml-1">→</span>
+              </a>
+              <a href="/contact" class="text-base font-semibold text-gray-200 hover:text-white transition flex items-center gap-1">
+                Contact Us 
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- FOOTER -->
-  <footer class="border-t border-white/10 py-6 text-sm text-gray-400">
-    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-      <p>© 2025 Serhii</p>
-      <a href="./contact.html" class="hover:text-white">
-        Contact
-      </a>
+  <footer class="border-t border-white/10 py-8 text-sm text-gray-400">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" class="text-brand">
+            <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/>
+            <path d="M12 22V12"/>
+            <polyline points="3.29 7 12 12 20.71 7"/>
+          </svg>
+          <p>© 2025 Serhii. All rights reserved.</p>
+        </div>
+        <div class="flex gap-6">
+          <a href="/contact" class="hover:text-white transition">Contact</a>
+          <a href="/shop" class="hover:text-white transition">Shop</a>
+          <a href="/learn" class="hover:text-white transition">Learn</a>
+        </div>
+      </div>
     </div>
   </footer>
 
