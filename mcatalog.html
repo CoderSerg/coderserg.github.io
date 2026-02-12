@@ -48,10 +48,10 @@
       header.appendChild(toggleIcon)
 
       const gridWrapper = document.createElement('div')
-      gridWrapper.className = 'overflow-hidden transition-all duration-500 ease-in-out'
+      gridWrapper.className = 'overflow-visible transition-all duration-500 ease-in-out'
 
       const grid = document.createElement('div')
-      grid.className = 'grid sm:grid-cols-2 lg:grid-cols-3 gap-6'
+      grid.className = 'grid sm:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible'
       grid.dataset.grid = title
 
       gridWrapper.appendChild(grid)
@@ -83,7 +83,7 @@
       const link = document.createElement('a')
       link.href = url
       link.target = '_blank'
-      link.className = 'link-card group p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-indigo-500 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1'
+      link.className = 'link-card transform-gpu group p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-indigo-500 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1'
 
       const wrapper = document.createElement('div')
       wrapper.className = 'flex items-center justify-between'
@@ -116,9 +116,8 @@
       try {
         const res = await fetch(path)
         const text = await res.text()
-        const cleanText = text.replace(/,\s*\]/g, ']') // remove trailing commas in arrays
-        const cleanText2 = cleanText.replace(/,\s*\}/g, '}') // remove trailing commas in objects
-        const data = JSON.parse(cleanText2)
+        const cleanText = text.replace(/,\s*\]/g, ']').replace(/,\s*\}/g, '}')
+        const data = JSON.parse(cleanText)
 
         if (data.categories && Array.isArray(data.categories)) {
           data.categories.forEach(cat => {
