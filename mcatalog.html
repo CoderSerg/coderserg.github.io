@@ -123,7 +123,7 @@
       })
     })
 
-    async function importFromJSON(path = 'json.json') {
+    async function importFromJSON(path = 'mcatalog.json') {
       try {
         const res = await fetch(path)
         const data = await res.json()
