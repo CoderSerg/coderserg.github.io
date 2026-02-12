@@ -24,9 +24,7 @@
     const categoriesContainer = document.getElementById('categories')
     const searchInput = document.getElementById('searchInput')
 
-    const state = {
-      categories: {}
-    }
+    const state = { categories: {} }
 
     function addCategory(title) {
       if (state.categories[title]) return
@@ -79,12 +77,9 @@
     }
 
     function addLink(title, url, category) {
-      if (!state.categories[category]) {
-        addCategory(category)
-      }
+      if (!state.categories[category]) addCategory(category)
 
       const grid = state.categories[category]
-
       const link = document.createElement('a')
       link.href = url
       link.target = '_blank'
@@ -106,35 +101,30 @@
       link.appendChild(wrapper)
 
       grid.appendChild(link)
-
       link.classList.add('opacity-0', 'translate-y-2')
-      requestAnimationFrame(() => {
-        link.classList.remove('opacity-0', 'translate-y-2')
-      })
+      requestAnimationFrame(() => link.classList.remove('opacity-0', 'translate-y-2'))
     }
 
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase()
-      const cards = document.querySelectorAll('.link-card')
-
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase()
-        card.classList.toggle('hidden', !text.includes(query))
+      document.querySelectorAll('.link-card').forEach(card => {
+        card.classList.toggle('hidden', !card.innerText.toLowerCase().includes(query))
       })
     })
 
     async function importFromJSON(path = 'mcatalog.json') {
       try {
         const res = await fetch(path)
-        const data = await res.json()
+        const text = await res.text()
+        const cleanText = text.replace(/,\s*\]/g, ']') // remove trailing commas in arrays
+        const cleanText2 = cleanText.replace(/,\s*\}/g, '}') // remove trailing commas in objects
+        const data = JSON.parse(cleanText2)
 
         if (data.categories && Array.isArray(data.categories)) {
           data.categories.forEach(cat => {
             addCategory(cat.title)
             if (Array.isArray(cat.links)) {
-              cat.links.forEach(link => {
-                addLink(link.title, link.url, cat.title)
-              })
+              cat.links.forEach(link => addLink(link.title, link.url, cat.title))
             }
           })
         }
